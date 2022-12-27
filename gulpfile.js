@@ -1,5 +1,5 @@
 var gulp = require('gulp');
-var path = require('path');
+// var path = require('path');
 var sass = require('gulp-sass')(require('sass'));
 var autoprefixer = require('gulp-autoprefixer');
 var sourcemaps = require('gulp-sourcemaps');
