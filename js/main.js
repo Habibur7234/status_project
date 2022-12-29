@@ -124,9 +124,6 @@ window.logIn =
                         return response.json();
                     })
                     .then((data) => {
-                        this.messageType = 'success';
-                        this.message = 'yeah';
-
                         const d = new Date();
                         d.setTime(d.getTime() + (1 * 1 * 60 * 60 * 1000));
                         let expires = "expires=" + d.toUTCString();
