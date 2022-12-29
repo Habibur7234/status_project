@@ -4,8 +4,8 @@
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
-    <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/assets/img/apple-icon.png">
+    <link rel="icon" type="image/png" href="/assets/img/favicon.png">
     <title>
         Location Status
     </title>
@@ -13,17 +13,16 @@
     <link rel="stylesheet" type="text/css"
           href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700"/>
     <!-- Nucleo Icons -->
-    <link href="../assets/css/nucleo-icons.css" rel="stylesheet"/>
-    <link href="../assets/css/nucleo-svg.css" rel="stylesheet"/>
+    <link href="/assets/css/nucleo-icons.css" rel="stylesheet"/>
+    <link href="/assets/css/nucleo-svg.css" rel="stylesheet"/>
     <!-- Font Awesome Icons -->
     <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
     <!-- Material Icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
     <!-- CSS Files -->
-    <link id="pagestyle" href="../assets/css/material-dashboard.css?v=3.0.4" rel="stylesheet"/>
-<!--Notyf-->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+    <link id="pagestyle" href="/assets/css/material-dashboard.css?v=3.0.4" rel="stylesheet"/>
+    <!--Notyf-->
+    <link rel="stylesheet" href="/assets/css/notyf.min.css">
 </head>
 
 <body class="g-sidenav-show  bg-gray-200">
@@ -33,7 +32,7 @@
         <i class="fas fa-times p-3 cursor-pointer text-white opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
            aria-hidden="true" id="iconSidenav"></i>
         <a class="navbar-brand m-0" href=" https://www.selopia.com " target="_blank">
-            <img src="../assets/img/logo-ct.png" class="navbar-brand-img h-100" alt="main_logo">
+            <img src="/assets/img/logo-ct.png" class="navbar-brand-img h-100" alt="main_logo">
             <span class="ms-1 font-weight-bold text-white">Location Status</span>
         </a>
     </div>
@@ -49,7 +48,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-white active bg-gradient-primary" href="../pages/users.html">
+                <a class="nav-link text-white active bg-gradient-primary" href="/users.html">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="material-icons opacity-10">group</i>
                     </div>
@@ -100,7 +99,7 @@
                 <ul class="navbar-nav  justify-content-end">
 
                     <li class="nav-item d-flex align-items-center">
-                        <a href="../pages/sign-in.html" class="nav-link text-body font-weight-bold px-0">
+                        <a href="/sign-in.html" class="nav-link text-body font-weight-bold px-0">
                             <i class="fa fa-user me-sm-1"></i>
                             <span class="d-sm-inline d-none">Jhon Smith</span>
                         </a>
@@ -158,6 +157,11 @@
                                 </a>
                             </li>
                             <li class="mb-2">
+
+
+
+
+
                                 <a class="dropdown-item border-radius-md" href="javascript:;">
                                     <div class="d-flex py-1">
                                         <div class="my-auto">
@@ -184,9 +188,9 @@
     <!-- End Navbar -->
 
 
-    <div  x-data="services()" x-init="initUser()">
+    <div x-data="services()" x-init="initUser()">
         <!--Add User modal-->
-        <div  class="modal fade" id="add_user_modal" tabindex="-1" role="dialog" aria-labelledby="modal-form"
+        <div class="modal fade" id="add_user_modal" tabindex="-1" role="dialog" aria-labelledby="modal-form"
              aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
@@ -208,26 +212,39 @@
                                                 <form id="customer_form">
                                                     <div class="col-lg-12 col-sm-10 mb2 my-4 input-group input-group-static">
                                                         <label>Name</label>
-                                                        <input type="text" class="form-control" placeholder="Abc..." x-model="userData.name">
+                                                        <input type="text" class="form-control" placeholder="Abc..."
+                                                               x-model="userData.name">
                                                     </div>
-                                                    <div class="col-lg-12 col-sm-10 mb2 my-4 input-group input-group-static"><label>Email</label>
-                                                        <input type="email" class="form-control" placeholder="someone@something.com...." x-model="userData.email">
+                                                    <div class="col-lg-12 col-sm-10 mb2 my-4 input-group input-group-static">
+                                                        <label>Email</label>
+                                                        <input type="email" class="form-control"
+                                                               placeholder="someone@something.com...."
+                                                               x-model="userData.email">
                                                     </div>
-                                                    <div class="col-lg-12 col-sm-10 mb2 my-4 input-group input-group-static"><label>Type</label>
+                                                    <div class="col-lg-12 col-sm-10 mb2 my-4 input-group input-group-static">
+                                                        <label>Type</label>
                                                         <select class="form-control" x-model="userData.role">
-                                                        <option disabled selected value> -- select an option --</option>
-                                                        <option value="Admin">Admin</option>
-                                                        <option value="Manager">Manager</option>
-                                                    </select>
+                                                            <option disabled selected value> -- select an option --
+                                                            </option>
+                                                            <option value="Admin">Admin</option>
+                                                            <option value="Manager">Manager</option>
+                                                        </select>
                                                     </div>
-                                                    <div class="col-lg-12 col-sm-10 mb2 my-4 input-group input-group-static"><label>Password</label>
-                                                        <input type="password" class="form-control" placeholder="********" x-model="userData.password">
+                                                    <div class="col-lg-12 col-sm-10 mb2 my-4 input-group input-group-static">
+                                                        <label>Password</label>
+                                                        <input type="password" class="form-control"
+                                                               placeholder="********" x-model="userData.password">
                                                     </div>
                                                     <div class="col-lg-12 col-sm-10 mb2 my-4 input-group input-group-static">
                                                         <label>Confirm Password</label>
-                                                        <input type="password" class="form-control" placeholder="********" x-model="userData.password_confirmation">
+                                                        <input type="password" class="form-control"
+                                                               placeholder="********"
+                                                               x-model="userData.password_confirmation">
                                                     </div>
-                                                    <button type="button" id="add_User" class="btn bg-gradient-primary text-white col-lg-12 col-sm-10 mb-4 my-4" @click="addUser()">Add</button>
+                                                    <button type="button" id="add_User"
+                                                            class="btn bg-gradient-primary text-white col-lg-12 col-sm-10 mb-4 my-4"
+                                                            @click="addUser()">Add
+                                                    </button>
                                                 </form>
                                             </div>
                                         </div>
@@ -244,12 +261,14 @@
 
         <!--Show Message Alert-->
         <template x-if="messageType == 'warning'">
-            <div x-init="setTimeout(() => message = '', 3000)" x-show="message"  class="alert alert-warning" role="alert">
+            <div x-init="setTimeout(() => message = '', 3000)" x-show="message" class="alert alert-warning"
+                 role="alert">
                 <span x-text="message"></span>
             </div>
         </template>
         <template x-if="messageType == 'success'">
-            <div x-init="setTimeout(() => message = '', 3000)" x-show="message" class="alert alert-success" role="alert">
+            <div x-init="setTimeout(() => message = '', 3000)" x-show="message" class="alert alert-success"
+                 role="alert">
                 <span x-text="message"></span>
             </div>
         </template>
@@ -283,21 +302,28 @@
                                                 <form method="POST">
                                                     <div class="col-lg-12 col-sm-10 mb2 my-4 input-group input-group-static">
                                                         <label>Name</label>
-                                                        <input type="text" class="form-control" placeholder="Abc..."  x-model="editModalData.name">
+                                                        <input type="text" class="form-control" placeholder="Abc..."
+                                                               x-model="editModalData.name">
                                                     </div>
                                                     <div class="col-lg-12 col-sm-10 mb2 my-4 input-group input-group-static">
                                                         <label>Email</label>
-                                                        <input type="email" class="form-control" placeholder="someone@something.com...." x-model="editModalData.email">
+                                                        <input type="email" class="form-control"
+                                                               placeholder="someone@something.com...."
+                                                               x-model="editModalData.email">
                                                     </div>
                                                     <div class="col-lg-12 col-sm-10 mb2 my-4 input-group input-group-static">
                                                         <label class="my-1 me-2">Type</label>
                                                         <select class="form-control" x-model="editModalData.role">
-                                                            <option disabled selected value> -- select an option --</option >
+                                                            <option disabled selected value> -- select an option --
+                                                            </option>
                                                             <option value="1">Admin</option>
                                                             <option value="2">Manager</option>
                                                         </select>
                                                     </div>
-                                                    <button type="button" class="btn bg-gradient-primary text-white col-lg-12 col-sm-10 mb-4 my-4" @click="updateUser()">Update</button>
+                                                    <button type="button"
+                                                            class="btn bg-gradient-primary text-white col-lg-12 col-sm-10 mb-4 my-4"
+                                                            @click="updateUser()">Update
+                                                    </button>
                                                 </form>
                                             </div>
                                         </div>
@@ -324,7 +350,8 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <p class="fw-light" style="font-size:14px;">This item will delete immediately. You can't undo this
+                        <p class="fw-light" style="font-size:14px;">This item will delete immediately. You can't undo
+                            this
                             action.</p>
                     </div>
                     <div class="modal-footer">
@@ -336,7 +363,7 @@
         </div>
         <!--End delete-->
 
-      <!--Update password-->
+        <!--Update password-->
         <div class="modal fade" id="edit_user_credentials" tabindex="-1" role="dialog" aria-labelledby="modal-form"
              aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -361,17 +388,25 @@
                                                     <div class="col-lg-12 col-sm-10 mb2 my-4 input-group input-group-static">
                                                         <label>Current Password</label>
                                                         <input type="password" class="form-control"
+                                                               placeholder="********"
+                                                               x-model="editUserModalPassword.old_password">
+                                                    </div>
+                                                    <div class="col-lg-12 col-sm-10 mb2 my-4 input-group input-group-static"
+                                                         x-model="editUserModalPassword.password">
+                                                        <label>New Password</label>
+                                                        <input type="password" class="form-control"
                                                                placeholder="********">
                                                     </div>
                                                     <div class="col-lg-12 col-sm-10 mb2 my-4 input-group input-group-static">
-                                                        <label>New Password</label>
-                                                        <input type="password" class="form-control" placeholder="********">
-                                                    </div>
-                                                    <div class="col-lg-12 col-sm-10 mb2 my-4 input-group input-group-static">
                                                         <label>Confirm Password</label>
-                                                        <input type="password" class="form-control" placeholder="********">
+                                                        <input type="password" class="form-control"
+                                                               placeholder="********"
+                                                               x-model="editUserModalPassword.password_confirmation">
                                                     </div>
-                                                    <button type="button" class="btn bg-gradient-primary text-white col-lg-12 col-sm-10 mb-4 my-4">Update</button>
+                                                    <button type="button"
+                                                            class="btn bg-gradient-primary text-white col-lg-12 col-sm-10 mb-4 my-4"
+                                                            @click="updatePassword()">Update
+                                                    </button>
                                                 </form>
                                             </div>
                                         </div>
@@ -383,11 +418,10 @@
                 </div>
             </div>
         </div>
-       <!--End update password-->
+        <!--End update password-->
 
 
-
-          <!--Table-->
+        <!--Table-->
         <div class="container-fluid py-4">
             <h5 class="text-primary font-weight-bolder ps-4">Users Table</h5>
             <div class="row">
@@ -396,11 +430,13 @@
                         <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                             <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
                                 <button id="shop_addBtn" toggle="tooltip" title="Add New User"
-                                        class="btn small btn-white text-dark shadow-none start-1 mt-n5" style="margin-bottom: -36px"
+                                        class="btn small btn-white text-dark shadow-none start-1 mt-n5"
+                                        style="margin-bottom: -36px"
                                         type="button" data-bs-toggle="modal" data-bs-target="#add_user_modal"><i
                                         class="material-icons opacity-10">add</i></button>
-<!--                                <h6 class="text-white text-capitalize ps-3">User table</h6>-->
-                                <h6 class="text-white text-capitalize position-absolute end-6 mt-n4" style="margin-top: -29px!important;" >Show</h6>
+                                <!--                                <h6 class="text-white text-capitalize ps-3">User table</h6>-->
+                                <h6 class="text-white text-capitalize position-absolute end-6 mt-n4"
+                                    style="margin-top: -29px!important;">Show</h6>
                             </div>
                         </div>
 
@@ -408,7 +444,7 @@
                             <div class="table-responsive p-0">
                                 <div class="container">
                                     <div class="form-group">
-                                        <table  class="table tab-pane table-class">
+                                        <table class="table tab-pane table-class">
                                             <thead>
 
                                             <th>NAME</th>
@@ -428,29 +464,46 @@
                                                             </div>
                                                         </div>
                                                     </td>
-                                                    <td class="align-middle text-center text-sm"  x-text="item.role"></td>
-                                                    <template  x-if="item.status == 'Online'">
+                                                    <td class="align-middle text-center text-sm"
+                                                        x-text="item.role"></td>
+                                                    <template x-if="item.status == 'Online'">
                                                         <td class="align-middle text-center text-sm ">
-                                                            <span class="badge badge-sm bg-gradient-success" x-text="item.status"></span>
+                                                            <span class="badge badge-sm bg-gradient-success"
+                                                                  x-text="item.status"></span>
                                                         </td>
                                                     </template>
-                                                    <template  x-if="item.status == 'Offline'">
+                                                    <template x-if="item.status == 'Offline'">
                                                         <td class="align-middle text-center text-sm">
-                                                        <span class="badge badge-sm bg-gradient-secondary" x-text="item.status"></span>
+                                                            <span class="badge badge-sm bg-gradient-secondary"
+                                                                  x-text="item.status"></span>
                                                         </td>
                                                     </template>
-                                                    <template  x-if="item.last_login == null">
+                                                    <template x-if="item.last_login == null">
                                                         <td class="align-middle text-center">N/A</td>
                                                     </template>
-                                                    <template  x-if="item.last_login != null">
-                                                        <td class="align-middle text-center" x-text="item.last_login"></td>
+                                                    <template x-if="item.last_login != null">
+                                                        <td class="align-middle text-center"
+                                                            x-text="item.last_login"></td>
                                                     </template>
                                                     <td class="align-middle text-center">
-                                                        <button class="btn btn-dark btn-sm mb-n1 " toggle="tooltip" title="Edit" type="button" data-bs-toggle="modal" data-bs-target="#edit_user_modal" @click="editUser(item.id)"><i class="material-icons opacity-10">edit</i></button>
-                                                        <button class="btn btn-dark btn-sm mb-n1" toggle="tooltip" title="Edit" type="button" data-bs-toggle="modal" data-bs-target="#edit_user_credentials"><i class="material-icons opacity-10">key</i></button>
+                                                        <button class="btn btn-dark btn-sm mb-n1 " toggle="tooltip"
+                                                                title="Edit" type="button" data-bs-toggle="modal"
+                                                                data-bs-target="#edit_user_modal"
+                                                                @click="editUser(item.id)"><i
+                                                                class="material-icons opacity-10">edit</i></button>
+                                                        <button class="btn btn-dark btn-sm mb-n1" toggle="tooltip"
+                                                                title="Edit" type="button" data-bs-toggle="modal"
+                                                                data-bs-target="#edit_user_credentials"
+                                                                @click="editUserPassword(item.id)"><i
+                                                                class="material-icons opacity-10">key</i></button>
 
-                                                        <template  x-if="item.id != loggedInID">
-                                                            <button class="btn btn-danger btn-sm mb-n1" toggle="tooltip" title="Delete" data-bs-toggle="modal" data-bs-target="#delete_user_modal" @click="deleteUser(item.id)"><i class="material-icons opacity-10">delete</i></button>
+                                                        <template x-if="item.id != loggedInID">
+                                                            <button class="btn btn-danger btn-sm mb-n1" toggle="tooltip"
+                                                                    title="Delete" data-bs-toggle="modal"
+                                                                    data-bs-target="#delete_user_modal"
+                                                                    @click="deleteUser(item.id)"><i
+                                                                    class="material-icons opacity-10">delete</i>
+                                                            </button>
                                                         </template>
                                                     </td>
                                                 </tr>
@@ -465,114 +518,113 @@
                 </div>
             </div>
 
-    </div>
 
+            <!--Table-->
+            <!--    <div class="container-fluid py-4">-->
+            <!--        <h5 class="text-primary font-weight-bolder ps-4">Users Table</h5>-->
+            <!--        <div class="row">-->
+            <!--        <div class="col-12">-->
+            <!--            <div class="card my-4">-->
+            <!--                <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">-->
+            <!--                    <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">-->
+            <!--                        <button id="shop_addBtn" toggle="tooltip" title="Add New User"-->
+            <!--                                class="btn small btn-white text-dark shadow-none start-1 mt-n5" style="margin-bottom: -36px"-->
+            <!--                                type="button" data-bs-toggle="modal" data-bs-target="#add_user_modal"><i-->
+            <!--                                class="material-icons opacity-10">add</i></button>-->
+            <!--                       <h6 class="text-white text-capitalize ps-3">User table</h6>-->
+            <!--                        <h6 class="text-white text-capitalize position-absolute end-6 mt-n4" style="margin-top: -29px!important;" >Show</h6>-->
+            <!--                            <select class="form-select w-3 p-1 shadow-none bg-light position-absolute end-2" style="margin-top: -33px" x-model="view" @change="changeView()">-->
+            <!--                                <option value="10">10</option>-->
+            <!--                                <option value="25">25</option>-->
+            <!--                                <option value="50">50</option>-->
+            <!--                                <option value="99">99</option>-->
+            <!--                                <option value="100000">ALL</option>-->
+            <!--                            </select>-->
+            <!--                    </div>-->
+            <!--                </div>-->
 
-         <!--Table-->
-<!--    <div class="container-fluid py-4">-->
-<!--        <h5 class="text-primary font-weight-bolder ps-4">Users Table</h5>-->
-<!--        <div class="row">-->
-<!--        <div class="col-12">-->
-<!--            <div class="card my-4">-->
-<!--                <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">-->
-<!--                    <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">-->
-<!--                        <button id="shop_addBtn" toggle="tooltip" title="Add New User"-->
-<!--                                class="btn small btn-white text-dark shadow-none start-1 mt-n5" style="margin-bottom: -36px"-->
-<!--                                type="button" data-bs-toggle="modal" data-bs-target="#add_user_modal"><i-->
-<!--                                class="material-icons opacity-10">add</i></button>-->
-<!--                       <h6 class="text-white text-capitalize ps-3">User table</h6>-->
-<!--                        <h6 class="text-white text-capitalize position-absolute end-6 mt-n4" style="margin-top: -29px!important;" >Show</h6>-->
-<!--                            <select class="form-select w-3 p-1 shadow-none bg-light position-absolute end-2" style="margin-top: -33px" x-model="view" @change="changeView()">-->
-<!--                                <option value="10">10</option>-->
-<!--                                <option value="25">25</option>-->
-<!--                                <option value="50">50</option>-->
-<!--                                <option value="99">99</option>-->
-<!--                                <option value="100000">ALL</option>-->
-<!--                            </select>-->
-<!--                    </div>-->
-<!--                </div>-->
+            <!--                <div class="card-body px-0 pb-2">-->
+            <!--                    <div class="table-responsive p-0">-->
+            <!--                        <div class="container">-->
+            <!--                            <div class="form-group">-->
+            <!--                                <table  class="table tab-pane table-class">-->
+            <!--                                    <thead>-->
 
-<!--                <div class="card-body px-0 pb-2">-->
-<!--                    <div class="table-responsive p-0">-->
-<!--                        <div class="container">-->
-<!--                            <div class="form-group">-->
-<!--                                <table  class="table tab-pane table-class">-->
-<!--                                    <thead>-->
+            <!--                                    <th>NAME</th>-->
+            <!--                                    <th>TYPE</th>-->
+            <!--                                    <th>STATUS</th>-->
+            <!--                                    <th>Last LOGIN</th>-->
+            <!--                                    <th>Action</th>-->
+            <!--                                    </thead>-->
+            <!--                                    <tbody>-->
+            <!--                                    <template x-for="(item, index) in items" :key="index">-->
+            <!--                                        <tr x-show="checkView(index + 1)" class="hover:bg-gray-200 text-gray-900 text-xs">-->
+            <!--                                            <td>-->
+            <!--                                                <div class="d-flex px-2 py-1">-->
+            <!--                                                    <div class="d-flex flex-column justify-content-center">-->
+            <!--                                                        <h6 x-text="item.job">Miriam Eric</h6>-->
+            <!--                                                        <p x-text="item.job">miriam@creative-tim.com</p>-->
+            <!--                                                    </div>-->
+            <!--                                                </div>-->
+            <!--                                            </td>-->
+            <!--                                            <td  x-text="item.job"></td>-->
+            <!--                                            <td  x-text="item.email"></td>-->
+            <!--                                            <td  x-text="item.year"></td>-->
+            <!--                                            <td x-text="item.country"></td>-->
+            <!--                                            <td>-->
+            <!--                                                <button class="btn btn-dark btn-sm mb-n1" toggle="tooltip" title="Edit" type="button" data-bs-toggle="modal" data-bs-target="#edit_user_modal"><i class="material-icons opacity-10">edit</i></button>-->
+            <!--                                                <button class="btn btn-danger btn-sm mb-n1" toggle="tooltip" title="Delete" data-bs-toggle="modal" data-bs-target="#delete_user_modal"><i class="material-icons opacity-10">delete</i></button>-->
+            <!--                                            </td>-->
+            <!--                                        </tr>-->
+            <!--                                    </template>-->
+            <!--                                    </tbody>-->
+            <!--                                </table>-->
+            <!--                                <nav aria-label="Page navigation example">-->
+            <!--                                    <ul class="pagination justify-content-end">-->
+            <!--                                        <li class="page-item ">-->
+            <!--                                            <a class="page-link"  href="javascript:;" @click="changePage(currentPage - 1)" aria-label="Previous"><span class="material-icons">keyboard_arrow_left</span>-->
+            <!--                                                <span class="sr-only">Previous</span>-->
+            <!--                                            </a>-->
+            <!--                                        </li>-->
+            <!--                                        <template x-for="item in pages">-->
+            <!--                                            <div @click="changePage(item)" class="page-item"-->
+            <!--                                                x-bind:class="{ 'active': currentPage === item }">-->
+            <!--                                                <span class="page-link " x-text="item" ></span>-->
+            <!--                                            </div>-->
+            <!--                                        </template>-->
+            <!--                                        <li class="page-item">-->
+            <!--                                            <a class="page-link"  href="javascript:;" @click="changePage(currentPage + 1)" aria-label="Next"><span class="material-icons">keyboard_arrow_right</span>-->
+            <!--                                                <span class="sr-only">Next</span>-->
+            <!--                                            </a>-->
+            <!--                                        </li>-->
+            <!--                                    </ul>-->
+            <!--                                </nav>-->
+            <!--                            </div>-->
+            <!--                        </div>-->
+            <!--                    </div>-->
+            <!--                </div>-->
+            <!--            </div>-->
+            <!--        </div>-->
+            <!--    </div>-->
 
-<!--                                    <th>NAME</th>-->
-<!--                                    <th>TYPE</th>-->
-<!--                                    <th>STATUS</th>-->
-<!--                                    <th>Last LOGIN</th>-->
-<!--                                    <th>Action</th>-->
-<!--                                    </thead>-->
-<!--                                    <tbody>-->
-<!--                                    <template x-for="(item, index) in items" :key="index">-->
-<!--                                        <tr x-show="checkView(index + 1)" class="hover:bg-gray-200 text-gray-900 text-xs">-->
-<!--                                            <td>-->
-<!--                                                <div class="d-flex px-2 py-1">-->
-<!--                                                    <div class="d-flex flex-column justify-content-center">-->
-<!--                                                        <h6 x-text="item.job">Miriam Eric</h6>-->
-<!--                                                        <p x-text="item.job">miriam@creative-tim.com</p>-->
-<!--                                                    </div>-->
-<!--                                                </div>-->
-<!--                                            </td>-->
-<!--                                            <td  x-text="item.job"></td>-->
-<!--                                            <td  x-text="item.email"></td>-->
-<!--                                            <td  x-text="item.year"></td>-->
-<!--                                            <td x-text="item.country"></td>-->
-<!--                                            <td>-->
-<!--                                                <button class="btn btn-dark btn-sm mb-n1" toggle="tooltip" title="Edit" type="button" data-bs-toggle="modal" data-bs-target="#edit_user_modal"><i class="material-icons opacity-10">edit</i></button>-->
-<!--                                                <button class="btn btn-danger btn-sm mb-n1" toggle="tooltip" title="Delete" data-bs-toggle="modal" data-bs-target="#delete_user_modal"><i class="material-icons opacity-10">delete</i></button>-->
-<!--                                            </td>-->
-<!--                                        </tr>-->
-<!--                                    </template>-->
-<!--                                    </tbody>-->
-<!--                                </table>-->
-<!--                                <nav aria-label="Page navigation example">-->
-<!--                                    <ul class="pagination justify-content-end">-->
-<!--                                        <li class="page-item ">-->
-<!--                                            <a class="page-link"  href="javascript:;" @click="changePage(currentPage - 1)" aria-label="Previous"><span class="material-icons">keyboard_arrow_left</span>-->
-<!--                                                <span class="sr-only">Previous</span>-->
-<!--                                            </a>-->
-<!--                                        </li>-->
-<!--                                        <template x-for="item in pages">-->
-<!--                                            <div @click="changePage(item)" class="page-item"-->
-<!--                                                x-bind:class="{ 'active': currentPage === item }">-->
-<!--                                                <span class="page-link " x-text="item" ></span>-->
-<!--                                            </div>-->
-<!--                                        </template>-->
-<!--                                        <li class="page-item">-->
-<!--                                            <a class="page-link"  href="javascript:;" @click="changePage(currentPage + 1)" aria-label="Next"><span class="material-icons">keyboard_arrow_right</span>-->
-<!--                                                <span class="sr-only">Next</span>-->
-<!--                                            </a>-->
-<!--                                        </li>-->
-<!--                                    </ul>-->
-<!--                                </nav>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-
-    <footer class="footer py-4 ">
-        <div class="container-fluid">
-            <div class="row align-items-center justify-content-lg-between">
-                <div class="col-lg-6 mb-lg-0 mb-4">
-                    <div class="copyright text-center text-sm text-muted text-lg-start">
-                        <a href="https://www.selopia.com" class="font-weight-bold" target="_blank">Selopia</a>
-                        ©
-                        <script>
-                            document.write(new Date().getFullYear())
-                        </script>
+            <footer class="footer py-4 ">
+                <div class="container-fluid">
+                    <div class="row align-items-center justify-content-lg-between">
+                        <div class="col-lg-6 mb-lg-0 mb-4">
+                            <div class="copyright text-center text-sm text-muted text-lg-start">
+                                <a href="https://www.selopia.com " class="font-weight-bold" target="_blank">Selopia</a>
+                                ©
+                                <script>
+                                    document.write(new Date().getFullYear())
+                                </script>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                        </div>
                     </div>
                 </div>
-                <div class="col-lg-6">
-                </div>
-            </div>
+            </footer>
         </div>
-    </footer>
     </div>
 </main>
 <div class="fixed-plugin">
@@ -604,12 +656,13 @@
     </div>
 </div>
 <!--   Core JS Files   -->
-<script src="../assets/js/core/popper.min.js"></script>
-<script src="../assets/js/core/bootstrap.min.js"></script>
-<script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
-<script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
-<script defer src="../assets/js/plugins/alpine.min.js"></script>
-<script src="../js/main.js"></script>
+<script src="/assets/js/core/popper.min.js"></script>
+<script src="/assets/js/core/bootstrap.min.js"></script>
+<script src="/assets/js/plugins/perfect-scrollbar.min.js"></script>
+<script src="/assets/js/plugins/smooth-scrollbar.min.js"></script>
+<script defer src="/assets/js/plugins/notyf.js"></script>
+<script defer src="/assets/js/plugins/alpine.min.js"></script>
+<script src="/js/main.js"></script>
 <script>
 
     var win = navigator.platform.indexOf('Win') > -1;
@@ -623,7 +676,7 @@
 <!-- Github buttons -->
 <script async defer src="https://buttons.github.io/buttons.js"></script>
 <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
-<script src="../assets/js/material-dashboard.min.js?v=3.0.4"></script>
+<script src="/assets/js/material-dashboard.min.js?v=3.0.4"></script>
 </body>
 
 </html>

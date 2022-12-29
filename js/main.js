@@ -94,6 +94,11 @@
 //     }
 // }
 
+
+const domain = 'https://location.selopian.us/api';
+
+
+
 //LOGIN
 window.logIn =
     function () {
@@ -105,7 +110,7 @@ window.logIn =
             messageType: '',
 
             logInService() {
-                fetch('http://location.local/api/login', {
+                fetch(domain + '/login', {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify(this.LogInData)
@@ -130,7 +135,7 @@ window.logIn =
                         document.cookie = "token" + "=" + data.access_token + "; " + expires + "; path=/; secure; sameSite=Lax";
                         //console.log("COOKIE");
 
-                        window.location = "http://localhost:63342/status_project/pages/index.html"
+                        window.location = "/index.html"
 
 
                     })
@@ -139,19 +144,13 @@ window.logIn =
                         this.message = 'Server error please try again later!';
 
                     })
-
             },
-
-
 
         }
     };
 
 
-
-
-
-
+//USER--------------------------------------------------------------
 window.services =
     function () {
         return {
@@ -159,15 +158,18 @@ window.services =
                 name: '',
                 email: '',
                 role: '',
-
                 password: '',
                 password_confirmation: '',
             },
-
             editModalData: {
                 name: '',
                 email: '',
                 role: '',
+            },
+            editUserModalPassword: {
+                old_password: '',
+                password: '',
+                password_confirmation: '',
             },
             updatedId: '',
             messageType: '',
@@ -175,17 +177,15 @@ window.services =
             services: [],
             loggedInID: '',
 
-
-            getToken(){
+            getToken() {
                 var match = document.cookie.match(new RegExp('(^| )token=([^;]+)'));
                 if (match) return match[2];
             },
 
-
             async initUser() {
                 this.userProfile();
                 let userData;
-                let response = await fetch('http://location.local/api/user-list', {
+                let response = await fetch(domain + '/user-list', {
                     method: 'GET',
                     headers: {'Authorization': 'bearer ' + this.getToken()},
                 });
@@ -199,7 +199,7 @@ window.services =
             },
 
             userProfile() {
-                fetch('http://location.local/api/profile', {
+                fetch(domain + '/profile', {
                     method: 'GET',
                     headers: {'Authorization': 'bearer' + this.getToken()},
                 })
@@ -211,23 +211,18 @@ window.services =
                     })
                     .then((data) => {
                         this.loggedInID = data.user.id;
-                        console.log("habibi"+this.loggedInID)
                     })
 
             },
 
-
-
-
             addUser() {
-                fetch('http://location.local/api/register', {
+                fetch(domain + '/register', {
                     method: 'POST',
                     headers: {
                         'Authorization': 'bearer ' + this.getToken(),
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify(this.userData)
-
                 })
                     .then((response) => {
                         if (!response.ok) {
@@ -236,17 +231,6 @@ window.services =
                         return response.json();
                     })
                     .then((data) => {
-
-
-                        // Create an instance of Notyf
-                        var notyf = new Notyf();
-
-                        notyf.error('You must fill out the form before moving forward');
-
-                        // Display a success notification
-                        notyf.success('Your changes have been successfully saved!');
-
-
                         this.messageType = 'success';
                         this.message = 'New Data added!';
                         this.services.push({
@@ -258,12 +242,10 @@ window.services =
                         const user_modal = document.querySelector('#add_user_modal');
                         const modal = bootstrap.Modal.getInstance(user_modal);
                         modal.hide();
-
                     })
                     .catch((error) => {
                         this.messageType = 'warning';
                         this.message = 'Server error please try again later!';
-
                     })
             },
 
@@ -278,10 +260,10 @@ window.services =
             },
 
             updateUser() {
-                fetch('http://location.local/api/user-update', {
+                fetch(domain + '/user-update', {
                     method: 'PUT',
                     headers: {
-                        'Authorization': 'bearer ' +this.getToken(),
+                        'Authorization': 'bearer ' + this.getToken(),
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify(this.editModalData),
@@ -308,7 +290,7 @@ window.services =
                         modal.hide();
 
                         this.messageType = 'success';
-                        this.message = 'Shop Information Updated!';
+                        this.message = 'User Information Updated!';
                     })
                     .catch(() => {
                         const user_modal = document.querySelector('#edit_user_modal');
@@ -319,23 +301,60 @@ window.services =
                     })
             },
 
-            deleteUser(userId) {
+            editUserPassword(userId) {
                 let position = this.services.findIndex(el => el.id === userId);
                 this.updatedId = this.services[position]['id'];
+                this.editUserModalPassword['id'] = this.services[position]['id'];
+            },
+            updatePassword() {
+                fetch(domain + '/user-password-update', {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': 'bearer ' + this.getToken(),
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(this.editUserModalPassword),
+                })
+                    .then((response) => {
+                        if (!response.ok) {
+                            throw new Error();
+                        }
+                        return response.json();
+                    })
+                    .then((data) => {
+                        const user_modal = document.querySelector('#edit_user_credentials');
+                        const modal = bootstrap.Modal.getInstance(user_modal);
+                        modal.hide();
 
-
+                        this.messageType = 'success';
+                        this.message = 'password Updated!';
+                    })
+                    .catch(() => {
+                        const user_modal = document.querySelector('#edit_user_modal');
+                        const modal = bootstrap.Modal.getInstance(user_modal);
+                        modal.hide();
+                        this.messageType = 'warning';
+                        this.message = 'Server error please try again later!';
+                    })
             },
 
+            deleteUser(locationId) {
+                let position = this.services.findIndex(el => el.id === locationId);
+                this.updatedId = this.services[position]['id'];
+            },
 
             deleteUsere() {
-                fetch('http://location.local/api/user-delete/' + this.updatedId, {
+                fetch(domain + '/user-delete/' + this.updatedId, {
                     method: 'DELETE',
                     headers: {
-                        'Authorization': 'bearer' + this.getToken()},
+                        'Authorization': 'bearer' + this.getToken()
+                    },
                 })
-
-
                     .then(response => {
+                        const user_modal = document.querySelector('#delete_user_modal');
+                        const modal = bootstrap.Modal.getInstance(user_modal);
+                        modal.hide();
+
                         let position = this.services.findIndex(el => el.id === this.updatedId);
                         this.services.splice(position, 1);
                         this.messageType = 'danger';
@@ -346,350 +365,251 @@ window.services =
                         this.message = "Something went wrong!";
                     });
             },
+        }
+    };
+
+
+window.locationService =
+
+    function () {
+        return {
+            locationData: {
+                name: '',
+                ip_address: '',
+                router_type: '',
+                feed_type: '',
+            },
+            messageType: '',
+            message: '',
+            editLocationData: {
+                name: '',
+                ip_address: '',
+                router_type: '',
+                feed_type: '',
+            },
+            update_location_id: '',
+            servicesLocation: [],
+            routerTypeList: [],
+            feedTypeList: [],
+
+            getToken() {
+                var match = document.cookie.match(new RegExp('(^| )token=([^;]+)'));
+                if (match) return match[2];
+            },
+
+            async initLocation() {
+                let locationData;
+                let response = await fetch(domain + '/location-list', {
+                    method: 'GET',
+                    headers: {'Authorization': 'bearer ' + this.getToken()},
+                });
+                if (response.ok) {
+                    locationData = await response.json();
+                } else {
+                    locationData = [];
+                }
+                this.servicesLocation = locationData.locations.data;
+            },
+
+            async routerType() {
+                let routerType;
+                let response = await fetch(domain + '/router-type-list', {
+                    method: 'GET',
+                    headers: {'Authorization': 'bearer ' + this.getToken()},
+                });
+                if (response.ok) {
+                    routerType = await response.json();
+                } else {
+                    routerType = [];
+                }
+                this.routerTypeList = routerType.data;
+
+            },
+
+            async feedType() {
+                let feedType;
+                let response = await fetch(domain + '/live-feed-type-list', {
+                    method: 'GET',
+                    headers: {'Authorization': 'bearer ' + this.getToken()},
+                });
+                if (response.ok) {
+                    feedType = await response.json();
+                } else {
+                    feedType = [];
+                }
+                this.feedTypeList = feedType.data;
+            },
+
+            addLocation() {
+                console.log(this.locationData);
+                fetch(domain + '/location-store', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': 'bearer ' + this.getToken(),
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(this.locationData)
+                })
+                    .then((response) => {
+                        if (!response.ok) {
+                            throw new Error();
+                        }
+                        return response.json();
+                    })
+                    .then((data) => {
+                        this.messageType = 'success';
+                        this.message = 'New user added!';
+                        this.servicesLocation.push({
+                            name: this.locationData['name'],
+                            ip_address: this.locationData['ip_address'],
+                            status: "Inactive"
+                        });
+                        const user_modal = document.querySelector('#add_location_modal');
+                        const modal = bootstrap.Modal.getInstance(user_modal);
+                        modal.hide();
+
+                    })
+                    .catch((error) => {
+                        this.messageType = 'warning';
+                        this.message = 'Server error please try again later!';
+
+                    })
+            },
+
+            editLocation(userId) {
+                let position = this.servicesLocation.findIndex(el => el.id === userId);
+                this.update_location_id = this.servicesLocation[position]['id'];
+                this.editLocationData['id'] = this.servicesLocation[position]['id'];
+                this.editLocationData['name'] = this.servicesLocation[position]['name'];
+                this.editLocationData['ip_address'] = this.servicesLocation[position]['ip_address'];
+                this.editLocationData['router_type'] = this.servicesLocation[position]['router_type'];
+                this.editLocationData['feed_type'] = this.servicesLocation[position]['feed_type'];
+            },
+
+            updateLocation() {
+                fetch(domain + '/location-update', {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': 'bearer ' + this.getToken(),
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(this.editLocationData),
+                })
+                    .then((response) => {
+                        if (!response.ok) {
+                            throw new Error();
+                        }
+                        return response.json();
+                    })
+                    .then((data) => {
+                        let position = this.servicesLocation.findIndex(el => el.id === this.updatedId);
+                        this.servicesLocation[position]['name'] = this.editLocationData['name'];
+                        this.servicesLocation[position]['ip_address'] = this.editLocationData['email'];
+                        this.servicesLocation[position]['router_type'] = this.editLocationData['router_type'];
+                        this.servicesLocation[position]['feed_type'] = this.editLocationData['feed_type'];
+
+                        this.editModalData['name'] = '';
+                        this.editModalData['ip_address'] = '';
+
+                        const edit_location_modal = document.querySelector('#edit_location_modal');
+                        const modal = bootstrap.Modal.getInstance(edit_location_modal);
+                        modal.hide();
+                        this.messageType = 'success';
+                        this.message = 'User Information Updated!';
+                    })
+                    .catch(() => {
+                        const edit_location_modal = document.querySelector('#edit_location_modal');
+                        const modal = bootstrap.Modal.getInstance(edit_location_modal);
+                        modal.hide();
+                        this.messageType = 'warning';
+                        this.message = 'Server error please try again later!';
+                    })
+            },
+
+            deleteLocation(userId) {
+                let position = this.servicesLocation.findIndex(el => el.id === userId);
+                this.update_location_id = this.servicesLocation[position]['id'];
+                console.log(this.update_location_id)
+            },
+
+            deleteLocationList() {
+                fetch(domain + '/location-delete/' + this.update_location_id, {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': 'bearer' + this.getToken()
+                    },
+                })
+                    .then(response => {
+
+                        const location_modal = document.querySelector('#delete_location_modal');
+                        const modal = bootstrap.Modal.getInstance(location_modal);
+                        modal.hide();
+
+                        let position = this.servicesLocation.findIndex(el => el.id === this.update_location_id);
+                        this.servicesLocation.splice(position, 1);
+                        this.messageType = 'success';
+                        this.message = "location Successfully Deleted!";
+                    })
+                    .catch(error => {
+                        const location_modal = document.querySelector('#delete_location_modal');
+                        const modal = bootstrap.Modal.getInstance(location_modal);
+                        modal.hide();
+                        this.messageType = 'warning';
+                        this.message = "Something went wrong!";
+
+                    });
+            },
+
+        }
+    };
+
+
+
+window.setting=
+    function () {
+        return {
+
+
+
+
+
+            async routerType() {
+                let routerType;
+                let response = await fetch(domain + '/router-type-list', {
+                    method: 'GET',
+                    headers: {'Authorization': 'bearer ' + this.getToken()},
+                });
+                if (response.ok) {
+                    routerType = await response.json();
+                } else {
+                    routerType = [];
+                }
+                this.routerTypeList = routerType.data;
+
+            },
+
+            async feedType() {
+                let feedType;
+                let response = await fetch(domain + '/live-feed-type-list', {
+                    method: 'GET',
+                    headers: {'Authorization': 'bearer ' + this.getToken()},
+                });
+                if (response.ok) {
+                    feedType = await response.json();
+                } else {
+                    feedType = [];
+                }
+                this.feedTypeList = feedType.data;
+            },
+
+
+
+
 
 
         }
-    }
 
-//             editService(serviceId) {
-//                 let position = this.services.findIndex(el => el.id === serviceId);
-//                 this.updatedId = this.services[position]['id'];
-//                 this.modalData['name'] = this.services[position]['name'];
-//                 this.modalData['branch'] = this.services[position]['branch'];
-//                 this.modalData['address'] = this.services[position]['address'];
-//             },
-//
-//             updateService() {
-//                 fetch('https://62b04e7db0a980a2ef4ff30a.mockapi.io/api/shop/' + this.updatedId, {
-//                     headers: {'Content-Type': 'application/json'},
-//                     method: 'PUT',
-//                     body: JSON.stringify(this.modalData),
-//                 })
-//                     .then((response) => {
-//                         if (!response.ok){
-//                             throw new Error();
-//                         }
-//                         return response.json();
-//                     })
-//                     .then((data) => {
-//                         let position = this.services.findIndex(el => el.id === this.updatedId);
-//                         this.services[position]['name'] = this.modalData['name'];
-//                         this.services[position]['branch'] = this.modalData['branch'];
-//                         this.services[position]['address'] = this.modalData['address'];
-//
-//                         this.updatedId = '';
-//                         this.modalData['name'] = '';
-//                         this.modalData['branch'] = '';
-//                         this.modalData['address'] = '';
-//
-//                         const shop_modal = document.querySelector('#update_shop_modal1');
-//                         const modal = bootstrap.Modal.getInstance(shop_modal);
-//                         modal.hide();
-//
-//                         this.messageType = 'success';
-//                         this.message = 'Shop Information Updated!';
-//                     })
-//                     .catch(() => {
-//                         const shop_modal = document.querySelector('#update_shop_modal1');
-//                         const modal = bootstrap.Modal.getInstance(shop_modal);
-//                         modal.hide();
-//                         this.messageType = 'warning';
-//                         this.message = 'Server error please try again later!';
-//                     })
-//             },
-//
-//             deleteModalService(serviceId) {
-//                 let position = this.services.findIndex(el => el.id === serviceId);
-//                 this.updatedId = this.services[position]['id'];
-//             },
-//
-//             deleteService() {
-//                 fetch('https://62b04e7db0a980a2ef4ff30a.mockapi.io/api/shop/' + this.updatedId, {method: 'DELETE'})
-//                     .then(response => {
-//                         let position = this.services.findIndex(el => el.id === this.updatedId);
-//                         this.services.splice(position, 1);
-//                         const delete_modal = document.querySelector('#delete-modal');
-//                         const modal = bootstrap.Modal.getInstance(delete_modal);
-//                         modal.hide();
-//                         this.messageType = 'danger';
-//                         this.message = "Data Successfully Deleted!";
-//                     })
-//                     .catch(error => {
-//                         this.messageType = 'warning';
-//                         this.message = "Something went wrong!";
-//                     });
-//             }
-//         }
-//     }
-//
-//
-// import Iodine from '@kingshott/iodine';
-//
-// const instance = new Iodine();
-//
-//
-//
-// window.salesman=
-//
-//     function () {
-//         return {
-//
-//             salesmanForm: {
-//                 name: '',
-//                 designation_id: '',
-//                 age: '',
-//                 gender: '',
-//                 email: '',
-//                 phone: '',
-//                 address: '',
-//                 nid: '',
-//                 nid_photo: '',
-//                 profile_img_url: '',
-//                 salary: '',
-//                 joining_date: '',
-//                 status: '',
-//             },
-//             salesmanModalData: {
-//                 name: '',
-//                 designation_id: '',
-//                 age: '',
-//                 gender: '',
-//                 email: '',
-//                 phone: '',
-//                 address: '',
-//                 nid: '',
-//                 nid_photo: '',
-//                 profile_img_url: '',
-//                 salary: '',
-//                 joining_date: '',
-//                 status: '',
-//             },
-//             salesmanUpdatedId: '',
-//             messageType: '',
-//             message: '',
-//             salesman: [],
-//
-//             async initService() {
-//                 let salesmanData;
-//                 let response = await fetch('http://103.205.71.148/salesman');
-//                 if (response.ok) {
-//                     salesmanData = await response.json();
-//                 } else {
-//                     salesmanData = [];
-//                 }
-//                 this.salesman = salesmanData.content;
-//             },
-//
-//
-//             addSalesman() {
-//
-//
-//                 let name = instance.assert(this.salesmanForm['name'], ['required','regexMatch:^[a-zA-Z]+(([\',. -][a-zA-Z ])?[a-zA-Z]*)*$']);
-//                 let age = instance.assert(this.salesmanForm['age'], ['required','min:18','max:120']);
-//                 let email = instance.assert(this.salesmanForm['email'], ['required','email']);
-//                 let address = instance.assert(this.salesmanForm['address'], ['required','regexMatch:^[#./0-9a-zA-Z\\s,-]+$']);
-//                 let phone = instance.assert(this.salesmanForm['phone'], ['required','regexMatch:^[+8801|8801|01][0-9]{0,14}\\d$']);
-//
-//                 if(!name.valid){
-//                     this.messageType = 'danger';
-//                     this.message = 'Invalid Data!';
-//                     return;
-//                 }
-//                 if(!age.valid){
-//                     this.messageType = 'danger';
-//                     this.message = 'Invalid Data!';
-//                     return;
-//                 }
-//                 if(!email.valid){
-//                     this.messageType = 'danger';
-//                     this.message = 'Invalid Data!';
-//                     return;
-//                 }
-//                 if(!address.valid){
-//                     this.messageType = 'danger';
-//                     this.message = 'Invalid Data!';
-//                     return;
-//                 }
-//
-//                 if(!phone.valid){
-//                     this.messageType = 'danger';
-//                     this.message = 'Invalid Data!';
-//                     return;
-//                 }
-//
-//
-//
-//
-//                 fetch('http://103.205.71.148/salesman', {
-//                     method: 'POST',
-//                     headers: {'Content-Type': 'application/json'},
-//                     body: JSON.stringify(this.salesmanForm)
-//
-//                 })
-//                     .then((response) => {
-//                         if (!response.ok){
-//                             throw new Error();
-//                         }
-//                         return response.json();
-//                     })
-//                     .then((data) => {
-//                         this.messageType = 'success';
-//                         this.message = 'New Data added!';
-//                         this.salesman.push({
-//                             _id: data._id,
-//                             name: this.salesmanForm['name'],
-//                             designation_id: this.salesmanForm['designation_id.designation'],
-//                             age: this.salesmanForm['age'],
-//                             gender: this.salesmanForm['gender'],
-//                             email: this.salesmanForm['email'],
-//                             phone: this.salesmanForm['phone'],
-//                             address: this.salesmanForm['address'],
-//                             nid: this.salesmanForm['nid'],
-//                             nid_photo: this.salesmanForm['nid_photo'],
-//                             profile_img_url: this.salesmanForm['profile_img_url'],
-//                             salary: this.salesmanForm['salary'],
-//                             joining_date: this.salesmanForm['joining_date'],
-//                             status: this.salesmanForm['status'],
-//                         });
-//                         this.salesmanForm['name'] = '';
-//                         this.salesmanForm['designation_id'] = '';
-//                         this.salesmanForm['age'] = '';
-//                         this.salesmanForm['gender'] = '';
-//                         this.salesmanForm['email'] = '';
-//                         this.salesmanForm['phone'] = '';
-//                         this.salesmanForm['address'] = '';
-//                         this.salesmanForm['nid'] = '';
-//                         this.salesmanForm['nid_photo'] = '';
-//                         this.salesmanForm['profile_img_url'] = '';
-//                         this.salesmanForm['salary'] = '';
-//                         this.salesmanForm['joining_date'] = '';
-//                         this.salesmanForm['status'] = '';
-//                     })
-//                     .catch((error) => {
-//                         this.messageType = 'warning';
-//                         this.message = 'Server error please try again later!';
-//
-//                     })
-//             },
-//
-//
-//             // editSalesman(salesmanId) {
-//             //     let position = this.salesman.findIndex(el => el._id === salesmanId);
-//             //     this.salesmanUpdatedId = this.salesman[position]['_id'];
-//             //     this.salesmanModalData['name'] = this.salesman[position]['name'];
-//             //     this.salesmanModalData['designation_id'] = this.salesman[position]['designation_id'];
-//             //     this.salesmanModalData['age'] = this.salesman[position]['age'];
-//             //     this.salesmanModalData['gender'] = this.salesman[position]['gender'];
-//             //     this.salesmanModalData['email'] = this.salesman[position]['email'];
-//             //     this.salesmanModalData['phone'] = this.salesman[position]['phone'];
-//             //     this.salesmanModalData['address'] = this.salesman[position]['address'];
-//             //     this.salesmanModalData['nid'] = this.salesman[position]['nid'];
-//             //     this.salesmanModalData['nid_photo'] = this.salesman[position]['nid_photo'];
-//             //     this.salesmanModalData['profile_img_url'] = this.salesman[position]['profile_img_url'];
-//             //     this.salesmanModalData['salary'] = this.salesman[position]['salary'];
-//             //     this.salesmanModalData['joining_date'] = this.salesman[position]['joining_date'];
-//             //     this.salesmanModalData['status'] = this.salesman[position]['status'];
-//             // },
-//             //
-//             // updateSalesman() {
-//             //     fetch('http://103.205.71.148/salesman/' + this.salesmanUpdatedId, {
-//             //         headers: {'Content-Type': 'application/json'},
-//             //         method: 'PUT',
-//             //         body: JSON.stringify(this.salesmanModalData),
-//             //     })
-//             //         .then((response) => {
-//             //             if (!response.ok){
-//             //                 throw new Error();
-//             //             }
-//             //             return response.json();
-//             //         })
-//             //         .then((data) => {
-//             //             let position = this.salesman.findIndex(el => el._id === this.salesmanUpdatedId);
-//             //             this.salesman[position]['name'] = this.salesmanModalData['name'];
-//             //             this.salesman[position]['designation_id'] = this.salesmanModalData['designation_id'];
-//             //             this.salesman[position]['age'] = this.salesmanModalData['age'];
-//             //             this.salesman[position]['gender'] = this.salesmanModalData['gender'];
-//             //             this.salesman[position]['email'] = this.salesmanModalData['email'];
-//             //             this.salesman[position]['phone'] = this.salesmanModalData['phone'];
-//             //             this.salesman[position]['address'] = this.salesmanModalData['address'];
-//             //             this.salesman[position]['nid'] = this.salesmanModalData['nid'];
-//             //             this.salesman[position]['nid_photo'] = this.salesmanModalData['nid_photo'];
-//             //             this.salesman[position]['profile_img_url'] = this.salesmanModalData['profile_img_url'];
-//             //             this.salesman[position]['salary'] = this.salesmanModalData['salary'];
-//             //             this.salesman[position]['joining_date'] = this.salesmanModalData['joining_date'];
-//             //             this.salesman[position]['status'] = this.salesmanModalData['status'];
-//             //
-//             //             this.salesmanUpdatedId = '';
-//             //             this.salesmanModalData['name'] = '';
-//             //             this.salesmanModalData['designation_id'] = '';
-//             //             this.salesmanModalData['age'] = '';
-//             //             this.salesmanModalData['gender'] = '';
-//             //             this.salesmanModalData['email'] = '';
-//             //             this.salesmanModalData['phone'] = '';
-//             //             this.salesmanModalData['address'] = '';
-//             //             this.salesmanModalData['nid'] = '';
-//             //             this.salesmanModalData['nid_photo'] = '';
-//             //             this.salesmanModalData['profile_img_url'] = '';
-//             //             this.salesmanModalData['salary'] = '';
-//             //             this.salesmanModalData['joining_date'] = '';
-//             //             this.salesmanModalData['status'] = '';
-//             //
-//             //             const salesman_modal = document.querySelector('#update_salesman_modal');
-//             //             const modal = bootstrap.Modal.getInstance(salesman_modal);
-//             //             modal.hide();
-//             //             this.messageType = 'success';
-//             //             this.message = 'Shop Information Updated!';
-//             //         })
-//             //         .catch(() => {
-//             //             const salesman_modal = document.querySelector('#update_salesman_modal');
-//             //             const modal = bootstrap.Modal.getInstance(salesman_modal);
-//             //             modal.hide();
-//             //             this.messageType = 'warning';
-//             //             this.message = 'Server error please try again later!';
-//             //         })
-//             // },
-//
-//
-//             deleteModalSalesman(salesmanId) {
-//                 let position = this.salesman.findIndex(el => el._id === salesmanId);
-//                 this.salesmanUpdatedId = this.salesman[position]['_id'];
-//
-//             },
-//
-//             deleteSalesman() {
-//                 fetch('http://103.205.71.148/salesman/' + this.salesmanUpdatedId, {method: 'DELETE' })
-//
-//                     .then(async response => {
-//                         const isJson = response.headers.get('content-type')?.includes('application/json');
-//                         let position = this.salesman.findIndex(el => el._id === this.salesmanUpdatedId);
-//                         this.salesman.splice(position, 1);
-//                         const data = isJson && await response.json();
-//
-//                         if (!response.ok) {
-//                             const error = (data && data.message) || response.status;
-//                             return Promise.reject(error);
-//                         }
-//                         this.messageType = 'danger';
-//                         this.message = "Data Successfully Deleted!";
-//                         const delete_modal = document.querySelector('#delete-Salesman-modal');
-//                         const modal = bootstrap.Modal.getInstance(delete_modal);
-//                         modal.hide();
-//                     })
-//                     .catch(error => {
-//                         const delete_modal = document.querySelector('#delete-Salesman-modal');
-//                         const modal = bootstrap.Modal.getInstance(delete_modal);
-//                         modal.hide();
-//                         this.messageType = 'warning';
-//                         this.message = "Something went wrong!";
-//                     });
-//             },
-//
-//
-//
-//         }
-//
-//
-//     }
-//
-//
+}
+
+
 
