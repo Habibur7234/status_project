@@ -18,10 +18,9 @@ jobs:
         username: ftp_habib_selopian_us
         password: ${{ secrets.location_key }}
         exclude: |
-          /.git*
-          /.git*/
-          /docs
-          /node_modules/
-          /*.js
-          /*.json*
-          spark
+          **/.git*
+          **/.git*/**
+          **/docs/**
+          **/node_modules/**
+          **/*.js*
+          **/*.json*
