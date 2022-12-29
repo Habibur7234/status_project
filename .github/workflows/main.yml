@@ -14,7 +14,7 @@ jobs:
     - name: 📂 Sync files
       uses: SamKirkland/FTP-Deploy-Action@4.3.0
       with:
-        server: ftp.orangeoffice.net
+        server: 103.205.71.148
         username: ftp_habib_selopian_us
         password: ${{ secrets.location_key }}
         exclude: |
