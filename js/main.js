@@ -567,12 +567,36 @@ window.setting=
         return {
 
 
+            getToken() {
+                var match = document.cookie.match(new RegExp('(^| )token=([^;]+)'));
+                if (match) return match[2];
+            },
+
+            liveFeed:[],
+
+
+            async liveFeeds() {
+                let liveFeed;
+                let response = await fetch(domain + '/feed_duration', {
+                    method: 'GET',
+                    headers: {'Authorization': 'bearer ' + this.getToken()},
+                });
+                if (response.ok) {
+                    liveFeed = await response.json();
+                } else {
+                    liveFeed = [];
+                }
+                console.log(liveFeed)
+                this.liveFeed = liveFeed.data;
+            },
 
 
 
-            async routerType() {
+
+
+            async locationFeeds() {
                 let routerType;
-                let response = await fetch(domain + '/router-type-list', {
+                let response = await fetch(domain + '/location_duration', {
                     method: 'GET',
                     headers: {'Authorization': 'bearer ' + this.getToken()},
                 });
@@ -585,19 +609,6 @@ window.setting=
 
             },
 
-            async feedType() {
-                let feedType;
-                let response = await fetch(domain + '/live-feed-type-list', {
-                    method: 'GET',
-                    headers: {'Authorization': 'bearer ' + this.getToken()},
-                });
-                if (response.ok) {
-                    feedType = await response.json();
-                } else {
-                    feedType = [];
-                }
-                this.feedTypeList = feedType.data;
-            },
 
 
 
