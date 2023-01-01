@@ -127,12 +127,10 @@ window.logIn =
                         const d = new Date();
                         d.setTime(d.getTime() + (1 * 1 * 60 * 60 * 1000));
                         let expires = "expires=" + d.toUTCString();
-                        //console.log(expires);
-                        //console.log(data.access_token);
                         document.cookie = "token" + "=" + data.access_token + "; " + expires + "; path=/; secure; sameSite=Lax";
-                        //console.log("COOKIE");
 
-                        window.location = "/index.html"
+
+                        window.location = "index.html"
 
 
                     })
@@ -562,62 +560,75 @@ window.locationService =
 
 
 
-window.setting=
-    function () {
-        return {
+window.setting = function ()
+                {
+                    return {
 
 
-            getToken() {
-                var match = document.cookie.match(new RegExp('(^| )token=([^;]+)'));
-                if (match) return match[2];
-            },
+                        getToken() {
+                            var match = document.cookie.match(new RegExp('(^| )token=([^;]+)'));
+                            if (match) return match[2];
+                        },
 
-            liveFeed:[],
+                        frequency:[],
+                        times : [5,10,30,59],
 
 
-            async liveFeeds() {
-                let liveFeed;
-                let response = await fetch(domain + '/feed_duration', {
-                    method: 'GET',
-                    headers: {'Authorization': 'bearer ' + this.getToken()},
-                });
-                if (response.ok) {
-                    liveFeed = await response.json();
-                } else {
-                    liveFeed = [];
+                        async frequencySettings() {
+
+                            let  frequency;
+                            let response = await fetch(domain + '/frequency-settings', {
+                                method: 'GET',
+                                headers: {'Authorization': 'bearer ' + this.getToken()},
+                            });
+
+                            if (response.ok) {
+                                frequency = await response.json();
+                            } else {
+                                frequency = [];
+                            }
+                            this.frequency = frequency.data;
+                            console.log(frequency)
+                        },
+
+
+                        frequencySettingsUpdate: {
+                            location_duration: '',
+                            feed_duration: '',
+
+                        },
+
+
+
+                        updatefrequencSertting(){
+                            fetch(domain + '/frequency-settings-update', {
+                                method: 'PUT',
+                                headers: {
+                                    'Authorization': 'bearer ' + this.getToken(),
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify(this.frequencySettingsUpdate),
+                            })
+                                .then((response) => {
+                                    if (!response.ok) {
+                                        throw new Error();
+                                    }
+                                    return response.json();
+                                })
+                                .then((data) => {
+                                    this.messageType = 'success';
+                                    this.message = 'Success';
+                                })
+                                .catch(() => {
+                                    this.messageType = 'warning';
+                                    this.message = 'Not Update';
+                                })
+                        },
+
+
+                    }
+
                 }
-                console.log(liveFeed)
-                this.liveFeed = liveFeed.data;
-            },
-
-
-
-
-
-            async locationFeeds() {
-                let routerType;
-                let response = await fetch(domain + '/location_duration', {
-                    method: 'GET',
-                    headers: {'Authorization': 'bearer ' + this.getToken()},
-                });
-                if (response.ok) {
-                    routerType = await response.json();
-                } else {
-                    routerType = [];
-                }
-                this.routerTypeList = routerType.data;
-
-            },
-
-
-
-
-
-
-
-        }
-
-}
 
 
 

@@ -184,7 +184,6 @@
 
     <div x-data="locationService()" x-init="initLocation()">
 
-
         <!--Add location modal-->
         <div class="modal fade" id="add_location_modal" tabindex="-1" role="dialog" aria-labelledby="modal-form" aria-hidden="true" x-init="routerType(),feedType() ">
             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -230,9 +229,23 @@
                                                             <template x-for="feed in feedTypeList">
                                                                 <option :value="feed.id" x-text="feed.name"></option>
                                                             </template>
-
                                                         </select>
                                                     </div>
+
+
+                                                    <div class="col-lg-12 col-sm-10 mb2 my-4 input-group input-group-static">
+                                                        <label>Live Feed Port</label>
+                                                        <input type="text" class="form-control" placeholder="101.120.6.9...." x-model="locationData.ip_address">
+                                                    </div>
+                                                    <div class="col-lg-12 col-sm-10 mb2 my-4 input-group input-group-static">
+                                                        <label>Live feed User</label>
+                                                        <input type="text" class="form-control" placeholder="101.120.6.9...." x-model="locationData.ip_address">
+                                                    </div>
+                                                    <div class="col-lg-12 col-sm-10 mb2 my-4 input-group input-group-static">
+                                                        <label>Live Feed Password</label>
+                                                        <input type="text" class="form-control" placeholder="101.120.6.9...." x-model="locationData.ip_address">
+                                                    </div>
+
                                                     <button type="button" id="add_User" class="btn bg-gradient-primary text-white col-lg-12 col-sm-10 mb-4 my-4" @click="addLocation()">Add</button>
                                                 </form>
                                             </div>
@@ -282,15 +295,6 @@
                                                             <option disabled selected value >--select an option--</option>
                                                             <template x-for="router in routerTypeList">
                                                                 <option :value="router.id" x-text="router.name"></option>
-<!--                                                                <template x-if="editLocationData.router_type == router.id">-->
-<!--                                                                    <option selected :value="router.id" x-text="router.name"></option>-->
-<!--                                                                </template>-->
-<!--                                                                <template x-if="editLocationData.router_type != router.id">-->
-<!--                                                                    <option :value="router.id" x-text="router.name"></option>-->
-<!--                                                                </template>-->
-<!--                                                                <template x-if="editLocationData.router_type == null">-->
-<!--                                                                    <option :value="router.id" x-text="router.name"></option>-->
-<!--                                                                </template>-->
                                                             </template>
                                                         </select>
                                                     </div>
@@ -304,9 +308,7 @@
                                                             </template>
                                                         </select>
                                                     </div>
-                                                    <button type="button" class="btn bg-gradient-primary text-white col-lg-12 col-sm-10 mb-4 my-4" @click="updateLocation()">
-                                                        Update
-                                                    </button>
+                                                    <button type="button" class="btn bg-gradient-primary text-white col-lg-12 col-sm-10 mb-4 my-4" @click="updateLocation()">Update</button>
                                                 </form>
                                             </div>
                                         </div>
