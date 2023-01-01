@@ -199,7 +199,7 @@
                                                     <label>Live Feed Frequency</label>
                                                     <select class="form-control" x-model="frequencySettingsUpdate.feed_duration">
                                                         <template x-for="time in times">
-                                                                <option :selected="time === frequency.feed_duration" :value="time" x-text="time +' minute..'"></option>
+                                                                <option :selected="time === frequency.feed_duration" :value="time" x-text="time +' minute'"></option>
                                                         </template>
 
                                                     </select>
@@ -209,7 +209,7 @@
                                                     <label>Location Frequency</label>
                                                     <select class="form-control" x-model="frequencySettingsUpdate.location_duration">
                                                         <template x-for="time in times">
-                                                            <option :selected="time === frequency.location_duration" :value="time" x-text="time +' minute..'"></option>
+                                                            <option :selected="time === frequency.location_duration" :value="time" x-text="time +' minute'"></option>
                                                         </template>
                                                     </select>
                                                 </div>
