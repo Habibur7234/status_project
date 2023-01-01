@@ -23,5 +23,6 @@ jobs:
           **/.idea/**
           **/docs/**
           **/node_modules/**
+          **/assets/scss/**
           **/*.js*
           **/*.json*

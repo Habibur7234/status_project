@@ -576,6 +576,7 @@ window.setting = function ()
 
                         async frequencySettings() {
 
+
                             let  frequency;
                             let response = await fetch(domain + '/frequency-settings', {
                                 method: 'GET',
