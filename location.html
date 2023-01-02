@@ -214,7 +214,7 @@
                                         <div class="row mb-4">
                                             <div class="col-lg-12 col-sm-6">
                                                 <!-- Form -->
-                                                <form id="customer_form" method="POST">
+                                                <form id="customer_form" method="POST" autocomplete="off">
                                                     <div class="col-lg-12 col-sm-10 mb2 my-3 input-group input-group-static">
                                                         <label for="customer_name">Location Name</label>
                                                         <input type="text" class="form-control" id="customer_name" placeholder="Abc..."  x-model="locationData.name">
@@ -241,7 +241,7 @@
                                                         <div class="col-md-6 col-sm-6 ">
                                                             <div class="input-group input-group-static my-3">
                                                                 <label>Location Port</label>
-                                                                <input type="text" class="form-control" placeholder="101.120.6..." x-model="locationData.ip_address">
+                                                                <input type="text" class="form-control" placeholder="1234..." x-model="locationData.router_port">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -259,13 +259,13 @@
                                                         <div class="col-md-6 col-sm-6">
                                                             <div class="input-group input-group-static my-3">
                                                                 <label>Live Feed IP</label>
-                                                                <input type="text" class="form-control" placeholder="101.120.6..." >
+                                                                <input type="text" class="form-control" placeholder="101.120.6..." x-model="locationData.feed_ip_address">
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6 col-sm-6 ">
                                                             <div class="input-group input-group-static my-3">
                                                                 <label>Live Feed Port</label>
-                                                                <input type="text" class="form-control" placeholder="101.120.6..." >
+                                                                <input type="text" class="form-control" placeholder="1234..." x-model="locationData.feed_port" >
                                                             </div>
                                                         </div>
                                                     </div>
@@ -274,17 +274,17 @@
                                                         <div class="col-md-6 col-sm-6">
                                                             <div class="input-group input-group-static my-3">
                                                                 <label>Live Feed User</label>
-                                                                <input type="text" class="form-control" placeholder="Abc...." >
+                                                                <input type="text"   class="form-control" placeholder="Abc...." x-model="locationData.username" autocomplete="off">
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6 col-sm-6 ">
                                                             <div class="input-group input-group-static my-3">
                                                                 <label>Live Feed Password</label>
-                                                                <input type="text" class="form-control" placeholder="101.120.6..." >
+                                                                <input type="password" name="Live Feed" class="form-control"  x-model="locationData.password" autocomplete="new-password" >
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <button type="button" id="add_User" class="btn bg-gradient-primary text-white col-lg-12 col-sm-10 mb-4 my-4" @click="addLocation()">Add</button>
+                                                    <button type="button" id="add_User" class="btn bg-gradient-primary text-white col-lg-12 col-sm-10 mb-4 my-4" @click="addLocation()" >Add</button>
                                                 </form>
                                             </div>
                                         </div>
@@ -346,7 +346,7 @@
                                                         <div class="col-md-6 col-sm-6 ">
                                                             <div class="input-group input-group-static my-3">
                                                                 <label>Location Port</label>
-                                                                <input type="text" class="form-control" placeholder="101.120.6..." >
+                                                                <input type="text" class="form-control" placeholder="1234..." x-model="editLocationData.router_port">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -364,13 +364,13 @@
                                                         <div class="col-md-6 col-sm-6">
                                                             <div class="input-group input-group-static my-3">
                                                                 <label>Live Feed IP</label>
-                                                                <input type="text" class="form-control" placeholder="101.120.6..." >
+                                                                <input type="text" class="form-control" placeholder="101.120.6..." x-model="editLocationData.feed_ip_address" >
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6 col-sm-6 ">
                                                             <div class="input-group input-group-static my-3">
                                                                 <label>Live Feed Port</label>
-                                                                <input type="text" class="form-control" placeholder="101.120.6..." >
+                                                                <input type="text" class="form-control" placeholder="1234..." x-model="editLocationData.feed_port">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -379,13 +379,13 @@
                                                         <div class="col-md-6 col-sm-6">
                                                             <div class="input-group input-group-static my-3">
                                                                 <label>Live Feed User</label>
-                                                                <input type="text" class="form-control" placeholder="Abc...." >
+                                                                <input type="text" class="form-control" placeholder="Abc...." x-model="editLocationData.username" >
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6 col-sm-6 ">
                                                             <div class="input-group input-group-static my-3">
                                                                 <label>Live Feed Password</label>
-                                                                <input type="text" class="form-control" placeholder="101.120.6..." >
+                                                                <input type="password" class="form-control" placeholder="101.120.6..." x-model="editLocationData.password" >
                                                             </div>
                                                         </div>
                                                     </div>

@@ -373,6 +373,11 @@ window.locationService =
                 ip_address: '',
                 router_type: '',
                 feed_type: '',
+                username:'',
+                password:'',
+                feed_ip_address:'',
+                feed_port:'',
+                router_port:'',
             },
             messageType: '',
             message: '',
@@ -381,6 +386,11 @@ window.locationService =
                 ip_address: '',
                 router_type: '',
                 feed_type: '',
+                username:'',
+                password:'',
+                feed_ip_address:'',
+                feed_port:'',
+                router_port:'',
             },
             update_location_id: '',
             servicesLocation: [],
@@ -436,7 +446,7 @@ window.locationService =
             },
 
             addLocation() {
-                console.log(this.locationData);
+
                 fetch(domain + '/location-store', {
                     method: 'POST',
                     headers: {
@@ -479,6 +489,11 @@ window.locationService =
                 this.editLocationData['ip_address'] = this.servicesLocation[position]['ip_address'];
                 this.editLocationData['router_type'] = this.servicesLocation[position]['router_type'];
                 this.editLocationData['feed_type'] = this.servicesLocation[position]['feed_type'];
+                this.editLocationData['username'] = this.servicesLocation[position]['username'];
+                this.editLocationData['password'] = this.servicesLocation[position]['password'];
+                this.editLocationData['router_port'] = this.servicesLocation[position]['router_port'];
+                this.editLocationData['feed_ip_address'] = this.servicesLocation[position]['feed_ip_address'];
+                this.editLocationData['feed_port'] = this.servicesLocation[position]['feed_port'];
             },
 
             updateLocation() {
@@ -497,20 +512,20 @@ window.locationService =
                         return response.json();
                     })
                     .then((data) => {
+
+                        this.messageType = 'success';
+                        this.message = 'Location Updated!';
                         let position = this.servicesLocation.findIndex(el => el.id === this.updatedId);
                         this.servicesLocation[position]['name'] = this.editLocationData['name'];
                         this.servicesLocation[position]['ip_address'] = this.editLocationData['email'];
                         this.servicesLocation[position]['router_type'] = this.editLocationData['router_type'];
                         this.servicesLocation[position]['feed_type'] = this.editLocationData['feed_type'];
 
-                        this.editModalData['name'] = '';
-                        this.editModalData['ip_address'] = '';
 
                         const edit_location_modal = document.querySelector('#edit_location_modal');
                         const modal = bootstrap.Modal.getInstance(edit_location_modal);
                         modal.hide();
-                        this.messageType = 'success';
-                        this.message = 'User Information Updated!';
+
                     })
                     .catch(() => {
                         const edit_location_modal = document.querySelector('#edit_location_modal');
@@ -524,7 +539,7 @@ window.locationService =
             deleteLocation(userId) {
                 let position = this.servicesLocation.findIndex(el => el.id === userId);
                 this.update_location_id = this.servicesLocation[position]['id'];
-                console.log(this.update_location_id)
+
             },
 
             deleteLocationList() {
@@ -563,8 +578,6 @@ window.locationService =
 window.setting = function ()
                 {
                     return {
-
-
                         getToken() {
                             var match = document.cookie.match(new RegExp('(^| )token=([^;]+)'));
                             if (match) return match[2];
@@ -576,6 +589,7 @@ window.setting = function ()
 
                         async frequencySettings() {
 
+                            console.log("habib")
 
                             let  frequency;
                             let response = await fetch(domain + '/frequency-settings', {
@@ -598,8 +612,6 @@ window.setting = function ()
                             feed_duration: '',
 
                         },
-
-
 
                         updatefrequencSertting(){
                             fetch(domain + '/frequency-settings-update', {
@@ -632,4 +644,40 @@ window.setting = function ()
                 }
 
 
+window.dashboard= function () {
+    return{
+
+
+
+        getToken() {
+            var match = document.cookie.match(new RegExp('(^| )token=([^;]+)'));
+            if (match) return match[2];
+        },
+
+
+       dashBoardData:[],
+
+        async getDashboard() {
+            let  dashboard;
+            let response = await fetch(domain + '/dashboard', {
+                method: 'GET',
+                headers: {'Authorization': 'bearer ' + this.getToken()},
+            });
+
+            if (response.ok) {
+                dashboard = await response.json();
+            } else {
+                dashboard = [];
+            }
+            // console.log(dashboard.data)
+            this.dashBoardData = dashboard.data;
+
+        },
+
+
+
+
+    }
+
+}
 
