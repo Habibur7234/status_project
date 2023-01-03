@@ -543,66 +543,22 @@
                     </div>
                     <div class="card-body p-3">
                         <div class="timeline timeline-one-side">
+                            <template x-for="item in dashboardUserMessage">
                             <div class="timeline-block mb-3">
-                  <span class="timeline-step">
-                    <i class="material-icons text-success text-gradient">check_circle</i>
-                  </span>
+                              <span class="timeline-step">
+                                      <template x-if="item.type == 'success'">
+                                          <i class="material-icons text-success text-gradient">check_circle</i>
+                                      </template>
+                                      <template x-if="item.type == 'danger'">
+                                          <i class="material-icons text-danger text-gradient">error</i>
+                                      </template>
+                              </span>
                                 <div class="timeline-content">
-                                    <h6 class="text-dark text-sm font-weight-bold mb-0">Location 218: Live Feed is Up
-                                        Again</h6>
+                                    <h6 class="text-dark text-sm font-weight-bold mb-0" x-text="item.message"></h6>
                                     <p class="text-secondary font-weight-bold text-xs mt-1 mb-0">21 DEC 2:20 PM</p>
                                 </div>
                             </div>
-                            <div class="timeline-block mb-3">
-                  <span class="timeline-step">
-                    <i class="material-icons text-success text-gradient">check_circle</i>
-                  </span>
-                                <div class="timeline-content">
-                                    <h6 class="text-dark text-sm font-weight-bold mb-0">Location 219: Location is Up
-                                        Again</h6>
-                                    <p class="text-secondary font-weight-bold text-xs mt-1 mb-0">19 SEP 9:20 PM</p>
-                                </div>
-                            </div>
-                            <div class="timeline-block mb-3">
-                  <span class="timeline-step">
-                    <i class="material-icons text-success text-gradient">check_circle</i>
-                  </span>
-                                <div class="timeline-content">
-                                    <h6 class="text-dark text-sm font-weight-bold mb-0">Location 230: Live Feed is Up
-                                        Again</h6>
-                                    <p class="text-secondary font-weight-bold text-xs mt-1 mb-0">23 DEC 2:20 PM</p>
-                                </div>
-                            </div>
-                            <div class="timeline-block mb-3">
-                  <span class="timeline-step">
-                    <i class="material-icons text-danger text-gradient">error</i>
-                  </span>
-                                <div class="timeline-content">
-                                    <h6 class="text-dark text-sm font-weight-bold mb-0">Location 201: Location is Down
-                                        Again</h6>
-                                    <p class="text-secondary font-weight-bold text-xs mt-1 mb-0">12 NOV 5:20 PM</p>
-                                </div>
-                            </div>
-                            <div class="timeline-block mb-3">
-                  <span class="timeline-step">
-                    <i class="material-icons text-success text-gradient">check_circle</i>
-                  </span>
-                                <div class="timeline-content">
-                                    <h6 class="text-dark text-sm font-weight-bold mb-0">Location 213: Live Feed is Up
-                                        Again</h6>
-                                    <p class="text-secondary font-weight-bold text-xs mt-1 mb-0">22 DEC 7:20 PM</p>
-                                </div>
-                            </div>
-                            <div class="timeline-block mb-3">
-                  <span class="timeline-step">
-                    <i class="material-icons text-danger text-gradient">error</i>
-                  </span>
-                                <div class="timeline-content">
-                                    <h6 class="text-dark text-sm font-weight-bold mb-0">Location 249: Live Feed is Down
-                                        Again</h6>
-                                    <p class="text-secondary font-weight-bold text-xs mt-1 mb-0">25 OCT 7:20 AM</p>
-                                </div>
-                            </div>
+                            </template>
                         </div>
                     </div>
                 </div>

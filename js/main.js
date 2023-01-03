@@ -643,20 +643,16 @@ window.setting = function ()
 
                 }
 
-
 window.dashboard= function () {
     return{
-
-
-
         getToken() {
-            var match = document.cookie.match(new RegExp('(^| )token=([^;]+)'));
+            let match = document.cookie.match(new RegExp('(^| )token=([^;]+)'));
             if (match) return match[2];
         },
 
 
        dashBoardData:[],
-
+        dashboardUserMessage:[],
         async getDashboard() {
             let  dashboard;
             let response = await fetch(domain + '/dashboard', {
@@ -671,13 +667,7 @@ window.dashboard= function () {
             }
             // console.log(dashboard.data)
             this.dashBoardData = dashboard.data;
-
+            this.dashboardUserMessage=this.dashBoardData.logs;
         },
-
-
-
-
     }
-
 }
-
