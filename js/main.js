@@ -651,8 +651,10 @@ window.dashboard= function () {
         },
 
 
-       dashBoardData:[],
+        dashBoardData:[],
         dashboardUserMessage:[],
+        dashboardUserPerfomance:[],
+
         async getDashboard() {
             let  dashboard;
             let response = await fetch(domain + '/dashboard', {
@@ -668,6 +670,8 @@ window.dashboard= function () {
             // console.log(dashboard.data)
             this.dashBoardData = dashboard.data;
             this.dashboardUserMessage=this.dashBoardData.logs;
+            this.dashboardUserPerfomance =this.dashBoardData.location_performance;
+
         },
     }
 }
