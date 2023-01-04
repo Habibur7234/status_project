@@ -242,7 +242,10 @@ window.services =
                         this.messageType = 'warning';
                         this.message = 'Server error please try again later!';
                     })
+
+                // console.log("console" +this.name);
             },
+
 
             editUser(userId) {
                 let position = this.services.findIndex(el => el.id === userId);
@@ -667,7 +670,6 @@ window.dashboard= function () {
         chart4days:[],
         chart4Data:[],
 
-
         async getDashboard() {
             let  dashboard;
             let response = await fetch(domain + '/dashboard', {
@@ -688,6 +690,17 @@ window.dashboard= function () {
             this.dashboardChart3=this.dashBoardData.feed_active_day;
             this.dashboardChart4=this.dashBoardData.feed_active_month;
 
+
+
+
+
+
+
+
+            for (const i in this.dashboardChart1) {
+                this.chart1days.push(i)
+                this.chart1Data.push(this.dashboardChart1[i])
+            }
 
             for (const i in this.dashboardChart1) {
                 this.chart1days.push(i)
@@ -711,6 +724,30 @@ window.dashboard= function () {
             }
 
 
+
+
+
+
+          function  filteredCities() {
+                return this.cities.filter(
+                    city => city.toLowerCase().includes(this.search.toLowerCase())
+                );
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+console.log(this.searchdata)
             // chart 01 starts from here
             let ctx = document.getElementById("chart-bars").getContext("2d");
             new Chart(ctx, {
