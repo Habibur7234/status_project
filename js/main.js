@@ -669,7 +669,7 @@ window.dashboard= function () {
         chart3Data:[],
         chart4days:[],
         chart4Data:[],
-
+        searchText:'',
         async getDashboard() {
             let  dashboard;
             let response = await fetch(domain + '/dashboard', {
@@ -691,12 +691,6 @@ window.dashboard= function () {
             this.dashboardChart4=this.dashBoardData.feed_active_month;
 
 
-
-
-
-
-
-
             for (const i in this.dashboardChart1) {
                 this.chart1days.push(i)
                 this.chart1Data.push(this.dashboardChart1[i])
@@ -711,7 +705,6 @@ window.dashboard= function () {
                 this.chart2Data.push(this.dashboardChart2[i])
             }
 
-
             for (const i in this.dashboardChart3) {
                 this.chart3days.push(i)
                 this.chart3Data.push(this.dashboardChart3[i])
@@ -722,32 +715,6 @@ window.dashboard= function () {
                 this.chart4days.push(i)
                 this.chart4Data.push(this.dashboardChart4[i])
             }
-
-
-
-
-
-
-          function  filteredCities() {
-                return this.cities.filter(
-                    city => city.toLowerCase().includes(this.search.toLowerCase())
-                );
-            }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-console.log(this.searchdata)
             // chart 01 starts from here
             let ctx = document.getElementById("chart-bars").getContext("2d");
             new Chart(ctx, {
@@ -914,7 +881,7 @@ console.log(this.searchdata)
             // chart 02 ends from here
 
             // chart 03 starts from here
-            var ctx3 = document.getElementById("chart-bars3").getContext("2d");
+            let ctx3 = document.getElementById("chart-bars3").getContext("2d");
             new Chart(ctx3, {
                 type: "bar",
                 data: {
@@ -1080,7 +1047,9 @@ console.log(this.searchdata)
             })
             // chart 04 ends from here
         },
+        // filterData(){
+        //     return this.dashboardUserPerfomance.filter(searchItem => searchItem.location_name.toLowerCase().includes(this.searchText.toLowerCase()))
+        // }
     }
 }
-
 
