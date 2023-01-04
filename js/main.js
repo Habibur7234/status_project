@@ -718,7 +718,7 @@ window.dashboard= function () {
                 data: {
                     labels: this.chart1days,
                     datasets: [{
-                        label: "Sales",
+                        label: "Location",
                         tension: 0.4,
                         borderWidth: 0,
                         borderRadius: 4,
@@ -792,7 +792,6 @@ window.dashboard= function () {
             });
             // chart 01 ends from here
 
-
             // chart 02 starts from here
             let ctx2 = document.getElementById("chart-line").getContext("2d");
             new Chart(ctx2, {
@@ -800,7 +799,7 @@ window.dashboard= function () {
                 data: {
                     labels: this.chart2days,
                     datasets: [{
-                        label: "Mobile apps",
+                        label: "Location",
                         tension: 0,
                         borderWidth: 0,
                         pointRadius: 5,
@@ -884,7 +883,7 @@ window.dashboard= function () {
                 data: {
                     labels: this.chart3days,
                     datasets: [{
-                        label: "Sales",
+                        label: "Feed",
                         tension: 0.4,
                         borderWidth: 0,
                         borderRadius: 4,
@@ -959,16 +958,15 @@ window.dashboard= function () {
 
             // chart 03 ends from here
 
-
              // chart 04 starts from here
             var ctx4 = document.getElementById("chart-line-tasks4").getContext("2d");
 
             new Chart(ctx4, {
                 type: "line",
                 data: {
-                    labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+                    labels: this.chart4days,
                     datasets: [{
-                        label: this.chart4days,
+                        label:"Feed",
                         tension: 0,
                         borderWidth: 0,
                         pointRadius: 5,
