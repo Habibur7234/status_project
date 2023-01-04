@@ -656,10 +656,17 @@ window.dashboard= function () {
         dashboardUserPerfomance:[],
         dashboardChart1:[],
         dashboardChart2:[],
+        dashboardChart3:[],
+        dashboardChart4:[],
         chart1days:[],
         chart1Data:[],
         chart2days:[],
         chart2Data:[],
+        chart3days:[],
+        chart3Data:[],
+        chart4days:[],
+        chart4Data:[],
+
 
         async getDashboard() {
             let  dashboard;
@@ -678,8 +685,10 @@ window.dashboard= function () {
             this.dashboardUserPerfomance =this.dashBoardData.location_performance;
             this.dashboardChart1=this.dashBoardData.location_active_day;
             this.dashboardChart2=this.dashBoardData.location_active_month;
+            this.dashboardChart3=this.dashBoardData.feed_active_day;
+            this.dashboardChart4=this.dashBoardData.feed_active_month;
 
-            // console.log(this.dashboardChart)
+
             for (const i in this.dashboardChart1) {
                 this.chart1days.push(i)
                 this.chart1Data.push(this.dashboardChart1[i])
@@ -687,6 +696,18 @@ window.dashboard= function () {
             for (const i in this.dashboardChart2) {
                 this.chart2days.push(i)
                 this.chart2Data.push(this.dashboardChart2[i])
+            }
+
+
+            for (const i in this.dashboardChart3) {
+                this.chart3days.push(i)
+                this.chart3Data.push(this.dashboardChart3[i])
+            }
+
+
+            for (const i in this.dashboardChart4) {
+                this.chart4days.push(i)
+                this.chart4Data.push(this.dashboardChart4[i])
             }
 
 
@@ -772,7 +793,6 @@ window.dashboard= function () {
             // chart 01 ends from here
 
 
-
             // chart 02 starts from here
             let ctx2 = document.getElementById("chart-line").getContext("2d");
             new Chart(ctx2, {
@@ -855,11 +875,175 @@ window.dashboard= function () {
                     },
                 },
             });
-
-
-
-
             // chart 02 ends from here
+
+            // chart 03 starts from here
+            var ctx3 = document.getElementById("chart-bars3").getContext("2d");
+            new Chart(ctx3, {
+                type: "bar",
+                data: {
+                    labels: this.chart3days,
+                    datasets: [{
+                        label: "Sales",
+                        tension: 0.4,
+                        borderWidth: 0,
+                        borderRadius: 4,
+                        borderSkipped: false,
+                        backgroundColor: "rgba(255, 255, 255, .8)",
+                        data: this.chart3Data,
+                        maxBarThickness: 6
+                    },],
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false,
+                        }
+                    },
+                    interaction: {
+                        intersect: false,
+                        mode: 'index',
+                    },
+                    scales: {
+                        y: {
+                            grid: {
+                                drawBorder: false,
+                                display: true,
+                                drawOnChartArea: true,
+                                drawTicks: false,
+                                borderDash: [5, 5],
+                                color: 'rgba(255, 255, 255, .2)'
+                            },
+                            ticks: {
+                                suggestedMin: 0,
+                                suggestedMax: 500,
+                                beginAtZero: true,
+                                padding: 10,
+                                font: {
+                                    size: 14,
+                                    weight: 300,
+                                    family: "Roboto",
+                                    style: 'normal',
+                                    lineHeight: 2
+                                },
+                                color: "#fff"
+                            },
+                        },
+                        x: {
+                            grid: {
+                                drawBorder: false,
+                                display: true,
+                                drawOnChartArea: true,
+                                drawTicks: false,
+                                borderDash: [5, 5],
+                                color: 'rgba(255, 255, 255, .2)'
+                            },
+                            ticks: {
+                                display: true,
+                                color: '#f8f9fa',
+                                padding: 10,
+                                font: {
+                                    size: 14,
+                                    weight: 300,
+                                    family: "Roboto",
+                                    style: 'normal',
+                                    lineHeight: 2
+                                },
+                            }
+                        },
+                    },
+                },
+            });
+
+            // chart 03 ends from here
+
+
+             // chart 04 starts from here
+            var ctx4 = document.getElementById("chart-line-tasks4").getContext("2d");
+
+            new Chart(ctx4, {
+                type: "line",
+                data: {
+                    labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+                    datasets: [{
+                        label: this.chart4days,
+                        tension: 0,
+                        borderWidth: 0,
+                        pointRadius: 5,
+                        pointBackgroundColor: "rgba(255, 255, 255, .8)",
+                        pointBorderColor: "transparent",
+                        borderColor: "rgba(255, 255, 255, .8)",
+                        borderColor: "rgba(255, 255, 255, .8)",
+                        borderWidth: 4,
+                        backgroundColor: "transparent",
+                        fill: true,
+                        data: this.chart4Data,
+                        maxBarThickness: 6
+
+                    }],
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false,
+                        }
+                    },
+                    interaction: {
+                        intersect: false,
+                        mode: 'index',
+                    },
+                    scales: {
+                        y: {
+                            grid: {
+                                drawBorder: false,
+                                display: true,
+                                drawOnChartArea: true,
+                                drawTicks: false,
+                                borderDash: [5, 5],
+                                color: 'rgba(255, 255, 255, .2)'
+                            },
+                            ticks: {
+                                display: true,
+                                color: '#f8f9fa',
+                                padding: 10,
+                                font: {
+                                    size: 14,
+                                    weight: 300,
+                                    family: "Roboto",
+                                    style: 'normal',
+                                    lineHeight: 2
+                                },
+                            }
+                        },
+                        x: {
+                            grid: {
+                                drawBorder: false,
+                                display: false,
+                                drawOnChartArea: false,
+                                drawTicks: false,
+                                borderDash: [5, 5]
+                            },
+                            ticks: {
+                                display: true,
+                                color: '#f8f9fa',
+                                padding: 10,
+                                font: {
+                                    size: 14,
+                                    weight: 300,
+                                    family: "Roboto",
+                                    style: 'normal',
+                                    lineHeight: 2
+                                },
+                            }
+                        },
+                    },
+                },
+            })
+            // chart 04 ends from here
         },
     }
 }

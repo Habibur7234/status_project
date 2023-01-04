@@ -483,19 +483,19 @@
 
 
                                                     <td class="align-middle text-center">
-                                                        <button class="btn btn-dark btn-sm mb-n1 " toggle="tooltip"
+                                                        <button class="btn btn-dark  mb-n1 " toggle="tooltip"
                                                                 title="Edit" type="button" data-bs-toggle="modal"
                                                                 data-bs-target="#edit_user_modal"
                                                                 @click="editUser(item.id)"><i
                                                                 class="material-icons opacity-10">edit</i></button>
-                                                        <button class="btn btn-dark btn-sm mb-n1" toggle="tooltip"
+                                                        <button class="btn btn-dark  mb-n1" toggle="tooltip"
                                                                 title="Edit" type="button" data-bs-toggle="modal"
                                                                 data-bs-target="#edit_user_credentials"
                                                                 @click="editUserPassword(item.id)"><i
                                                                 class="material-icons opacity-10">key</i></button>
 
                                                         <template x-if="item.id != loggedInID">
-                                                            <button class="btn btn-danger btn-sm mb-n1" toggle="tooltip"
+                                                            <button class="btn btn-danger  mb-n1" toggle="tooltip"
                                                                     title="Delete" data-bs-toggle="modal"
                                                                     data-bs-target="#delete_user_modal"
                                                                     @click="deleteUser(item.id)"><i

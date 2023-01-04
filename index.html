@@ -27,7 +27,7 @@
         }
         .user-container::-webkit-scrollbar-thumb {
             border-radius: 15px;
-            background: rgb(57,146,238);
+            background: rgb(229,51,113);
         }
 
     </style>
@@ -282,8 +282,8 @@
                         <p class="text-sm ">Location Active Statistics by Days</p>
                         <hr class="dark horizontal">
                         <div class="d-flex ">
-                            <i class="material-icons text-sm my-auto me-1">schedule</i>
-                            <p class="mb-0 text-sm"> Just Updated</p>
+<!--                            <i class="material-icons text-sm my-auto me-1">schedule</i>-->
+<!--                            <p class="mb-0 text-sm"> Just Updated</p>-->
                         </div>
                     </div>
                 </div>
@@ -302,8 +302,8 @@
                         <p class="text-sm "> Location Active Statistics by Months</p>
                         <hr class="dark horizontal">
                         <div class="d-flex ">
-                            <i class="material-icons text-sm my-auto me-1">schedule</i>
-                            <p class="mb-0 text-sm">Last updated 6 min ago </p>
+<!--                            <i class="material-icons text-sm my-auto me-1">schedule</i>-->
+<!--                            <p class="mb-0 text-sm">Last updated 6 min ago </p>-->
                         </div>
                     </div>
                 </div>
@@ -324,8 +324,8 @@
                         <p class="text-sm ">Feed Active Statistics by Days</p>
                         <hr class="dark horizontal">
                         <div class="d-flex ">
-                            <i class="material-icons text-sm my-auto me-1">schedule</i>
-                            <p class="mb-0 text-sm"> Just Updated</p>
+<!--                            <i class="material-icons text-sm my-auto me-1">schedule</i>-->
+<!--                            <p class="mb-0 text-sm"> Just Updated</p>-->
                         </div>
                     </div>
                 </div>
@@ -344,8 +344,8 @@
                         <p class="text-sm ">Feed Active Statistics by Months</p>
                         <hr class="dark horizontal">
                         <div class="d-flex ">
-                            <i class="material-icons text-sm my-auto me-1">schedule</i>
-                            <p class="mb-0 text-sm">Last updated 6 min ago </p>
+<!--                            <i class="material-icons text-sm my-auto me-1">schedule</i>-->
+<!--                            <p class="mb-0 text-sm">Last updated 6 min ago </p>-->
                         </div>
                     </div>
                 </div>
@@ -401,7 +401,7 @@
                                                 </div>
                                             </div>
                                             <div class="progress">
-                                                <div class="progress-bar bg-gradient-info" role="progressbar"
+                                                <div class="progress-bar bg-gradient-success" role="progressbar"
                                                      :style="`width: ${location.total_online_per}%`"
                                                       aria-valuemax="100"></div>
                                             </div>
@@ -510,265 +510,6 @@
 <!--MainJS-->
 <script src="/js/main.js"></script>
 
-<script>
-
-
-
-
-
-
-
-//    var ctx2 = document.getElementById("chart-line").getContext("2d");
-//    new Chart(ctx2, {
-//        type: "line",
-//        data: {
-//            labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-//            datasets: [{
-//                label: "Mobile apps",
-//                tension: 0,
-//                borderWidth: 0,
-//                pointRadius: 5,
-//                pointBackgroundColor: "rgba(255, 255, 255, .8)",
-//                pointBorderColor: "transparent",
-//                borderColor: "rgba(255, 255, 255, .8)",
-//                borderColor: "rgba(255, 255, 255, .8)",
-//                borderWidth: 4,
-//                backgroundColor: "transparent",
-//                fill: true,
-//                data: [50, 40, 300, 320, 500, 350, 200, 230, 500],
-//                maxBarThickness: 6
-//
-//            }],
-//        },
-//        options: {
-//            responsive: true,
-//            maintainAspectRatio: false,
-//            plugins: {
-//                legend: {
-//                    display: false,
-//                }
-//            },
-//            interaction: {
-//                intersect: false,
-//                mode: 'index',
-//            },
-//            scales: {
-//                y: {
-//                    grid: {
-//                        drawBorder: false,
-//                        display: true,
-//                        drawOnChartArea: true,
-//                        drawTicks: false,
-//                        borderDash: [5, 5],
-//                        color: 'rgba(255, 255, 255, .2)'
-//                    },
-//                    ticks: {
-//                        display: true,
-//                        color: '#f8f9fa',
-//                        padding: 10,
-//                        font: {
-//                            size: 14,
-//                            weight: 300,
-//                            family: "Roboto",
-//                            style: 'normal',
-//                            lineHeight: 2
-//                        },
-//                    }
-//                },
-//                x: {
-//                    grid: {
-//                        drawBorder: false,
-//                        display: false,
-//                        drawOnChartArea: false,
-//                        drawTicks: false,
-//                        borderDash: [5, 5]
-//                    },
-//                    ticks: {
-//                        display: true,
-//                        color: '#f8f9fa',
-//                        padding: 10,
-//                        font: {
-//                            size: 14,
-//                            weight: 300,
-//                            family: "Roboto",
-//                            style: 'normal',
-//                            lineHeight: 2
-//                        },
-//                    }
-//                },
-//            },
-//        },
-//    });
-
-
-
-
-
-
-    var ctx3 = document.getElementById("chart-bars3").getContext("2d");
-    new Chart(ctx3, {
-        type: "bar",
-        data: {
-            labels: ["M", "T", "W", "T", "F", "S", "S"],
-            datasets: [{
-                label: "Sales",
-                tension: 0.4,
-                borderWidth: 0,
-                borderRadius: 4,
-                borderSkipped: false,
-                backgroundColor: "rgba(255, 255, 255, .8)",
-                data: [50, 20, 10, 22, 50, 10, 90],
-                maxBarThickness: 6
-            },],
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: {
-                    display: false,
-                }
-            },
-            interaction: {
-                intersect: false,
-                mode: 'index',
-            },
-            scales: {
-                y: {
-                    grid: {
-                        drawBorder: false,
-                        display: true,
-                        drawOnChartArea: true,
-                        drawTicks: false,
-                        borderDash: [5, 5],
-                        color: 'rgba(255, 255, 255, .2)'
-                    },
-                    ticks: {
-                        suggestedMin: 0,
-                        suggestedMax: 500,
-                        beginAtZero: true,
-                        padding: 10,
-                        font: {
-                            size: 14,
-                            weight: 300,
-                            family: "Roboto",
-                            style: 'normal',
-                            lineHeight: 2
-                        },
-                        color: "#fff"
-                    },
-                },
-                x: {
-                    grid: {
-                        drawBorder: false,
-                        display: true,
-                        drawOnChartArea: true,
-                        drawTicks: false,
-                        borderDash: [5, 5],
-                        color: 'rgba(255, 255, 255, .2)'
-                    },
-                    ticks: {
-                        display: true,
-                        color: '#f8f9fa',
-                        padding: 10,
-                        font: {
-                            size: 14,
-                            weight: 300,
-                            family: "Roboto",
-                            style: 'normal',
-                            lineHeight: 2
-                        },
-                    }
-                },
-            },
-        },
-    });
-
-
-
-    var ctx4 = document.getElementById("chart-line-tasks4").getContext("2d");
-
-    new Chart(ctx4, {
-        type: "line",
-        data: {
-            labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-            datasets: [{
-                label: "Mobile apps",
-                tension: 0,
-                borderWidth: 0,
-                pointRadius: 5,
-                pointBackgroundColor: "rgba(255, 255, 255, .8)",
-                pointBorderColor: "transparent",
-                borderColor: "rgba(255, 255, 255, .8)",
-                borderColor: "rgba(255, 255, 255, .8)",
-                borderWidth: 4,
-                backgroundColor: "transparent",
-                fill: true,
-                data: [50, 40, 300, 320, 500, 350, 200, 230, 500],
-                maxBarThickness: 6
-
-            }],
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: {
-                    display: false,
-                }
-            },
-            interaction: {
-                intersect: false,
-                mode: 'index',
-            },
-            scales: {
-                y: {
-                    grid: {
-                        drawBorder: false,
-                        display: true,
-                        drawOnChartArea: true,
-                        drawTicks: false,
-                        borderDash: [5, 5],
-                        color: 'rgba(255, 255, 255, .2)'
-                    },
-                    ticks: {
-                        display: true,
-                        color: '#f8f9fa',
-                        padding: 10,
-                        font: {
-                            size: 14,
-                            weight: 300,
-                            family: "Roboto",
-                            style: 'normal',
-                            lineHeight: 2
-                        },
-                    }
-                },
-                x: {
-                    grid: {
-                        drawBorder: false,
-                        display: false,
-                        drawOnChartArea: false,
-                        drawTicks: false,
-                        borderDash: [5, 5]
-                    },
-                    ticks: {
-                        display: true,
-                        color: '#f8f9fa',
-                        padding: 10,
-                        font: {
-                            size: 14,
-                            weight: 300,
-                            family: "Roboto",
-                            style: 'normal',
-                            lineHeight: 2
-                        },
-                    }
-                },
-            },
-        },
-    })
-</script>
 
 <script>
     var win = navigator.platform.indexOf('Win') > -1;
