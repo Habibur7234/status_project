@@ -171,27 +171,63 @@ window.services =
             message: '',
             services: [],
             loggedInID: '',
+            firstPage : '',
+            lastPage: '',
+            currentPage: '',
+            totalPage:'',
+            pagination:'',
+
 
             getToken() {
                 var match = document.cookie.match(new RegExp('(^| )token=([^;]+)'));
                 if (match) return match[2];
             },
 
-            async initUser() {
+            async initUser(page = 1) {
                 this.userProfile();
                 let userData;
-                let response = await fetch(domain + '/user-list', {
+                let response = await fetch(domain + '/user-list?page=' + page, {
                     method: 'GET',
                     headers: {'Authorization': 'bearer ' + this.getToken()},
                 });
+
                 if (response.ok) {
                     userData = await response.json();
                 } else {
                     userData = [];
                 }
+                this.services = [];
+
                 this.services = userData.users.data;
+                this.firstPage = userData.users.from;
+                this.lastPage = userData.users.last_page;
+                this.totalPage = userData.users.last_page;
+                this.currentPage = userData.users.current_page;
+
+
+
+
+                let pagination_number;
+                let pegination_fatch = await fetch(domain + '/paginate-settings?name=users', {
+                    method: 'GET',
+                    headers: {'Authorization': 'bearer ' + this.getToken()},
+                });
+
+
+                if (pegination_fatch.ok) {
+                    pagination_number = await pegination_fatch.json();
+                } else {
+                    pagination_number = [];
+                }
+
+                this.pagination = pagination_number.per_page;
+
+                // this.initUser();
+                console.log(this.pagination);
 
             },
+
+
 
             userProfile() {
                 fetch(domain + '/profile', {
@@ -208,6 +244,42 @@ window.services =
                         this.loggedInID = data.user.id;
                     })
 
+            },
+
+            paginationData:{
+                name:'users',
+                per_page:'',
+            },
+
+
+
+
+            updatePagination() {
+                fetch(domain + '/paginate-settings-update', {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': 'bearer ' + this.getToken(),
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(this.paginationData),
+                })
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error();
+                    }
+                    return response.json();
+                })
+
+                    .then((data) => {
+
+                        this.initUser();
+
+                    })
+                // // delay(2000);
+                //
+                // this.initUser();
+                //
+                // console.log(this.paginationData)
             },
 
             addUser() {
@@ -405,9 +477,9 @@ window.locationService =
                 if (match) return match[2];
             },
 
-            async initLocation() {
+            async initLocation(page = 1) {
                 let locationData;
-                let response = await fetch(domain + '/location-list', {
+                let response = await fetch(domain + '/location-list?page='+page, {
                     method: 'GET',
                     headers: {'Authorization': 'bearer ' + this.getToken()},
                 });
