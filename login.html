@@ -20,12 +20,8 @@
   <!-- CSS Files -->
   <link id="pagestyle" href="/assets/css/material-dashboard.css?v=3.0.4" rel="stylesheet"/>
 
+  <link rel="stylesheet" href="/assets/css/simple-notify.min.css">
 
-  <!-- CSS -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simple-notify@0.5.5/dist/simple-notify.min.css" />
-
-  <!-- JS -->
-  <script src="https://cdn.jsdelivr.net/npm/simple-notify@0.5.5/dist/simple-notify.min.js"></script>
 
 
 </head>
@@ -96,7 +92,6 @@
               </div>
             </div>
           </div>
-
             <footer class="footer py-4 ps-9">
               <div class="container-fluid">
                 <div class="row align-items-center justify-content-lg-between">
@@ -120,34 +115,8 @@
   </main>
 
 
-<div class="fixed-plugin">
-  <a class="fixed-plugin-button text-dark position-fixed px-3 py-2">
-    <i class="material-icons py-2">settings</i>
-  </a>
-  <div class="card shadow-lg">
-    <div class="card-header pb-0 pt-3">
-      <div class="float-start">
-        <h5 class="mt-3 mb-0">Look and Feel</h5>
-      </div>
-      <div class="float-end mt-4">
-        <button class="btn btn-link text-dark p-0 fixed-plugin-close-button">
-          <i class="material-icons">clear</i>
-        </button>
-      </div>
-      <!-- End Toggle Button -->
-    </div>
-    <div class="card-body pt-sm-3 pt-0">
-      <hr class="horizontal dark my-3">
-      <div class="mt-2 d-flex">
-        <h6 class="mb-0">Light / Dark</h6>
-        <div class="form-check form-switch ps-0 ms-auto my-auto">
-          <input class="form-check-input mt-1 ms-auto" type="checkbox" id="dark-version"
-                 onclick="darkMode(this)">
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+
+
 <!--   Core JS Files   -->
 <script src="/assets/js/core/popper.min.js"></script>
 <script src="/assets/js/core/bootstrap.min.js"></script>
@@ -155,6 +124,7 @@
 <script src="/assets/js/plugins/smooth-scrollbar.min.js"></script>
 <script defer src="/assets/js/plugins/alpine.min.js"></script>
 <script src="/js/main.js"></script>
+  <script src="assets/js/plugins/simple-notify.min.js"></script>
 <script>
 
   var win = navigator.platform.indexOf('Win') > -1;
@@ -169,6 +139,7 @@
 <script async defer src="https://buttons.github.io/buttons.js"></script>
 <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
 <script src="/assets/js/material-dashboard.min.js?v=3.0.4"></script>
+  <script src="https://cdn.jsdelivr.net/npm/simple-notify@0.5.5/dist/simple-notify.min.js"></script>
 </main>
 </body>
 

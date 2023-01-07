@@ -3,25 +3,7 @@
 const domain = 'https://location.selopian.us/api';
 
 
-function pushNotify() {
-    new Notify({
-        status: 'success',
-        title: 'Notify Title',
-        text: 'Notify text lorem ipsum',
-        effect: 'fade',
-        speed: 300,
-        customClass: null,
-        customIcon: null,
-        showIcon: true,
-        showCloseButton: true,
-        autoclose: false,
-        autotimeout: 3000,
-        gap: 20,
-        distance: 20,
-        type: 1,
-        position: 'right top'
-    })
-}
+
 
 function getCookie(cname) {
     let name = cname + "=";
@@ -57,7 +39,25 @@ window.logIn =
                 password: '',
             },
             messageType: '',
-
+            pushNotify (status,title,text) {
+                new Notify({
+                    status: status,
+                    title: title,
+                    text: text,
+                    effect: 'fade',
+                    speed: 300,
+                    customClass: null,
+                    customIcon: null,
+                    showIcon: true,
+                    showCloseButton: true,
+                    autoclose: false,
+                    autotimeout: 3000,
+                    gap: 20,
+                    distance: 20,
+                    type: 1,
+                    position: 'right top'
+                })
+            },
             logInService() {
                 fetch(domain + '/login', {
                     method: 'POST',
@@ -73,19 +73,18 @@ window.logIn =
                         return response.json();
                     })
                     .then((data) => {
+
+
                         const d = new Date();
                         d.setTime(d.getTime() + (1 * 1 * 60 * 60 * 1000));
                         let expires = "expires=" + d.toUTCString();
                         document.cookie = "token" + "=" + data.access_token + "; " + expires + "; path=/; secure; sameSite=Lax";
-
-
                         window.location = "index.html"
 
 
                     })
                     .catch((error) => {
-                        this.messageType = 'warning';
-                        this.message = 'Server error please try again later!';
+                        this.pushNotify("error",error,'sd;UserName or Password Invalid')
 
                     })
             },
@@ -132,6 +131,26 @@ window.services =
                 if (match) return match[2];
             },
 
+            pushNotify (status,title,text) {
+                new Notify({
+                    status: status,
+                    title: title,
+                    text: text,
+                    effect: 'fade',
+                    speed: 300,
+                    customClass: null,
+                    customIcon: null,
+                    showIcon: true,
+                    showCloseButton: true,
+                    autoclose: false,
+                    autotimeout: 3000,
+                    gap: 20,
+                    distance: 20,
+                    type: 1,
+                    position: 'right top'
+                })
+            },
+
             async initUser(page = 1) {
                 this.userProfile();
                 let userData;
@@ -146,23 +165,16 @@ window.services =
                     userData = [];
                 }
                 this.services = [];
-
                 this.services = userData.users.data;
-
                 this.firstPage = userData.users.from;
                 this.lastPage = userData.users.last_page;
                 this.totalPage = userData.users.last_page;
                 this.currentPage = userData.users.current_page;
-
-
-
-
                 let pagination_number;
                 let pegination_fatch = await fetch(domain + '/paginate-settings?name=users', {
                     method: 'GET',
                     headers: {'Authorization': 'bearer ' + this.getToken()},
                 });
-
 
                 if (pegination_fatch.ok) {
                     pagination_number = await pegination_fatch.json();
@@ -176,7 +188,6 @@ window.services =
                 console.log(this.pagination);
 
             },
-
 
 
             userProfile() {
@@ -200,8 +211,6 @@ window.services =
                 name:'users',
                 per_page:'',
             },
-
-
 
 
             updatePagination() {
@@ -248,8 +257,6 @@ window.services =
                         return response.json();
                     })
                     .then((data) => {
-                        this.messageType = 'success';
-                        this.message = 'New Data added!';
                         this.services.push({
                             name: this.userData['name'],
                             email: this.userData['email'],
@@ -259,10 +266,13 @@ window.services =
                         const user_modal = document.querySelector('#add_user_modal');
                         const modal = bootstrap.Modal.getInstance(user_modal);
                         modal.hide();
+
+                        this.pushNotify("success",data,'')
+
                     })
                     .catch((error) => {
-                        this.messageType = 'warning';
-                        this.message = 'Server error please try again later!';
+                        this.pushNotify("error",error,'sd;UserName or Password Invalid')
+
                     })
 
                 // console.log("console" +this.name);
