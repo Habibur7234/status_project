@@ -472,6 +472,12 @@ window.locationService =
             routerTypeList: [],
             feedTypeList: [],
 
+            lFirstPage : '',
+            lLastPage: '',
+            lCurrentPage: '',
+            lTotalPage:'',
+            lPagination:'',
+
             getToken() {
                 var match = document.cookie.match(new RegExp('(^| )token=([^;]+)'));
                 if (match) return match[2];
@@ -479,7 +485,7 @@ window.locationService =
 
             async initLocation(page = 1) {
                 let locationData;
-                let response = await fetch(domain + '/location-list?page='+page, {
+                let response = await fetch(domain + '/location-list?page='+ page, {
                     method: 'GET',
                     headers: {'Authorization': 'bearer ' + this.getToken()},
                 });
@@ -489,7 +495,53 @@ window.locationService =
                     locationData = [];
                 }
                 this.servicesLocation = locationData.locations.data;
+
+                this.lCurrentPage = locationData.locations.current_page;
+                this.lFirstPage = locationData.locations.from;
+                this.lLastPage = locationData.locations.last_page;
+                this.lTotalPage = userData.users.last_page;
+
+
+
+
+
+                let lPagination_number;
+                let lPegination_fatch = await fetch(domain + '/paginate-settings?name=users', {
+                    method: 'GET',
+                    headers: {'Authorization': 'bearer ' + this.getToken()},
+                });
+
+
+                if (lPegination_fatch.ok) {
+                    lPagination_number = await pegination_fatch.json();
+                } else {
+                    lPagination_number = [];
+                }
+
+                this.lPagination = lPagination_number.per_page;
+
+
+
+                console.log(this.lPagination +"Habib");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             },
+
+
+
+
 
             async routerType() {
                 let routerType;
@@ -682,6 +734,21 @@ window.setting = function ()
                         },
 
 
+                        async clearCash() {
+                            let  cash;
+                            let response = await fetch(domain + '/clear-cache', {
+                                method: 'GET',
+                                headers: {'Authorization': 'bearer ' + this.getToken()},
+                            });
+
+                            if (response.ok) {
+                                cash = await response.json();
+                            } else {
+                                cash = [];
+                            }
+                        },
+
+
                         frequencySettingsUpdate: {
                             location_duration: '',
                             feed_duration: '',
@@ -767,11 +834,11 @@ window.dashboard= function () {
                 this.chart1days.push(i)
                 this.chart1Data.push(this.dashboardChart1[i])
             }
-
-            for (const i in this.dashboardChart1) {
-                this.chart1days.push(i)
-                this.chart1Data.push(this.dashboardChart1[i])
-            }
+            //
+            // for (const i in this.dashboardChart1) {
+            //     this.chart1days.push(i)
+            //     this.chart1Data.push(this.dashboardChart1[i])
+            // }
             for (const i in this.dashboardChart2) {
                 this.chart2days.push(i)
                 this.chart2Data.push(this.dashboardChart2[i])
@@ -1119,9 +1186,7 @@ window.dashboard= function () {
             })
             // chart 04 ends from here
         },
-        // filterData(){
-        //     return this.dashboardUserPerfomance.filter(searchItem => searchItem.location_name.toLowerCase().includes(this.searchText.toLowerCase()))
-        // }
+
     }
 }
 

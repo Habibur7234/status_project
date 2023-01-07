@@ -224,11 +224,11 @@
                                                     </div>
                                                     <div class="col-lg-12 col-sm-10 mb2 my-4 input-group input-group-static">
                                                         <label>Type</label>
-                                                        <select class="form-control" x-model="userData.role">
-                                                            <option disabled selected value> -- select an option --
+                                                        <select class="form-control testSelect" x-model="userData.role">
+                                                            <option disabled selected value> -- Select User Role --
                                                             </option>
-                                                            <option value="Admin">Admin</option>
-                                                            <option value="Manager">Manager</option>
+                                                            <option value="Admin">ADMIN</option>
+                                                            <option value="Manager">MANAGER</option>
                                                         </select>
                                                     </div>
                                                     <div class="col-lg-12 col-sm-10 mb2 my-4 input-group input-group-static">
@@ -456,8 +456,8 @@
                                             <th>NAME</th>
                                             <th class="align-middle text-center">TYPE</th>
                                             <th class="align-middle text-center">STATUS</th>
-                                            <th class="align-middle text-center">Last LOGIN</th>
-                                            <th class="align-middle text-center">Action</th>
+                                            <th class="align-middle text-center">LAST LOGIN</th>
+                                            <th class="align-middle text-center">ACTION</th>
                                             </thead>
                                             <tbody>
                                             <template x-for="item in services">

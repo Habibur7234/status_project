@@ -223,7 +223,7 @@
                                                     <div class="col-lg-12 col-sm-10 my-1 input-group input-group-static">
                                                         <label> Router Type</label>
                                                         <select class="form-control" x-model="locationData.router_type">
-                                                            <option disabled selected value >--select an option--</option>
+                                                            <option disabled selected value >--Select A Router--</option>
                                                             <template x-for="router in routerTypeList">
                                                                 <option :value="router.id" x-text="router.name"></option>
                                                             </template>
@@ -249,7 +249,7 @@
                                                     <div class="col-lg-12 col-sm-10 my-1 input-group input-group-static">
                                                         <label>Live Feed Type</label>
                                                         <select class="form-control" x-model="locationData.feed_type">
-                                                            <option disabled selected value >--select an option--</option>
+                                                            <option disabled selected value >--Select A Live Feed Type--</option>
                                                             <template x-for="feed in feedTypeList">
                                                                 <option :value="feed.id" x-text="feed.name"></option>
                                                             </template>
@@ -280,7 +280,7 @@
                                                         <div class="col-md-6 col-sm-6 ">
                                                             <div class="input-group input-group-static my-3">
                                                                 <label>Live Feed Password</label>
-                                                                <input type="password" name="Live Feed" class="form-control"  x-model="locationData.password" autocomplete="new-password" >
+                                                                <input type="password" name="Live Feed" class="form-control"  x-model="locationData.password" autocomplete="new-password" placeholder="*******" >
                                                             </div>
                                                         </div>
                                                     </div>
@@ -326,7 +326,7 @@
                                                     <div class="col-lg-12 col-sm-10  my-1 input-group input-group-static">
                                                         <label> Router Type</label>
                                                         <select class="form-control" x-model="editLocationData.router_type">
-                                                            <option disabled selected value >--select an option--</option>
+                                                            <option disabled selected value >Select A Router</option>
                                                             <template x-for="router in routerTypeList">
                                                                 <option :value="router.id" x-text="router.name"></option>
                                                             </template>
@@ -354,7 +354,7 @@
                                                     <div class="col-lg-12 col-sm-10  my-1 input-group input-group-static">
                                                         <label>Live Feed Type</label>
                                                         <select class="form-control" x-model="editLocationData.feed_type">
-                                                            <option disabled selected value> -- select an option -- </option>
+                                                            <option disabled selected value>Select A Live Feed Type</option>
                                                             <template x-for="feed in feedTypeList">
                                                                 <option :value="feed.id" x-text="feed.name"></option>
                                                             </template>
@@ -481,10 +481,10 @@
                                     <div class="form-group">
                                         <table class="table tab-pane table-class">
                                             <thead>
-                                            <th class="align-middle text-center">LOCATION/IP</th>
+                                            <th class="align-middle text-center">LOCATION - IP</th>
                                             <th class="align-middle text-center">LOCATION STATUS</th>
                                             <th class="align-middle text-center">LIVE FEED STATUS</th>
-                                            <th class="align-middle text-center">Action</th>
+                                            <th class="align-middle text-center">ACTION</th>
                                             </thead>
                                             <tbody>
                                             <template x-for="location in servicesLocation">
