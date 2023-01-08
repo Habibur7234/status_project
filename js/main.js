@@ -1,6 +1,179 @@
 //Global Api
 const domain = 'https://location.selopian.us/api';
 
+
+
+
+// var today = new Date();
+// var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+//
+
+
+
+
+
+
+
+
+
+// Light Mode / Dark Mode
+function darkMode(el) {
+    const body = document.getElementsByTagName('body')[0];
+    const hr = document.querySelectorAll('div:not(.sidenav) > hr');
+    const hr_card = document.querySelectorAll('div:not(.bg-gradient-dark) hr');
+    const text_btn = document.querySelectorAll('button:not(.btn) > .text-dark');
+    const text_span = document.querySelectorAll('span.text-dark, .breadcrumb .text-dark');
+    const text_span_white = document.querySelectorAll('span.text-white, .breadcrumb .text-white');
+    const text_strong = document.querySelectorAll('strong.text-dark');
+    const text_strong_white = document.querySelectorAll('strong.text-white');
+    const text_nav_link = document.querySelectorAll('a.nav-link.text-dark');
+    const text_nav_link_white = document.querySelectorAll('a.nav-link.text-white');
+    const secondary = document.querySelectorAll('.text-secondary');
+    const bg_gray_100 = document.querySelectorAll('.bg-gray-100');
+    const bg_gray_600 = document.querySelectorAll('.bg-gray-600');
+    const btn_text_dark = document.querySelectorAll('.btn.btn-link.text-dark, .material-icons.text-dark');
+    const btn_text_white = document.querySelectorAll('.btn.btn-link.text-white, .material-icons.text-white');
+    const card_border = document.querySelectorAll('.card.border');
+    const card_border_dark = document.querySelectorAll('.card.border.border-dark');
+
+    const svg = document.querySelectorAll('g');
+
+    if (!el.getAttribute("checked")) {
+        body.classList.add('dark-version');
+        for (var i = 0; i < hr.length; i++) {
+            if (hr[i].classList.contains('dark')) {
+                hr[i].classList.remove('dark');
+                hr[i].classList.add('light');
+            }
+        }
+
+        for (var i = 0; i < hr_card.length; i++) {
+            if (hr_card[i].classList.contains('dark')) {
+                hr_card[i].classList.remove('dark');
+                hr_card[i].classList.add('light');
+            }
+        }
+        for (var i = 0; i < text_btn.length; i++) {
+            if (text_btn[i].classList.contains('text-dark')) {
+                text_btn[i].classList.remove('text-dark');
+                text_btn[i].classList.add('text-white');
+            }
+        }
+        for (var i = 0; i < text_span.length; i++) {
+            if (text_span[i].classList.contains('text-dark')) {
+                text_span[i].classList.remove('text-dark');
+                text_span[i].classList.add('text-white');
+            }
+        }
+        for (var i = 0; i < text_strong.length; i++) {
+            if (text_strong[i].classList.contains('text-dark')) {
+                text_strong[i].classList.remove('text-dark');
+                text_strong[i].classList.add('text-white');
+            }
+        }
+        for (var i = 0; i < text_nav_link.length; i++) {
+            if (text_nav_link[i].classList.contains('text-dark')) {
+                text_nav_link[i].classList.remove('text-dark');
+                text_nav_link[i].classList.add('text-white');
+            }
+        }
+        for (var i = 0; i < secondary.length; i++) {
+            if (secondary[i].classList.contains('text-secondary')) {
+                secondary[i].classList.remove('text-secondary');
+                secondary[i].classList.add('text-white');
+                secondary[i].classList.add('opacity-8');
+            }
+        }
+        for (var i = 0; i < bg_gray_100.length; i++) {
+            if (bg_gray_100[i].classList.contains('bg-gray-100')) {
+                bg_gray_100[i].classList.remove('bg-gray-100');
+                bg_gray_100[i].classList.add('bg-gray-600');
+            }
+        }
+        for (var i = 0; i < btn_text_dark.length; i++) {
+            btn_text_dark[i].classList.remove('text-dark');
+            btn_text_dark[i].classList.add('text-white');
+        }
+        for (var i = 0; i < svg.length; i++) {
+            if (svg[i].hasAttribute('fill')) {
+                svg[i].setAttribute('fill', '#fff');
+            }
+        }
+        for (var i = 0; i < card_border.length; i++) {
+            card_border[i].classList.add('border-dark');
+        }
+        el.setAttribute("checked", "true");
+    } else {
+        body.classList.remove('dark-version');
+        for (var i = 0; i < hr.length; i++) {
+            if (hr[i].classList.contains('light')) {
+                hr[i].classList.add('dark');
+                hr[i].classList.remove('light');
+            }
+        }
+        for (var i = 0; i < hr_card.length; i++) {
+            if (hr_card[i].classList.contains('light')) {
+                hr_card[i].classList.add('dark');
+                hr_card[i].classList.remove('light');
+            }
+        }
+        for (var i = 0; i < text_btn.length; i++) {
+            if (text_btn[i].classList.contains('text-white')) {
+                text_btn[i].classList.remove('text-white');
+                text_btn[i].classList.add('text-dark');
+            }
+        }
+        for (var i = 0; i < text_span_white.length; i++) {
+            if (text_span_white[i].classList.contains('text-white') && !text_span_white[i].closest('.sidenav') && !text_span_white[i].closest('.card.bg-gradient-dark')) {
+                text_span_white[i].classList.remove('text-white');
+                text_span_white[i].classList.add('text-dark');
+            }
+        }
+        for (var i = 0; i < text_strong_white.length; i++) {
+            if (text_strong_white[i].classList.contains('text-white')) {
+                text_strong_white[i].classList.remove('text-white');
+                text_strong_white[i].classList.add('text-dark');
+            }
+        }
+        for (var i = 0; i < text_nav_link_white.length; i++) {
+            if (text_nav_link_white[i].classList.contains('text-white') && !text_nav_link_white[i].closest('.sidenav')) {
+                text_nav_link_white[i].classList.remove('text-white');
+                text_nav_link_white[i].classList.add('text-dark');
+            }
+        }
+        for (var i = 0; i < secondary.length; i++) {
+            if (secondary[i].classList.contains('text-white')) {
+                secondary[i].classList.remove('text-white');
+                secondary[i].classList.remove('opacity-8');
+                secondary[i].classList.add('text-dark');
+            }
+        }
+        for (var i = 0; i < bg_gray_600.length; i++) {
+            if (bg_gray_600[i].classList.contains('bg-gray-600')) {
+                bg_gray_600[i].classList.remove('bg-gray-600');
+                bg_gray_600[i].classList.add('bg-gray-100');
+            }
+        }
+        for (var i = 0; i < svg.length; i++) {
+            if (svg[i].hasAttribute('fill')) {
+                svg[i].setAttribute('fill', '#252f40');
+            }
+        }
+        for (var i = 0; i < btn_text_white.length; i++) {
+            if (!btn_text_white[i].closest('.card.bg-gradient-dark')) {
+                btn_text_white[i].classList.remove('text-white');
+                btn_text_white[i].classList.add('text-dark');
+            }
+        }
+        for (var i = 0; i < card_border_dark.length; i++) {
+            card_border_dark[i].classList.remove('border-dark');
+        }
+        el.removeAttribute("checked");
+    }
+};
+
+
+
 //Login Check
 function getCookie(cname) {
     let name = cname + "=";
@@ -17,6 +190,12 @@ function getCookie(cname) {
     }
     return false;
 }
+
+// check which mode from cookie
+/// set dark mode or do nothing for ligh mode
+//console.log(darkMode(this));
+
+
 
 if (!getCookie("token") && location.href.replace(/.*\/\/[^\/]*/, '') != "/status_project/login.html") {
     window.location.replace("/status_project/login.html");
@@ -71,7 +250,8 @@ window.logIn =
                         d.setTime(d.getTime() + (1 * 1 * 60 * 60 * 1000));
                         let expires = "expires=" + d.toUTCString();
                         document.cookie = "token" + "=" + data.access_token + "; " + expires + "; path=/; secure; sameSite=Lax";
-                        window.location = "index.html"
+                        //document.cookie = "theme=1";
+                            window.location = "index.html"
 
                     })
                     .catch((error) => {
@@ -127,6 +307,9 @@ window.logOut =
                         return response.json();
                     })
                     .then((data) => {
+
+                        // clear all cookie variable - jwt, id, profile.. and others
+
                         window.location = "login.html"
                         this.pushNotify('success', 'Success', 'Successfully LogOut ')
 
@@ -179,6 +362,11 @@ window.services =
                 var match = document.cookie.match(new RegExp('(^| )token=([^;]+)'));
                 if (match) return match[2];
             },
+
+
+
+
+
 
             pushNotify(status, title, text) {
                 new Notify({
@@ -233,7 +421,7 @@ window.services =
                 this.pagination = pagination_number.per_page;
             },
 
-
+            // userTable:'',
 
             addUser() {
                 fetch(domain + '/register', {
@@ -246,14 +434,15 @@ window.services =
                 })
                     .then(async response => {
                         const data = await response.json();
+                        // console.log(data.error);
                         if(!response.ok) {
+
                             for (const key in data.error) {
                                 this.pushNotify("error",data.error[key],'')
-
                             }
                         }else{
 
-                            this.services.push({
+                            this.services.unshift({
                                 name: this.userData['name'],
                                 email: this.userData['email'],
                                 role: this.userData["role"],
@@ -262,6 +451,10 @@ window.services =
                             const user_modal = document.querySelector('#add_user_modal');
                             const modal = bootstrap.Modal.getInstance(user_modal);
                             modal.hide();
+
+                            console.log(data.message);
+
+                            this.pushNotify("success",data.message,'User Added Successfully')
                         }
                     })
 
@@ -281,6 +474,12 @@ window.services =
                     })
                     .then((data) => {
                         this.loggedInID = data.user.id;
+
+                        // save it in cookie
+                        //user_id = 111
+                        //user_name = Montu Mia
+
+
                     })
 
             },
@@ -414,8 +613,8 @@ window.services =
 
                     })
                     .catch(error => {
-                        this.messageType = 'warning';
-                        this.message = "Something went wrong!";
+                        this.pushNotify('error', 'Success', 'User Can not Delete')
+
                     });
             },
         }
@@ -595,6 +794,7 @@ window.locationService =
 
                     .then(async responsei => {
                         const data = await responsei.json();
+                        console.log(data);
                         if(!responsei.ok) {
                             for (const key in data.error) {
                                 this.pushNotify("error",data.error[key],'')
@@ -602,7 +802,7 @@ window.locationService =
                             }
                         }else{
 
-                            this.servicesLocation.push({
+                            this.servicesLocation.unshift({
                                 name: this.locationData['name'],
                                 ip_address: this.locationData['ip_address'],
                                 status: "Inactive"
@@ -610,6 +810,8 @@ window.locationService =
                             const user_modal = document.querySelector('#add_location_modal');
                             const modal = bootstrap.Modal.getInstance(user_modal);
                             modal.hide();
+
+                            this.pushNotify("success",data.message,'Location Added Successfully')
                         }
                     })
 
@@ -639,36 +841,32 @@ window.locationService =
                     },
                     body: JSON.stringify(this.editLocationData),
                 })
-                    .then((response) => {
-                        if (!response.ok) {
-                            throw new Error();
+                    .then(async responsela => {
+                        const data = await responsela.json();
+                        if(!responsela.ok) {
+                            for (const key in data.error) {
+                                this.pushNotify("error",data.error[key],'')
+
+                            }
+                        }else{
+                            // let position = this.servicesLocation.findIndex(el => el.id === this.updatedId);
+                            // this.servicesLocation[position]['name'] = this.editLocationData['name'];
+                            // this.servicesLocation[position]['ip_address'] = this.editLocationData['email'];
+                            // this.servicesLocation[position]['router_type'] = this.editLocationData['router_type'];
+                            // this.servicesLocation[position]['feed_type'] = this.editLocationData['feed_type'];
+
+                            const edit_location_modal = document.querySelector('#edit_location_modal');
+                            const modal = bootstrap.Modal.getInstance(edit_location_modal);
+                            modal.hide();
+
+                            this.pushNotify('success', 'Success', 'Location Update Successfully')
+
                         }
-                        return response.json();
                     })
-                    .then((data) => {
-
-                        this.messageType = 'success';
-                        this.message = 'Location Updated!';
-                        let position = this.servicesLocation.findIndex(el => el.id === this.updatedId);
-                        this.servicesLocation[position]['name'] = this.editLocationData['name'];
-                        this.servicesLocation[position]['ip_address'] = this.editLocationData['email'];
-                        this.servicesLocation[position]['router_type'] = this.editLocationData['router_type'];
-                        this.servicesLocation[position]['feed_type'] = this.editLocationData['feed_type'];
 
 
-                        const edit_location_modal = document.querySelector('#edit_location_modal');
-                        const modal = bootstrap.Modal.getInstance(edit_location_modal);
-                        modal.hide();
-
-                    })
-                    .catch(() => {
-                        const edit_location_modal = document.querySelector('#edit_location_modal');
-                        const modal = bootstrap.Modal.getInstance(edit_location_modal);
-                        modal.hide();
-                        this.messageType = 'warning';
-                        this.message = 'Server error please try again later!';
-                    })
             },
+
 
             deleteLocation(userId) {
                 let position = this.servicesLocation.findIndex(el => el.id === userId);
@@ -691,15 +889,11 @@ window.locationService =
 
                         let position = this.servicesLocation.findIndex(el => el.id === this.update_location_id);
                         this.servicesLocation.splice(position, 1);
-                        this.messageType = 'success';
-                        this.message = "location Successfully Deleted!";
+                        this.pushNotify('success', 'Success', 'Location Deleted Successfully ')
+
                     })
                     .catch(error => {
-                        const location_modal = document.querySelector('#delete_location_modal');
-                        const modal = bootstrap.Modal.getInstance(location_modal);
-                        modal.hide();
-                        this.messageType = 'warning';
-                        this.message = "Something went wrong!";
+                        this.pushNotify('error', 'Success', 'Location Can Not Delete')
 
                     });
             },
@@ -717,6 +911,27 @@ window.setting = function () {
 
         frequency: [],
         times: [5, 10, 30, 59],
+
+
+        pushNotify(status, title, text) {
+            new Notify({
+                status: status,
+                title: title,
+                text: text,
+                effect: 'fade',
+                speed: 300,
+                customClass: null,
+                customIcon: null,
+                showIcon: true,
+                showCloseButton: true,
+                autoclose: true,
+                autotimeout: 3000,
+                gap: 20,
+                distance: 20,
+                type: 1,
+                position: 'right top'
+            })
+        },
 
 
         async frequencySettings() {
@@ -772,12 +987,12 @@ window.setting = function () {
                     return response.json();
                 })
                 .then((data) => {
-                    this.messageType = 'success';
-                    this.message = 'Success';
+                    this.pushNotify('success', 'Success', 'Setting Update Successfully ')
+
                 })
                 .catch(() => {
-                    this.messageType = 'warning';
-                    this.message = 'Not Update';
+                    this.pushNotify('error', 'error', 'Setting Can Not Update')
+
                 })
         },
 
@@ -794,6 +1009,11 @@ window.dashboard = function () {
             let match = document.cookie.match(new RegExp('(^| )token=([^;]+)'));
             if (match) return match[2];
         },
+
+
+
+
+
         dashBoardData: [],
         dashboardUserMessage: [],
         dashboardUserPerfomance: [],
@@ -810,6 +1030,8 @@ window.dashboard = function () {
         chart4days: [],
         chart4Data: [],
         searchText: '',
+
+
         async getDashboard() {
             let dashboard;
             let response = await fetch(domain + '/dashboard', {
@@ -1183,9 +1405,7 @@ window.dashboard = function () {
             })
             // chart 04 ends from here
         },
-        // filterData(){
-        //     return this.dashboardUserPerfomance.filter(searchItem => searchItem.location_name.toLowerCase().includes(this.searchText.toLowerCase()))
-        // }
+
     }
 }
 
