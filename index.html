@@ -84,9 +84,9 @@
 
         </ul>
     </div>
-    <div class="sidenav-footer position-absolute w-100 bottom-0 ">
+    <div class="sidenav-footer position-absolute w-100 bottom-0"  x-data="logOut()">
         <div class="mx-3">
-            <a class="btn bg-gradient-danger mt-4 w-100" href="login.html" type="button">LogOut</a>
+            <button class="btn bg-gradient-danger mt-4 w-100" href="login.html"  @click="logOutService()" type="button">LogOut</button>
         </div>
     </div>
 </aside>

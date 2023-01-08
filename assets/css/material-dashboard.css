@@ -19997,6 +19997,12 @@ hr.horizontal.gray-light {
     padding-top: 0.75rem;
     padding-bottom: 0.75rem;
   }
+  .end-6 {
+    right: 22% !important;
+  }
+  .w-3 {
+    width: 17% !important;
+  }
 }
 @media (min-width: 768px) {
   .navbar-vertical.navbar-expand-md {
@@ -21631,6 +21637,14 @@ h1, .h1 {
   font-size: 3rem;
   line-height: 1.25;
   letter-spacing: 0;
+}
+@media (max-width: 425px) {
+  .end-6 {
+    right: 22% !important;
+  }
+  .w-3 {
+    width: 17% !important;
+  }
 }
 @media (max-width: 575.98px) {
   h1, .h1 {

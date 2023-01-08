@@ -1,14 +1,11 @@
-
-
+//Global Api
 const domain = 'https://location.selopian.us/api';
 
-
-
-
+//Login Check
 function getCookie(cname) {
     let name = cname + "=";
     let ca = document.cookie.split(';');
-    for(let i = 0; i < ca.length; i++) {
+    for (let i = 0; i < ca.length; i++) {
         let c = ca[i];
         while (c.charAt(0) == ' ') {
             c = c.substring(1);
@@ -21,13 +18,9 @@ function getCookie(cname) {
     return false;
 }
 
-if(!getCookie("token") && location.href.replace(/.*\/\/[^\/]*/, '') != "/login.html")
-{
- window.location.replace("/login.html");
+if (!getCookie("token") && location.href.replace(/.*\/\/[^\/]*/, '') != "/status_project/login.html") {
+    window.location.replace("/status_project/login.html");
 }
-
-
-
 
 
 //LOGIN
@@ -39,7 +32,7 @@ window.logIn =
                 password: '',
             },
             messageType: '',
-            pushNotify (status,title,text) {
+            pushNotify(status, title, text) {
                 new Notify({
                     status: status,
                     title: title,
@@ -74,23 +67,80 @@ window.logIn =
                     })
                     .then((data) => {
 
-
                         const d = new Date();
                         d.setTime(d.getTime() + (1 * 1 * 60 * 60 * 1000));
                         let expires = "expires=" + d.toUTCString();
                         document.cookie = "token" + "=" + data.access_token + "; " + expires + "; path=/; secure; sameSite=Lax";
                         window.location = "index.html"
 
-
                     })
                     .catch((error) => {
-                        this.pushNotify("error",error,'sd;UserName or Password Invalid')
+                        this.pushNotify("error", error, 'UserName or Password Invalid')
 
                     })
             },
 
         }
     };
+
+
+
+
+window.logOut =
+    function () {
+        return {
+            messageType: '',
+            pushNotify(status, title, text) {
+                new Notify({
+                    status: status,
+                    title: title,
+                    text: text,
+                    effect: 'fade',
+                    speed: 300,
+                    customClass: null,
+                    customIcon: null,
+                    showIcon: true,
+                    showCloseButton: true,
+                    autoclose: false,
+                    autotimeout: 3000,
+                    gap: 20,
+                    distance: 20,
+                    type: 1,
+                    position: 'right top'
+                })
+            },
+
+            getToken() {
+                var match = document.cookie.match(new RegExp('(^| )token=([^;]+)'));
+                if (match) return match[2];
+            },
+
+            logOutService() {
+                fetch(domain + '/logout', {
+                    method: 'POST',
+                    headers: {'Authorization': 'bearer ' + this.getToken()}
+                })
+                    .then((response) => {
+                        if (!response.ok) {
+                            throw new Error();
+                        }
+                        return response.json();
+                    })
+                    .then((data) => {
+                        window.location = "login.html"
+                        this.pushNotify('success', 'Success', 'Successfully LogOut ')
+
+                    })
+                    .catch((error) => {
+                        window.location = "login.html"
+                    })
+            },
+
+        }
+    };
+
+
+
 
 
 //USER--------------------------------------------------------------
@@ -119,19 +169,18 @@ window.services =
             message: '',
             services: [],
             loggedInID: '',
-            firstPage : '',
+            firstPage: '',
             lastPage: '',
             currentPage: '',
-            totalPage:'',
-            pagination:'',
-
+            totalPage: '',
+            pagination: '',
 
             getToken() {
                 var match = document.cookie.match(new RegExp('(^| )token=([^;]+)'));
                 if (match) return match[2];
             },
 
-            pushNotify (status,title,text) {
+            pushNotify(status, title, text) {
                 new Notify({
                     status: status,
                     title: title,
@@ -142,7 +191,7 @@ window.services =
                     customIcon: null,
                     showIcon: true,
                     showCloseButton: true,
-                    autoclose: false,
+                    autoclose: true,
                     autotimeout: 3000,
                     gap: 20,
                     distance: 20,
@@ -158,7 +207,6 @@ window.services =
                     method: 'GET',
                     headers: {'Authorization': 'bearer ' + this.getToken()},
                 });
-
                 if (response.ok) {
                     userData = await response.json();
                 } else {
@@ -170,22 +218,52 @@ window.services =
                 this.lastPage = userData.users.last_page;
                 this.totalPage = userData.users.last_page;
                 this.currentPage = userData.users.current_page;
+
+
                 let pagination_number;
                 let pegination_fatch = await fetch(domain + '/paginate-settings?name=users', {
                     method: 'GET',
                     headers: {'Authorization': 'bearer ' + this.getToken()},
                 });
-
                 if (pegination_fatch.ok) {
                     pagination_number = await pegination_fatch.json();
                 } else {
                     pagination_number = [];
                 }
-
                 this.pagination = pagination_number.per_page;
+            },
 
-                // this.initUser();
-                console.log(this.pagination);
+
+
+            addUser() {
+                fetch(domain + '/register', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': 'bearer ' + this.getToken(),
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(this.userData)
+                })
+                    .then(async response => {
+                        const data = await response.json();
+                        if(!response.ok) {
+                            for (const key in data.error) {
+                                this.pushNotify("error",data.error[key],'')
+
+                            }
+                        }else{
+
+                            this.services.push({
+                                name: this.userData['name'],
+                                email: this.userData['email'],
+                                role: this.userData["role"],
+                                status: "Offline",
+                            });
+                            const user_modal = document.querySelector('#add_user_modal');
+                            const modal = bootstrap.Modal.getInstance(user_modal);
+                            modal.hide();
+                        }
+                    })
 
             },
 
@@ -207,11 +285,10 @@ window.services =
 
             },
 
-            paginationData:{
-                name:'users',
-                per_page:'',
+            paginationData: {
+                name: 'users',
+                per_page: '',
             },
-
 
             updatePagination() {
                 fetch(domain + '/paginate-settings-update', {
@@ -222,60 +299,18 @@ window.services =
                     },
                     body: JSON.stringify(this.paginationData),
                 })
-                .then((response) => {
-                    if (!response.ok) {
-                        throw new Error();
-                    }
-                    return response.json();
-                })
-
-                    .then((data) => {
-
-                        this.initUser();
-
-                    })
-                // // delay(2000);
-                //
-                // this.initUser();
-                //
-                // console.log(this.paginationData)
-            },
-
-            addUser() {
-                fetch(domain + '/register', {
-                    method: 'POST',
-                    headers: {
-                        'Authorization': 'bearer ' + this.getToken(),
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(this.userData)
-                })
                     .then((response) => {
                         if (!response.ok) {
                             throw new Error();
                         }
                         return response.json();
                     })
+
                     .then((data) => {
-                        this.services.push({
-                            name: this.userData['name'],
-                            email: this.userData['email'],
-                            role: this.userData["role"],
-                            status: "Offline",
-                        });
-                        const user_modal = document.querySelector('#add_user_modal');
-                        const modal = bootstrap.Modal.getInstance(user_modal);
-                        modal.hide();
 
-                        this.pushNotify("success",data,'')
+                        this.initUser();
 
                     })
-                    .catch((error) => {
-                        this.pushNotify("error",error,'sd;UserName or Password Invalid')
-
-                    })
-
-                // console.log("console" +this.name);
             },
 
 
@@ -286,7 +321,6 @@ window.services =
                 this.editModalData['name'] = this.services[position]['name'];
                 this.editModalData['email'] = this.services[position]['email'];
                 this.editModalData['role'] = this.services[position]['role'];
-                // console.log(this.updatedId);
             },
 
             updateUser() {
@@ -298,44 +332,40 @@ window.services =
                     },
                     body: JSON.stringify(this.editModalData),
                 })
-                    .then((response) => {
-                        if (!response.ok) {
-                            throw new Error();
+
+                    .then(async responsel => {
+                        const data = await responsel.json();
+                        if(!responsel.ok) {
+                            for (const key in data.error) {
+                                this.pushNotify("error",data.error[key],'')
+
+                            }
+                        }else{
+                            let position = this.services.findIndex(el => el.id === this.updatedId);
+                            this.services[position]['name'] = this.editModalData['name'];
+                            this.services[position]['email'] = this.editModalData['email'];
+                            this.services[position]['role'] = this.editModalData['role'];
+
+                            this.updatedId = '';
+                            this.editModalData['name'] = '';
+                            this.editModalData['email'] = '';
+                            this.editModalData['role'] = '';
+                            const user_modal = document.querySelector('#edit_user_modal');
+                            const modal = bootstrap.Modal.getInstance(user_modal);
+                            modal.hide();
+                            this.pushNotify('success', 'Success', 'User Update Successfully')
+
                         }
-                        return response.json();
-                    })
-                    .then((data) => {
-                        let position = this.services.findIndex(el => el.id === this.updatedId);
-                        this.services[position]['name'] = this.editModalData['name'];
-                        this.services[position]['email'] = this.editModalData['email'];
-                        this.services[position]['role'] = this.editModalData['role'];
-
-                        this.updatedId = '';
-                        this.editModalData['name'] = '';
-                        this.editModalData['email'] = '';
-                        this.editModalData['role'] = '';
-
-                        const user_modal = document.querySelector('#edit_user_modal');
-                        const modal = bootstrap.Modal.getInstance(user_modal);
-                        modal.hide();
-
-                        this.messageType = 'success';
-                        this.message = 'User Information Updated!';
-                    })
-                    .catch(() => {
-                        const user_modal = document.querySelector('#edit_user_modal');
-                        const modal = bootstrap.Modal.getInstance(user_modal);
-                        modal.hide();
-                        this.messageType = 'warning';
-                        this.message = 'Server error please try again later!';
                     })
             },
+
 
             editUserPassword(userId) {
                 let position = this.services.findIndex(el => el.id === userId);
                 this.updatedId = this.services[position]['id'];
                 this.editUserModalPassword['id'] = this.services[position]['id'];
             },
+
             updatePassword() {
                 fetch(domain + '/user-password-update', {
                     method: 'PUT',
@@ -345,26 +375,19 @@ window.services =
                     },
                     body: JSON.stringify(this.editUserModalPassword),
                 })
-                    .then((response) => {
-                        if (!response.ok) {
-                            throw new Error();
-                        }
-                        return response.json();
-                    })
-                    .then((data) => {
-                        const user_modal = document.querySelector('#edit_user_credentials');
-                        const modal = bootstrap.Modal.getInstance(user_modal);
-                        modal.hide();
+                    .then(async responselm => {
+                        const data = await responselm.json();
+                        if(!responselm.ok) {
+                            for (const key in data.error) {
+                                this.pushNotify("error",data.error[key],'')
 
-                        this.messageType = 'success';
-                        this.message = 'password Updated!';
-                    })
-                    .catch(() => {
-                        const user_modal = document.querySelector('#edit_user_modal');
-                        const modal = bootstrap.Modal.getInstance(user_modal);
-                        modal.hide();
-                        this.messageType = 'warning';
-                        this.message = 'Server error please try again later!';
+                            }
+                        }else{
+                            const user_modal = document.querySelector('#edit_user_modal');
+                            const modal = bootstrap.Modal.getInstance(user_modal);
+                            modal.hide();
+                            this.pushNotify('success', 'Success', 'Password Update Successfully')
+                        }
                     })
             },
 
@@ -384,11 +407,11 @@ window.services =
                         const user_modal = document.querySelector('#delete_user_modal');
                         const modal = bootstrap.Modal.getInstance(user_modal);
                         modal.hide();
-
                         let position = this.services.findIndex(el => el.id === this.updatedId);
                         this.services.splice(position, 1);
-                        this.messageType = 'danger';
-                        this.message = "Data Successfully Deleted!";
+                        this.pushNotify('success', 'Success', 'User Delete Successfully ')
+
+
                     })
                     .catch(error => {
                         this.messageType = 'warning';
@@ -408,11 +431,11 @@ window.locationService =
                 ip_address: '',
                 router_type: '',
                 feed_type: '',
-                username:'',
-                password:'',
-                feed_ip_address:'',
-                feed_port:'',
-                router_port:'',
+                username: '',
+                password: '',
+                feed_ip_address: '',
+                feed_port: '',
+                router_port: '',
             },
             messageType: '',
             message: '',
@@ -421,31 +444,51 @@ window.locationService =
                 ip_address: '',
                 router_type: '',
                 feed_type: '',
-                username:'',
-                password:'',
-                feed_ip_address:'',
-                feed_port:'',
-                router_port:'',
+                username: '',
+                password: '',
+                feed_ip_address: '',
+                feed_port: '',
+                router_port: '',
             },
             update_location_id: '',
             servicesLocation: [],
             routerTypeList: [],
             feedTypeList: [],
 
-            lFirstPage : '',
+            lFirstPage: '',
             lLastPage: '',
             lCurrentPage: '',
-            lTotalPage:'',
-            lPagination:'',
+            lTotalPage: '',
+            lPagination: '',
 
             getToken() {
                 var match = document.cookie.match(new RegExp('(^| )token=([^;]+)'));
                 if (match) return match[2];
             },
 
+            pushNotify(status, title, text) {
+                new Notify({
+                    status: status,
+                    title: title,
+                    text: text,
+                    effect: 'fade',
+                    speed: 300,
+                    customClass: null,
+                    customIcon: null,
+                    showIcon: true,
+                    showCloseButton: true,
+                    autoclose: true,
+                    autotimeout: 3000,
+                    gap: 20,
+                    distance: 20,
+                    type: 1,
+                    position: 'right top'
+                })
+            },
+
             async initLocation(page = 1) {
                 let locationData;
-                let response = await fetch(domain + '/location-list?page='+ page, {
+                let response = await fetch(domain + '/location-list?page=' + page, {
                     method: 'GET',
                     headers: {'Authorization': 'bearer ' + this.getToken()},
                 });
@@ -463,8 +506,6 @@ window.locationService =
                 this.lCurrentPage = locationData.locations.current_page;
 
 
-
-
                 let lPagination_number;
                 let lPegination_fatch = await fetch(domain + '/paginate-settings?name=location', {
                     method: 'GET',
@@ -478,14 +519,12 @@ window.locationService =
                 }
                 this.lPagination = lPagination_number.per_page;
 
-                console.log("Habib" + this.lPagination);
-
             },
 
 
-            lPaginationData:{
-                name:'location',
-                per_page:'',
+            lPaginationData: {
+                name: 'location',
+                per_page: '',
             },
 
 
@@ -512,8 +551,6 @@ window.locationService =
                     })
 
             },
-
-
 
 
             async routerType() {
@@ -555,30 +592,27 @@ window.locationService =
                     },
                     body: JSON.stringify(this.locationData)
                 })
-                    .then((response) => {
-                        if (!response.ok) {
-                            throw new Error();
+
+                    .then(async responsei => {
+                        const data = await responsei.json();
+                        if(!responsei.ok) {
+                            for (const key in data.error) {
+                                this.pushNotify("error",data.error[key],'')
+
+                            }
+                        }else{
+
+                            this.servicesLocation.push({
+                                name: this.locationData['name'],
+                                ip_address: this.locationData['ip_address'],
+                                status: "Inactive"
+                            });
+                            const user_modal = document.querySelector('#add_location_modal');
+                            const modal = bootstrap.Modal.getInstance(user_modal);
+                            modal.hide();
                         }
-                        return response.json();
                     })
-                    .then((data) => {
-                        this.messageType = 'success';
-                        this.message = 'New user added!';
-                        this.servicesLocation.push({
-                            name: this.locationData['name'],
-                            ip_address: this.locationData['ip_address'],
-                            status: "Inactive"
-                        });
-                        const user_modal = document.querySelector('#add_location_modal');
-                        const modal = bootstrap.Modal.getInstance(user_modal);
-                        modal.hide();
 
-                    })
-                    .catch((error) => {
-                        this.messageType = 'warning';
-                        this.message = 'Server error please try again later!';
-
-                    })
             },
 
             editLocation(userId) {
@@ -674,116 +708,110 @@ window.locationService =
     };
 
 
+window.setting = function () {
+    return {
+        getToken() {
+            var match = document.cookie.match(new RegExp('(^| )token=([^;]+)'));
+            if (match) return match[2];
+        },
 
-window.setting = function ()
-                {
-                    return {
-                        getToken() {
-                            var match = document.cookie.match(new RegExp('(^| )token=([^;]+)'));
-                            if (match) return match[2];
-                        },
-
-                        frequency:[],
-                        times : [5,10,30,59],
+        frequency: [],
+        times: [5, 10, 30, 59],
 
 
-                        async frequencySettings() {
+        async frequencySettings() {
+            let frequency;
+            let response = await fetch(domain + '/frequency-settings', {
+                method: 'GET',
+                headers: {'Authorization': 'bearer ' + this.getToken()},
+            });
 
-                            console.log("habib")
-
-                            let  frequency;
-                            let response = await fetch(domain + '/frequency-settings', {
-                                method: 'GET',
-                                headers: {'Authorization': 'bearer ' + this.getToken()},
-                            });
-
-                            if (response.ok) {
-                                frequency = await response.json();
-                            } else {
-                                frequency = [];
-                            }
-                            this.frequency = frequency.data;
-                            console.log(frequency)
-                        },
+            if (response.ok) {
+                frequency = await response.json();
+            } else {
+                frequency = [];
+            }
+            this.frequency = frequency.data;
+        },
 
 
-                        async clearCash() {
-                            let  cash;
-                            let response = await fetch(domain + '/clear-cache', {
-                                method: 'GET',
-                                headers: {'Authorization': 'bearer ' + this.getToken()},
-                            });
+        async clearCash() {
+            let cash;
+            let response = await fetch(domain + '/clear-cache', {
+                method: 'GET',
+                headers: {'Authorization': 'bearer ' + this.getToken()},
+            });
 
-                            if (response.ok) {
-                                cash = await response.json();
-                            } else {
-                                cash = [];
-                            }
-                        },
-
-
-                        frequencySettingsUpdate: {
-                            location_duration: '',
-                            feed_duration: '',
-
-                        },
-
-                        updatefrequencSertting(){
-                            fetch(domain + '/frequency-settings-update', {
-                                method: 'PUT',
-                                headers: {
-                                    'Authorization': 'bearer ' + this.getToken(),
-                                    'Content-Type': 'application/json'
-                                },
-                                body: JSON.stringify(this.frequencySettingsUpdate),
-                            })
-                                .then((response) => {
-                                    if (!response.ok) {
-                                        throw new Error();
-                                    }
-                                    return response.json();
-                                })
-                                .then((data) => {
-                                    this.messageType = 'success';
-                                    this.message = 'Success';
-                                })
-                                .catch(() => {
-                                    this.messageType = 'warning';
-                                    this.message = 'Not Update';
-                                })
-                        },
+            if (response.ok) {
+                cash = await response.json();
+            } else {
+                cash = [];
+            }
+        },
 
 
+        frequencySettingsUpdate: {
+            location_duration: '',
+            feed_duration: '',
+
+        },
+
+        updatefrequencSertting() {
+            fetch(domain + '/frequency-settings-update', {
+                method: 'PUT',
+                headers: {
+                    'Authorization': 'bearer ' + this.getToken(),
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(this.frequencySettingsUpdate),
+            })
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error();
                     }
+                    return response.json();
+                })
+                .then((data) => {
+                    this.messageType = 'success';
+                    this.message = 'Success';
+                })
+                .catch(() => {
+                    this.messageType = 'warning';
+                    this.message = 'Not Update';
+                })
+        },
 
-                }
 
-                let days = []
+    }
 
-window.dashboard= function () {
-    return{
+}
+
+let days = []
+
+window.dashboard = function () {
+    return {
         getToken() {
             let match = document.cookie.match(new RegExp('(^| )token=([^;]+)'));
             if (match) return match[2];
         },
-        dashBoardData:[],
-        dashboardUserMessage:[],
-        dashboardUserPerfomance:[],
-        dashboardChart1:[],
-        dashboardChart2:[],
-        dashboardChart3:[],
-        dashboardChart4:[],
-        chart1days:[],
-        chart1Data:[],
-        chart2days:[],
-        chart2Data:[],
-        chart3days:[],
-        chart3Data:[],
-        chart4days:[],
-        chart4Data:[],
-        searchText:'',
+        dashBoardData: [],
+        dashboardUserMessage: [],
+        dashboardUserPerfomance: [],
+        dashboardChart1: [],
+        dashboardChart2: [],
+        dashboardChart3: [],
+        dashboardChart4: [],
+        chart1days: [],
+        chart1Data: [],
+        chart2days: [],
+        chart2Data: [],
+        chart3days: [],
+        chart3Data: [],
+        chart4days: [],
+        chart4Data: [],
+        searchText: '',
         async getDashboard() {
-            let  dashboard;
+            let dashboard;
             let response = await fetch(domain + '/dashboard', {
                 method: 'GET',
                 headers: {'Authorization': 'bearer ' + this.getToken()},
@@ -795,12 +823,12 @@ window.dashboard= function () {
                 dashboard = [];
             }
             this.dashBoardData = dashboard.data;
-            this.dashboardUserMessage=this.dashBoardData.logs;
-            this.dashboardUserPerfomance =this.dashBoardData.location_performance;
-            this.dashboardChart1=this.dashBoardData.location_active_day;
-            this.dashboardChart2=this.dashBoardData.location_active_month;
-            this.dashboardChart3=this.dashBoardData.feed_active_day;
-            this.dashboardChart4=this.dashBoardData.feed_active_month;
+            this.dashboardUserMessage = this.dashBoardData.logs;
+            this.dashboardUserPerfomance = this.dashBoardData.location_performance;
+            this.dashboardChart1 = this.dashBoardData.location_active_day;
+            this.dashboardChart2 = this.dashBoardData.location_active_month;
+            this.dashboardChart3 = this.dashBoardData.feed_active_day;
+            this.dashboardChart4 = this.dashBoardData.feed_active_month;
 
 
             for (const i in this.dashboardChart1) {
@@ -1070,7 +1098,7 @@ window.dashboard= function () {
 
             // chart 03 ends from here
 
-             // chart 04 starts from here
+            // chart 04 starts from here
             var ctx4 = document.getElementById("chart-line-tasks4").getContext("2d");
 
             new Chart(ctx4, {
@@ -1078,7 +1106,7 @@ window.dashboard= function () {
                 data: {
                     labels: this.chart4days,
                     datasets: [{
-                        label:"Feed",
+                        label: "Feed",
                         tension: 0,
                         borderWidth: 0,
                         pointRadius: 5,
