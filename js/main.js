@@ -197,8 +197,8 @@ function getCookie(cname) {
 
 
 
-if (!getCookie("token") && location.href.replace(/.*\/\/[^\/]*/, '') != "/status_project/login.html") {
-    window.location.replace("/status_project/login.html");
+if (!getCookie("token") && location.href.replace(/.*\/\/[^\/]*/, '') != "/login.html") {
+    window.location.replace("/login.html");
 }
 
 
