@@ -79,7 +79,7 @@ function getCookie(cname) {
 if (!getCookie("token") && location.href.replace(/.*\/\/[^\/]*/, '') != "/login.html") {
     window.location.replace("/login.html");
 }
-
+//kkk
 
 
 //LOGIN
