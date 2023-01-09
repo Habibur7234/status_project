@@ -4,9 +4,6 @@ const domain = 'https://location.selopian.us/api';
 
 
 
-// var today = new Date();
-// var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-//
 
 
 
@@ -155,26 +152,12 @@ const refreshToken = () => {
             document.cookie = "token" + "=" + data.access_token + "; " + expires + "; path=/; secure; sameSite=Lax";
         })
 }
-let refreshTime = 10 * 60 * 1000;
+let refreshTime = 1 * 60 * 1000;
 setTimeout(refreshToken,refreshTime)
 
-// const saveLogCredential = (data) => {
-//     window.localStorage.setItem('credential',JSON.stringify(data))
-// }
-// let myCredential
-// const getCredential = () =>{
-//     myCredential = window.localStorage.getItem('credential')
-//     return JSON.parse(myCredential)
-// }
-// let refreshToken = ()=>{
-//     const newCredential = getCredential()
-//     if(newCredential.email){
-//         this.logIn().logInService()
-//     }else{
-//         console.log(0)
-//     }
-// }
-// refreshToken();
+
+
+
 window.logOut =
     function () {
         return {
@@ -267,15 +250,12 @@ window.services =
             currentPage: '',
             totalPage: '',
             pagination: '',
+            userRole: '',
 
             getToken() {
                 var match = document.cookie.match(new RegExp('(^| )token=([^;]+)'));
                 if (match) return match[2];
             },
-
-
-
-
 
 
             pushNotify(status, title, text) {
@@ -312,10 +292,14 @@ window.services =
                 }
                 this.services = [];
                 this.services = userData.users.data;
+                // console.log(userData.roles)
                 this.firstPage = userData.users.from;
                 this.lastPage = userData.users.last_page;
                 this.totalPage = userData.users.last_page;
                 this.currentPage = userData.users.current_page;
+                this.userRole = userData.roles;
+                //this.userRole = userData.roleLabel;
+                console.log(this.userRole);
 
 
                 let pagination_number;
@@ -332,7 +316,6 @@ window.services =
             },
 
             // userTable:'',
-
 
 
             addUser() {
@@ -353,13 +336,25 @@ window.services =
                                 this.pushNotify("error",data.error[key],'')
                             }
                         }else{
-console.log(this.services.role_id)
+
+                            // console.log(data);
+
+                            // if (this.userData["role"] =='1'){
+                            //     this.userData["role"]='Admin'
+                            // }
+                            // else {
+                            //     this.userData["role"]='Manager'
+                            // }
                             this.services.unshift({
-                                name: this.userData['name'],
-                                email: this.userData['email'],
-                                role: this.userData["role"],
+                                id: data.user.id,
+                                name: data.user.name,
+                                email: data.user.email,
+                                role: data.user.role,
+                                role_id: data.user.role_id,
                                 status: "Offline",
                             });
+
+                            console.log(this.userRole);
                             const user_modal = document.querySelector('#add_user_modal');
                             const modal = bootstrap.Modal.getInstance(user_modal);
                             modal.hide();
@@ -431,8 +426,12 @@ console.log(this.services.role_id)
                 this.editModalData['id'] = this.services[position]['id'];
                 this.editModalData['name'] = this.services[position]['name'];
                 this.editModalData['email'] = this.services[position]['email'];
-                this.editModalData['role'] = this.services[position]['role'];
+                this.editModalData['role'] = this.services[position]['role_id'];
+
+                console.log(this.editModalData);
             },
+
+
 
             updateUser() {
                 fetch(domain + '/user-update', {
@@ -453,9 +452,11 @@ console.log(this.services.role_id)
                             }
                         }else{
                             let position = this.services.findIndex(el => el.id === this.updatedId);
-                            this.services[position]['name'] = this.editModalData['name'];
-                            this.services[position]['email'] = this.editModalData['email'];
-                            this.services[position]['role'] = this.editModalData['role'];
+                            this.services[position]['name'] = data.user.name;
+                            this.services[position]['email'] = data.user.email;
+                            this.services[position]['role_id'] = data.user.role_id;
+                            this.services[position]['role'] = data.user.role;
+
 
                             this.updatedId = '';
                             this.editModalData['name'] = '';
@@ -761,11 +762,11 @@ window.locationService =
 
                             }
                         }else{
-                            // let position = this.servicesLocation.findIndex(el => el.id === this.updatedId);
-                            // this.servicesLocation[position]['name'] = this.editLocationData['name'];
-                            // this.servicesLocation[position]['ip_address'] = this.editLocationData['email'];
-                            // this.servicesLocation[position]['router_type'] = this.editLocationData['router_type'];
-                            // this.servicesLocation[position]['feed_type'] = this.editLocationData['feed_type'];
+                            let position = this.servicesLocation.findIndex(el => el.id === this.update_location_id);
+                            this.servicesLocation[position]['name'] = this.editLocationData['name'];
+                            this.servicesLocation[position]['ip_address'] = this.editLocationData['email'];
+                            this.servicesLocation[position]['router_type'] = this.editLocationData['router_type'];
+                            this.servicesLocation[position]['feed_type'] = this.editLocationData['feed_type'];
 
                             const edit_location_modal = document.querySelector('#edit_location_modal');
                             const modal = bootstrap.Modal.getInstance(edit_location_modal);
@@ -921,11 +922,6 @@ window.dashboard = function () {
             let match = document.cookie.match(new RegExp('(^| )token=([^;]+)'));
             if (match) return match[2];
         },
-
-
-
-
-
         dashBoardData: [],
         dashboardUserMessage: [],
         dashboardUserPerfomance: [],
