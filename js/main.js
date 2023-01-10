@@ -66,6 +66,10 @@ function getCookie(cname) {
     return false;
 }
 
+
+
+
+
 // check which mode from cookie
 /// set dark mode or do nothing for ligh mode
 //console.log(darkMode(this));
@@ -73,10 +77,10 @@ function getCookie(cname) {
 
 
 
-if (!getCookie("token") && location.href.replace(/.*\/\/[^\/]*/, '') != "/login.html") {
-    window.location.replace("/login.html");
+if (!getCookie("token") && location.href.replace(/.*\/\/[^\/]*/, '') != "/status_project/login.html") {
+    window.location.replace("/status_project/login.html");
 }
-//kkk
+//
 
 
 //LOGIN
@@ -87,7 +91,8 @@ window.logIn =
                 email: '',
                 password: '',
             },
-            messageType: '',
+
+
             pushNotify(status, title, text) {
                 new Notify({
                     status: status,
@@ -113,20 +118,24 @@ window.logIn =
                     headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify(this.LogInData)
                 }).then((response) => {
-                    console.log(response)
                         if (!response.ok) {
                             throw new Error();
                         }
                         return response.json();
                     })
+
                     .then((data) => {
+                        console.log(this.profileUserName)
+
+
                         const d = new Date();
                         d.setTime(d.getTime() + (1 * 1 * 60 * 60 * 1000));
                         let expires = "expires=" + d.toUTCString();
                         document.cookie = "token" + "=" + data.access_token + "; " + expires + "; path=/; secure; sameSite=Lax";
                         //document.cookie = "theme=1";
                             window.location = "index.html"
-                            // saveLogCredential(this.LogInData)
+
+                        document.cookie= "userName" + "=" + data.user.name;
                     })
                     .catch((error) => {
                         this.pushNotify("error", error, 'UserName or Password Invalid')
@@ -137,8 +146,16 @@ window.logIn =
         }
     };
 
-const token = document.cookie.split("=")[1]
+const userName = document.cookie.split(";")[0].split("=")[1];
+let userNameId = generateVariable('#currentUserName');
+if(userNameId){
+    if(userName){
+        userNameId.innerText = userName
+    }
+}
 
+
+const token = document.cookie.split("=")[1]
 const refreshToken = () => {
     fetch(domain + '/refresh', {
         method: 'GET',
@@ -381,6 +398,8 @@ window.services =
                     })
                     .then((data) => {
                         this.loggedInID = data.user.id;
+
+                        console.log( "hhhhhhhhhh" +this.loggedInID)
 
                         // save it in cookie
                         //user_id = 111
@@ -823,7 +842,7 @@ window.setting = function () {
         },
 
         frequency: [],
-        times: [5, 10, 30, 59],
+
 
 
         pushNotify(status, title, text) {
@@ -883,6 +902,7 @@ window.setting = function () {
             feed_duration: '',
 
         },
+        times: [5, 10, 30, 59],
 
         updatefrequencSertting() {
             fetch(domain + '/frequency-settings-update', {

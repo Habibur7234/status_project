@@ -99,9 +99,9 @@
                 </div>
                 <ul class="navbar-nav  justify-content-end">
                     <li class="nav-item d-flex align-items-center">
-                        <a href="/sign-in.html" class="nav-link text-body font-weight-bold px-0">
+                        <a href="#!" class="nav-link text-body font-weight-bold px-0">
                             <i class="fa fa-user me-sm-1"></i>
-                            <span class="d-sm-inline d-none">Jhon Smith</span>
+                            <span class="d-sm-inline d-none" id="currentUserName"></span>
                         </a>
                     </li>
                     <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
@@ -201,7 +201,7 @@
                                                     <label>Live Feed Frequency</label>
                                                     <select class="form-control" x-model="frequencySettingsUpdate.feed_duration">
                                                         <template x-for="time in times">
-                                                                <option :selected="time === frequency.feed_duration" :value="time" x-text="time +' minute'"></option>
+                                                                <option :selected="time == frequency.feed_duration" :value="time" x-text="time +' minute'"></option>
                                                         </template>
 
                                                     </select>
@@ -211,7 +211,7 @@
                                                     <label>Location Frequency</label>
                                                     <select class="form-control" x-model="frequencySettingsUpdate.location_duration">
                                                         <template x-for="time in times">
-                                                            <option :selected="time === frequency.location_duration" :value="time" x-text="time +' minute'"></option>
+                                                            <option :selected="time == frequency.location_duration" :value="time" x-text="time +' minute'"></option>
                                                         </template>
                                                     </select>
                                                 </div>
