@@ -68,8 +68,8 @@ function getCookie(cname) {
 
 
 
-if (!getCookie("token") && location.href.replace(/.*\/\/[^\/]*/, '') != "/login.html") {
-    window.location.replace("/login.html");
+if (!getCookie("token") && location.href.replace(/.*\/\/[^\/]*/, '') != "/status_project/login.html") {
+    window.location.replace("/status_project/login.html");
 }
 //
 
@@ -399,7 +399,6 @@ window.services =
                     this.loggedInID = profile.id;
                     this.profileInfo = profile;
                     this.profileRole = profile.role;
-                    console.log(this.profileRole)
                 })
 
             },
