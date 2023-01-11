@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" x-data="services()" x-init="userProfile()">
+
 
 <head>
     <meta charset="utf-8"/>
@@ -24,8 +25,6 @@
     <!--Notyf-->
     <link rel="stylesheet" href="/assets/css/notyf.min.css">
     <link rel="stylesheet" href="/assets/css/simple-notify.min.css">
-
-
 </head>
 
 <body class="themeId g-sidenav-show bg-gray-200">
@@ -77,11 +76,7 @@
             </li>
         </ul>
     </div>
-    <div class="sidenav-footer position-absolute w-100 bottom-7">
-        <div class="mx-3">
-            <button class="btn bg-gradient-success mt-4 w-100" href="login.html"  @click="logOutService()" type="button">Clear Cache</button>
-        </div>
-    </div>
+
     <div class="sidenav-footer position-absolute w-100 bottom-0"  x-data="logOut()">
         <div class="mx-3">
             <button class="btn bg-gradient-danger mt-4 w-100" href="login.html"  @click="logOutService()" type="button">LogOut</button>
@@ -311,12 +306,13 @@
                                                                placeholder="someone@something.com...."
                                                                x-model="editModalData.email">
                                                     </div>
+
                                                     <div class="col-lg-12 col-sm-10 mb2 my-4 input-group input-group-static">
                                                         <label class="my-1 me-2">Type</label>
                                                         <select class="form-control" x-model="editModalData.role">
                                                             <option disabled selected value >Select A Role</option>
                                                             <template x-for="role in userRole">
-                                                                <option :value="role.id" x-text="role.name"></option>
+                                                                <option  :value="role.id" x-text="role.name"></option>
                                                             </template>
                                                         </select>
                                                     </div>
@@ -489,17 +485,23 @@
                                                     </template>
 
 
+
                                                     <td class="align-middle text-center">
+
+
                                                         <button class="btn btn-dark  mb-n1 " toggle="tooltip"
                                                                 title="Edit" type="button" data-bs-toggle="modal"
                                                                 data-bs-target="#edit_user_modal"
                                                                 @click="editUser(item.id)"><i
-                                                                class="material-icons opacity-10">edit</i></button>
+                                                                class="material-icons opacity-10">edit</i>
+                                                        </button>
                                                         <button class="btn btn-dark  mb-n1" toggle="tooltip"
                                                                 title="Edit" type="button" data-bs-toggle="modal"
                                                                 data-bs-target="#edit_user_credentials"
                                                                 @click="editUserPassword(item.id)"><i
-                                                                class="material-icons opacity-10">key</i></button>
+                                                                class="material-icons opacity-10">key</i>
+                                                        </button>
+
 
                                                         <template x-if="item.id != loggedInID">
                                                             <button class="btn btn-danger  mb-n1" toggle="tooltip"
@@ -554,12 +556,6 @@
                                                                 <span class="sr-only">Previous</span>
                                                             </a>
                                                         </li>
-
-<!--                                                        <template x-if="currentPage - 1 > firstPage">-->
-<!--                                                            <li class="page-item">-->
-<!--                                                                ...-->
-<!--                                                            </li>-->
-<!--                                                        </template>-->
 
 
                                                         <li class="page-item">
@@ -757,5 +753,4 @@
 <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
 <script src="/assets/js/material-dashboard.min.js?v=3.0.4"></script>
 </body>
-
 </html>

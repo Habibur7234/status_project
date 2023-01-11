@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/html">
+<html lang="en" xmlns="http://www.w3.org/1999/html" x-data="services()" x-init="userProfile()" >
 
 <head>
     <meta charset="utf-8"/>
@@ -26,9 +26,8 @@
 </head>
 
 
-<body class="themeId g-sidenav-show  bg-gray-200">
-<aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 bg-gradient-dark"
-       id="sidenav-main">
+<body class="themeId g-sidenav-show  bg-gray-200" >
+<aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 bg-gradient-dark" id="sidenav-main">
     <div class="sidenav-header">
         <i class="fas fa-times p-3 cursor-pointer text-white opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
            aria-hidden="true" id="iconSidenav"></i>
@@ -48,7 +47,7 @@
                     <span class="nav-link-text ms-1">Dashboard</span>
                 </a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" id="userMenu">
                 <a class="nav-link text-white " href="users.html">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="material-icons opacity-10">group</i>
@@ -56,7 +55,6 @@
                     <span class="nav-link-text ms-1">Users</span>
                 </a>
             </li>
-
             <li class="nav-item">
                 <a class="nav-link text-white active bg-gradient-primary " href="location.html">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -65,7 +63,7 @@
                     <span class="nav-link-text ms-1">Location</span>
                 </a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" id="userMenu1">
                 <a class="nav-link text-white " href="settings.html">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="material-icons opacity-10">settings</i>
@@ -100,7 +98,7 @@
                 <ul class="navbar-nav  justify-content-end">
 
                     <li class="nav-item d-flex align-items-center">
-                        <a href="#!" class="nav-link text-body font-weight-bold px-0">
+                        <a href="/sign-in.html" class="nav-link text-body font-weight-bold px-0">
                             <i class="fa fa-user me-sm-1"></i>
                             <span class="d-sm-inline d-none" id="currentUserName"></span>
                         </a>
@@ -198,6 +196,7 @@
     <div x-data="locationService()" x-init="initLocation()">
 
         <!--Add location modal-->
+        <template x-if="profileRole=='Admin'">
         <div class="modal fade" id="add_location_modal" tabindex="-1" role="dialog" aria-labelledby="modal-form" aria-hidden="true" x-init="routerType(),feedType() ">
             <div class=" modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
@@ -299,7 +298,7 @@
             </div>
         </div>
         <!--End Modal-->
-
+        </template>
 
         <!--edit location modal-->
         <div class="modal fade" id="edit_location_modal" tabindex="-1" role="dialog" aria-labelledby="modal-form" aria-hidden="true" x-init="routerType(),feedType()">
@@ -500,16 +499,19 @@
                             </div>
                         </div>
 
-                        <div class="card-body px-0 pb-2">
+                        <div class="card-body px-0 pb-2" >
                             <div class="table-responsive p-0">
                                 <div class="container">
                                     <div class="form-group">
                                         <table class="table tab-pane table-class">
                                             <thead>
+
                                             <th class="align-middle text-center">LOCATION - IP</th>
                                             <th class="align-middle text-center">LOCATION STATUS</th>
                                             <th class="align-middle text-center">LIVE FEED STATUS</th>
+                                            <template x-if="profileRole=='Admin'">
                                             <th class="align-middle text-center">ACTION</th>
+                                            </template>
                                             </thead>
                                             <tbody>
                                             <template x-for="location in servicesLocation">
@@ -539,12 +541,15 @@
                                                         </td>
                                                     </template>
                                                         <td class="align-middle text-center">N/A</td>
-                                                    <td class="align-middle text-center">
-                                                        <button class="btn btn-dark  mb-n1 " toggle="tooltip" title="Edit" type="button" data-bs-toggle="modal" data-bs-target="#edit_location_modal" @click="editLocation(location.id)" ><i class="material-icons opacity-10">edit</i></button>
-<!--                                                        <button class="btn btn-dark btn-sm mb-n1" toggle="tooltip" title="Edit" type="button" data-bs-toggle="modal" data-bs-target="#edit_user_credentials" @click="editUserPassword(item.id)"><i class="material-icons opacity-10">key</i></button>-->
-                                                        <button class="btn btn-danger  mb-n1" toggle="tooltip" title="Delete" data-bs-toggle="modal" data-bs-target="#delete_location_modal" @click="deleteLocation(location.id)"><i class="material-icons opacity-10">delete</i></button>
+                                                    <td class="align-middle text-center" >
+                                                        <template x-if="profileRole=='Admin'">
+                                                            <button class="btn btn-dark  mb-n1 " toggle="tooltip" title="Edit" type="button" data-bs-toggle="modal" data-bs-target="#edit_location_modal" @click="editLocation(location.id)" ><i class="material-icons opacity-10">edit</i></button>
+                                                        </template>
 
-                                                    </td>
+                                                        <template x-if="profileRole=='Admin'">
+                                                                <button class="btn btn-danger  mb-n1" toggle="tooltip" title="Delete" data-bs-toggle="modal" data-bs-target="#delete_location_modal" @click="deleteLocation(location.id)"><i class="material-icons opacity-10">delete</i></button>
+                                                        </template>
+                                                  </td>
                                                 </tr>
                                             </template>
                                             </tbody>

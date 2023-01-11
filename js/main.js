@@ -3,12 +3,6 @@ const domain = 'https://location.selopian.us/api';
 
 
 
-
-
-
-
-
-
 const generateVariable = (selector) => {
     return document.querySelector(selector)
 }
@@ -35,11 +29,9 @@ let active;
 const themeChange =()=>{
     active = getTheme();
     if (!active.dark) {
-        console.log(isChecked)
         window.localStorage.setItem("theme", JSON.stringify({dark:true}))
         theme()
     } else {
-        console.log(isChecked)
         window.localStorage.setItem("theme", JSON.stringify({dark:false}))
         theme()
     }
@@ -72,13 +64,12 @@ function getCookie(cname) {
 
 // check which mode from cookie
 /// set dark mode or do nothing for ligh mode
-//console.log(darkMode(this));
 
 
 
 
-if (!getCookie("token") && location.href.replace(/.*\/\/[^\/]*/, '') != "/status_project/login.html") {
-    window.location.replace("/status_project/login.html");
+if (!getCookie("token") && location.href.replace(/.*\/\/[^\/]*/, '') != "/login.html") {
+    window.location.replace("/login.html");
 }
 //
 
@@ -125,17 +116,15 @@ window.logIn =
                     })
 
                     .then((data) => {
-                        console.log(this.profileUserName)
-
 
                         const d = new Date();
                         d.setTime(d.getTime() + (1 * 1 * 60 * 60 * 1000));
                         let expires = "expires=" + d.toUTCString();
                         document.cookie = "token" + "=" + data.access_token + "; " + expires + "; path=/; secure; sameSite=Lax";
                         //document.cookie = "theme=1";
-                            window.location = "index.html"
+                        window.location = "index.html"
+                        document.cookie= "user" + "=" + JSON.stringify(data.user);
 
-                        document.cookie= "userName" + "=" + data.user.name;
                     })
                     .catch((error) => {
                         this.pushNotify("error", error, 'UserName or Password Invalid')
@@ -146,11 +135,24 @@ window.logIn =
         }
     };
 
-const userName = document.cookie.split(";")[0].split("=")[1];
+const userInfo = JSON.parse(document.cookie.split(";")[0].split("=")[1])
+let userMenu = generateVariable('#userMenu')
+let userMenu1 = generateVariable('#userMenu1')
+
 let userNameId = generateVariable('#currentUserName');
+const {id,name,email,role,role_id} = userInfo;
+if(role==='Manager'){
+    userMenu.innerHTML=""
+    userMenu.hidden = true;
+}
+if(role==='Manager'){
+    userMenu1.innerHTML=""
+    userMenu1.hidden = true;
+}
+
 if(userNameId){
-    if(userName){
-        userNameId.innerText = userName
+    if(userInfo){
+        userNameId.innerText = name
     }
 }
 
@@ -162,14 +164,13 @@ const refreshToken = () => {
         headers: {'Authorization': 'bearer ' + token}
     }).then(res => res.json())
         .then(data => {
-            console.log(data)
             const date = new Date();
             date.setTime(date.getTime() + (1 * 1 * 60 * 60 * 1000));
             let expires = "expires=" + date.toUTCString();
             document.cookie = "token" + "=" + data.access_token + "; " + expires + "; path=/; secure; sameSite=Lax";
         })
 }
-let refreshTime = 1 * 60 * 1000;
+let refreshTime = 13 * 60 * 1000;
 setTimeout(refreshToken,refreshTime)
 
 
@@ -267,7 +268,11 @@ window.services =
             currentPage: '',
             totalPage: '',
             pagination: '',
-            userRole: '',
+            profileInfo: '',
+            userInfo:'',
+            profileRole:'',
+            userRole:'',
+
 
             getToken() {
                 var match = document.cookie.match(new RegExp('(^| )token=([^;]+)'));
@@ -296,7 +301,8 @@ window.services =
             },
 
             async initUser(page = 1) {
-                this.userProfile();
+
+                await this.userProfile();
                 let userData;
                 let response = await fetch(domain + '/user-list?page=' + page, {
                     method: 'GET',
@@ -309,14 +315,18 @@ window.services =
                 }
                 this.services = [];
                 this.services = userData.users.data;
-                // console.log(userData.roles)
                 this.firstPage = userData.users.from;
                 this.lastPage = userData.users.last_page;
                 this.totalPage = userData.users.last_page;
                 this.currentPage = userData.users.current_page;
                 this.userRole = userData.roles;
-                //this.userRole = userData.roleLabel;
-                console.log(this.userRole);
+
+                // for (let role in this.userRole ) {
+                // }
+
+
+
+
 
 
                 let pagination_number;
@@ -346,7 +356,6 @@ window.services =
                 })
                     .then(async response => {
                         const data = await response.json();
-                        // console.log(data.error);
                         if(!response.ok) {
 
                             for (const key in data.error) {
@@ -354,14 +363,6 @@ window.services =
                             }
                         }else{
 
-                            // console.log(data);
-
-                            // if (this.userData["role"] =='1'){
-                            //     this.userData["role"]='Admin'
-                            // }
-                            // else {
-                            //     this.userData["role"]='Manager'
-                            // }
                             this.services.unshift({
                                 id: data.user.id,
                                 name: data.user.name,
@@ -371,13 +372,9 @@ window.services =
                                 status: "Offline",
                             });
 
-                            console.log(this.userRole);
                             const user_modal = document.querySelector('#add_user_modal');
                             const modal = bootstrap.Modal.getInstance(user_modal);
                             modal.hide();
-
-                            console.log(data.message);
-
                             this.pushNotify("success",data.message,'User Added Successfully')
                         }
                     })
@@ -385,28 +382,25 @@ window.services =
             },
 
 
-            userProfile() {
-                fetch(domain + '/profile', {
+           async userProfile() {
+                await fetch(domain + '/profile', {
                     method: 'GET',
                     headers: {'Authorization': 'bearer' + this.getToken()},
                 })
-                    .then((response) => {
-                        if (!response.ok) {
-                            throw new Error();
-                        }
-                        return response.json();
-                    })
-                    .then((data) => {
-                        this.loggedInID = data.user.id;
-
-                        console.log( "hhhhhhhhhh" +this.loggedInID)
-
-                        // save it in cookie
-                        //user_id = 111
-                        //user_name = Montu Mia
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error();
+                    }
+                    return response.json();
+                })
 
 
-                    })
+                .then((profile) => {
+                    this.loggedInID = profile.id;
+                    this.profileInfo = profile;
+                    this.profileRole = profile.role;
+                    console.log(this.profileRole)
+                })
 
             },
 
@@ -424,6 +418,7 @@ window.services =
                     },
                     body: JSON.stringify(this.paginationData),
                 })
+
                     .then((response) => {
                         if (!response.ok) {
                             throw new Error();
@@ -446,9 +441,8 @@ window.services =
                 this.editModalData['name'] = this.services[position]['name'];
                 this.editModalData['email'] = this.services[position]['email'];
                 this.editModalData['role'] = this.services[position]['role_id'];
-
-                console.log(this.editModalData);
-            },
+                this.editModalData['role_name'] = this.services[position]['role'];
+                },
 
 
 
@@ -726,7 +720,6 @@ window.locationService =
 
                     .then(async responsei => {
                         const data = await responsei.json();
-                        console.log(data);
                         if(!responsei.ok) {
                             for (const key in data.error) {
                                 this.pushNotify("error",data.error[key],'')
@@ -737,6 +730,13 @@ window.locationService =
                             this.servicesLocation.unshift({
                                 name: this.locationData['name'],
                                 ip_address: this.locationData['ip_address'],
+                                router_type: this.locationData['router_type'],
+                                feed_type: this.locationData['feed_type'],
+                                username: this.locationData['username'],
+                                password: this.locationData['password'],
+                                feed_ip_address: this.locationData['feed_ip_address'],
+                                feed_port: this.locationData['feed_port'],
+                                router_port: this.locationData['router_port'],
                                 status: "Inactive"
                             });
                             const user_modal = document.querySelector('#add_location_modal');
@@ -786,6 +786,11 @@ window.locationService =
                             this.servicesLocation[position]['ip_address'] = this.editLocationData['email'];
                             this.servicesLocation[position]['router_type'] = this.editLocationData['router_type'];
                             this.servicesLocation[position]['feed_type'] = this.editLocationData['feed_type'];
+                            this.servicesLocation[position]['username'] = this.editLocationData['username'];
+                            this.servicesLocation[position]['password'] = this.editLocationData['password'];
+                            this.servicesLocation[position]['feed_ip_address'] = this.editLocationData['feed_type'];
+                            this.servicesLocation[position]['feed_port'] = this.editLocationData['feed_type'];
+                            this.servicesLocation[position]['router_port'] = this.editLocationData['feed_type'];
 
                             const edit_location_modal = document.querySelector('#edit_location_modal');
                             const modal = bootstrap.Modal.getInstance(edit_location_modal);
@@ -866,8 +871,16 @@ window.setting = function () {
         },
 
 
+        frequencySettingsUpdate: {
+            location_duration: '',
+            feed_duration: '',
+        },
+        times: [5, 10, 30, 59],
+
         async frequencySettings() {
             let frequency;
+            // let location_duration;
+            // let feed_duration
             let response = await fetch(domain + '/frequency-settings', {
                 method: 'GET',
                 headers: {'Authorization': 'bearer ' + this.getToken()},
@@ -879,6 +892,9 @@ window.setting = function () {
                 frequency = [];
             }
             this.frequency = frequency.data;
+            this.frequencySettingsUpdate.location_duration = this.frequency.location_duration;
+            this.frequencySettingsUpdate.feed_duration = this.frequency.feed_duration;
+
         },
 
 
@@ -897,14 +913,12 @@ window.setting = function () {
         },
 
 
-        frequencySettingsUpdate: {
-            location_duration: '',
-            feed_duration: '',
 
-        },
-        times: [5, 10, 30, 59],
+
+
 
         updatefrequencSertting() {
+
             fetch(domain + '/frequency-settings-update', {
                 method: 'PUT',
                 headers: {
