@@ -129,8 +129,8 @@ const themeChange =()=>{
 const userCokie = document.cookie;
 if(userCokie){
     const userInfoCokie = userCokie.split(";")[0].split("=")[1]
-    const userInfo = userInfoCokie ? JSON.parse(userInfoCokie) : {}
-    console.log(userInfo)
+    // const userInfo = userInfoCokie ? JSON.parse(userInfoCokie) : {}
+    console.log(userInfoCokie)
     // let userMenu = generateVariable('#userMenu')
     // let userMenu1 = generateVariable('#userMenu1')
     //
