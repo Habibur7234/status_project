@@ -86,10 +86,10 @@ function getCookie(cname) {
 
 
 
-
-if (!getCookie("token") && location.href.replace(/.*\/\/[^\/]*/, '') != "/login.html") {
-    window.location.replace("/login.html");
-}
+//
+// if (!getCookie("token") && location.href.replace(/.*\/\/[^\/]*/, '') != "/login.html") {
+//     window.location.replace("/login.html");
+// }
 
 const generateVariable = (selector) => {
     return document.querySelector(selector)
@@ -129,30 +129,31 @@ const themeChange =()=>{
 
 const userCokie = document.cookie;
 if(userCokie){
-    const userInfoCokie = userCokie.split(";")[0].split("=")[1]
-    // const userInfo = userInfoCokie ? JSON.parse(userInfoCokie) : {}
-    console.log(userInfoCokie)
-    // let userMenu = generateVariable('#userMenu')
-    // let userMenu1 = generateVariable('#userMenu1')
-    //
-    // let userNameId = generateVariable('#currentUserName');
-    // const {name,role} = userInfo;
-    // if(role==='Manager'){
-    //     userMenu.innerHTML=""
-    //     userMenu.hidden = true;
-    // }
-    // if(role==='Manager'){
-    //     userMenu1.innerHTML=""
-    //     userMenu1.hidden = true;
-    // }
-    //
-    // if(userNameId){
-    //     if(userInfo){
-    //         userNameId.innerText = name
-    //     }else{
-    //         userNameId.innerText = 'John Doe'
-    //     }
-    // }
+    const confirmUser = userCokie.split(";")
+    let jsonString =''
+    confirmUser.map(user => user.includes('user') ? jsonString = user : '')
+    const userInfo = JSON.parse(jsonString.split("=")[1])
+    let userMenu = generateVariable('#userMenu')
+    let userMenu1 = generateVariable('#userMenu1')
+
+    let userNameId = generateVariable('#currentUserName');
+    const {name,role} = userInfo;
+    if(role==='Manager'){
+        userMenu.innerHTML=""
+        userMenu.hidden = true;
+    }
+    if(role==='Manager'){
+        userMenu1.innerHTML=""
+        userMenu1.hidden = true;
+    }
+
+    if(userNameId){
+        if(userInfo){
+            userNameId.innerText = name
+        }else{
+            userNameId.innerText = 'John Doe'
+        }
+    }
 }
 
 
