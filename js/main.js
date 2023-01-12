@@ -221,6 +221,7 @@ window.logOut =
                         // clear all cookie variable - jwt, id, profile.. and others
 
                         window.location = "login.html"
+                        document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
                         this.pushNotify('success', 'Success', 'Successfully LogOut ')
 
                     })
