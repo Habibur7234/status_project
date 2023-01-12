@@ -87,8 +87,8 @@ function getCookie(cname) {
 
 
 
-if (!getCookie("token") && location.href.replace(/.*\/\/[^\/]*/, '') != "/login.html") {
-    window.location.replace("/login.html");
+if (!getCookie("token") && location.href.replace(/.*\/\/[^\/]*/, '') != "/status_project/login.html") {
+    window.location.replace("/status_project/login.html");
 }
 
 const generateVariable = (selector) => {
@@ -965,7 +965,6 @@ window.dashboard = function () {
         chart3Data: [],
         chart4days: [],
         chart4Data: [],
-        searchText: '',
 
 
         async getDashboard() {
@@ -983,6 +982,7 @@ window.dashboard = function () {
             this.dashBoardData = dashboard.data;
             this.dashboardUserMessage = this.dashBoardData.logs;
             this.dashboardUserPerfomance = this.dashBoardData.location_performance;
+            console.log(this.dashboardUserPerfomance)
             this.dashboardChart1 = this.dashBoardData.location_active_day;
             this.dashboardChart2 = this.dashBoardData.location_active_month;
             this.dashboardChart3 = this.dashBoardData.feed_active_day;
