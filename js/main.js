@@ -86,8 +86,8 @@ function getCookie(cname) {
 
 
 
-if (!getCookie("token") && location.href.replace(/.*\/\/[^\/]*/, '') != "/status_project/login.html") {
-    window.location.replace("/status_project/login.html");
+if (!getCookie("token") && location.href.replace(/.*\/\/[^\/]*/, '') != "/login.html") {
+    window.location.replace("/login.html");
 }
 
 const generateVariable = (selector) => {
@@ -130,7 +130,6 @@ const userCokie = document.cookie;
 if(userCokie){
     const userInfoCokie = userCokie.split(";")[0].split("=")[1]
     const userInfo = userInfoCokie ? JSON.parse(userInfoCokie) : {}
-    console.log(userInfoCokie)
     let userMenu = generateVariable('#userMenu')
     let userMenu1 = generateVariable('#userMenu1')
 
@@ -1256,7 +1255,7 @@ window.dashboard = function () {
             // chart 03 ends from here
 
             // chart 04 starts from here
-            var ctx4 = document.getElementById("chart-line-tasks4").getContext("2d");
+            let ctx4 = document.getElementById("chart-line-tasks4").getContext("2d");
 
             new Chart(ctx4, {
                 type: "line",
