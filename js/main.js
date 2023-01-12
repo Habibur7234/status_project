@@ -93,38 +93,35 @@ if (!getCookie("token") && location.href.replace(/.*\/\/[^\/]*/, '') != "/login.
 const generateVariable = (selector) => {
     return document.querySelector(selector)
 }
-// let isChecked = generateVariable('#dark-version')
-//
-// const getTheme = () => {
-//     return JSON.parse(window.localStorage.getItem("theme"));
-// }
-// let themeBody = generateVariable('.themeId')
-// const theme = () => {
-//     if(themeBody){
-//         if (getTheme().dark) {
-//             themeBody.classList.add("dark-version")
-//             isChecked.checked = true;
-//         } else {
-//             themeBody.classList.remove("dark-version")
-//             isChecked.checked = false;
-//         }
-//     }
-//
-// }
-// theme(getTheme())
-// let active;
-// const themeChange =()=>{
-//     active = getTheme();
-//     if (!active.dark) {
-//         window.localStorage.setItem("theme", JSON.stringify({dark:true}))
-//         theme()
-//     } else {
-//         window.localStorage.setItem("theme", JSON.stringify({dark:false}))
-//         theme()
-//     }
-// }
-//
-//
+let isChecked = generateVariable('#dark-version')
+const getTheme = () => {
+    return JSON.parse(window.localStorage.getItem("theme"));
+}
+let themeBody = generateVariable('.themeId')
+const theme = () => {
+    if(themeBody){
+        if (getTheme().dark) {
+            themeBody.classList.add("dark-version")
+            isChecked.checked = true;
+        } else {
+            themeBody.classList.remove("dark-version")
+            isChecked.checked = false;
+        }
+    }
+
+}
+theme(getTheme())
+let active;
+const themeChange =()=>{
+    active = getTheme();
+    if (!active.dark) {
+        window.localStorage.setItem("theme", JSON.stringify({dark:true}))
+        theme()
+    } else {
+        window.localStorage.setItem("theme", JSON.stringify({dark:false}))
+        theme()
+    }
+}
 
 
 
@@ -132,7 +129,9 @@ const generateVariable = (selector) => {
 
 
 
-const userInfo = (document.cookie.split(";")[0].split("=")[1])
+
+
+const userInfo = JSON.parse(document.cookie.split(";")[0].split("=")[1])
 let userMenu = generateVariable('#userMenu')
 let userMenu1 = generateVariable('#userMenu1')
 
@@ -150,6 +149,8 @@ if(role==='Manager'){
 if(userNameId){
     if(userInfo){
         userNameId.innerText = name
+    }else{
+        userNameId.innerText = 'John Doe'
     }
 }
 
