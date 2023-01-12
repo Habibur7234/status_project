@@ -95,7 +95,7 @@ const generateVariable = (selector) => {
 }
 let isChecked = generateVariable('#dark-version')
 const getTheme = () => {
-    return JSON.parse(window.localStorage.getItem("theme"));
+    return JSON.parse(window.localStorage.getItem("theme")) || {};
 }
 let themeBody = generateVariable('.themeId')
 const theme = () => {
