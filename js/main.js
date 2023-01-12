@@ -130,27 +130,28 @@ const userCokie = document.cookie;
 if(userCokie){
     const userInfoCokie = userCokie.split(";")[0].split("=")[1]
     const userInfo = userInfoCokie ? JSON.parse(userInfoCokie) : {}
-    let userMenu = generateVariable('#userMenu')
-    let userMenu1 = generateVariable('#userMenu1')
-
-    let userNameId = generateVariable('#currentUserName');
-    const {id,name,email,role,role_id} = userInfo;
-    if(role==='Manager'){
-        userMenu.innerHTML=""
-        userMenu.hidden = true;
-    }
-    if(role==='Manager'){
-        userMenu1.innerHTML=""
-        userMenu1.hidden = true;
-    }
-
-    if(userNameId){
-        if(userInfo){
-            userNameId.innerText = name
-        }else{
-            userNameId.innerText = 'John Doe'
-        }
-    }
+    console.log(userInfo)
+    // let userMenu = generateVariable('#userMenu')
+    // let userMenu1 = generateVariable('#userMenu1')
+    //
+    // let userNameId = generateVariable('#currentUserName');
+    // const {id,name,email,role,role_id} = userInfo;
+    // if(role==='Manager'){
+    //     userMenu.innerHTML=""
+    //     userMenu.hidden = true;
+    // }
+    // if(role==='Manager'){
+    //     userMenu1.innerHTML=""
+    //     userMenu1.hidden = true;
+    // }
+    //
+    // if(userNameId){
+    //     if(userInfo){
+    //         userNameId.innerText = name
+    //     }else{
+    //         userNameId.innerText = 'John Doe'
+    //     }
+    // }
 }
 
 
