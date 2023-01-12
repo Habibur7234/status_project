@@ -1,81 +1,6 @@
 //Global Api
 const domain = 'https://location.selopian.us/api';
 
-
-
-const generateVariable = (selector) => {
-    return document.querySelector(selector)
-}
-let isChecked = generateVariable('#dark-version')
-
-const getTheme = () => {
-    return JSON.parse(window.localStorage.getItem("theme"));
-}
-let themeBody = generateVariable('.themeId')
-const theme = () => {
-    if(themeBody){
-        if (getTheme().dark) {
-            themeBody.classList.add("dark-version")
-            isChecked.checked = true;
-        } else {
-            themeBody.classList.remove("dark-version")
-            isChecked.checked = false;
-        }
-    }
-
-}
-theme(getTheme())
-let active;
-const themeChange =()=>{
-    active = getTheme();
-    if (!active.dark) {
-        window.localStorage.setItem("theme", JSON.stringify({dark:true}))
-        theme()
-    } else {
-        window.localStorage.setItem("theme", JSON.stringify({dark:false}))
-        theme()
-    }
-}
-
-
-
-
-
-//Login Check
-function getCookie(cname) {
-    let name = cname + "=";
-    let ca = document.cookie.split(';');
-    for (let i = 0; i < ca.length; i++) {
-        let c = ca[i];
-        while (c.charAt(0) == ' ') {
-            c = c.substring(1);
-        }
-        if (c.indexOf(name) == 0) {
-            //return c.substring(name.length, c.length);
-            return true;
-        }
-    }
-    return false;
-}
-
-
-
-
-
-// check which mode from cookie
-/// set dark mode or do nothing for ligh mode
-
-
-
-
-if (!getCookie("token") && location.href.replace(/.*\/\/[^\/]*/, '') != "/status_project/login.html") {
-    window.location.replace("/status_project/login.html");
-}
-//
-
-
-//
-
 //LOGIN
 window.logIn =
     function () {
@@ -137,6 +62,76 @@ window.logIn =
         }
     };
 
+
+
+
+
+//Login Check
+function getCookie(cname) {
+    let name = cname + "=";
+    let ca = document.cookie.split(';');
+    for (let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            //return c.substring(name.length, c.length);
+            return true;
+        }
+    }
+    return false;
+}
+
+
+
+
+if (!getCookie("token") && location.href.replace(/.*\/\/[^\/]*/, '') != "/login.html") {
+    window.location.replace("/login.html");
+}
+
+const generateVariable = (selector) => {
+    return document.querySelector(selector)
+}
+let isChecked = generateVariable('#dark-version')
+
+const getTheme = () => {
+    return JSON.parse(window.localStorage.getItem("theme"));
+}
+let themeBody = generateVariable('.themeId')
+const theme = () => {
+    if(themeBody){
+        if (getTheme().dark) {
+            themeBody.classList.add("dark-version")
+            isChecked.checked = true;
+        } else {
+            themeBody.classList.remove("dark-version")
+            isChecked.checked = false;
+        }
+    }
+
+}
+theme(getTheme())
+let active;
+const themeChange =()=>{
+    active = getTheme();
+    if (!active.dark) {
+        window.localStorage.setItem("theme", JSON.stringify({dark:true}))
+        theme()
+    } else {
+        window.localStorage.setItem("theme", JSON.stringify({dark:false}))
+        theme()
+    }
+}
+
+
+
+
+
+
+
+
+
 const userInfo = JSON.parse(document.cookie.split(";")[0].split("=")[1])
 let userMenu = generateVariable('#userMenu')
 let userMenu1 = generateVariable('#userMenu1')
@@ -181,7 +176,6 @@ setTimeout(refreshToken,refreshTime)
 window.logOut =
     function () {
         return {
-            messageType: '',
             pushNotify(status, title, text) {
                 new Notify({
                     status: status,
@@ -261,8 +255,6 @@ window.services =
                 password_confirmation: '',
             },
             updatedId: '',
-            messageType: '',
-            message: '',
             services: [],
             loggedInID: '',
             firstPage: '',
@@ -563,8 +555,6 @@ window.locationService =
                 feed_port: '',
                 router_port: '',
             },
-            messageType: '',
-            message: '',
             editLocationData: {
                 name: '',
                 ip_address: '',

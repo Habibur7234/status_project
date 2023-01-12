@@ -186,7 +186,7 @@
     <!-- End Navbar -->
 
 
-    <div x-data="services()" x-init="initUser()">
+    <div x-init="initUser()">
         <!--Add User modal-->
         <div class="modal fade" id="add_user_modal" tabindex="-1" role="dialog" aria-labelledby="modal-form"
              aria-hidden="true">
@@ -255,26 +255,6 @@
             </div>
         </div>
         <!--End Modal-->
-
-
-        <!--Show Message Alert-->
-        <template x-if="messageType == 'warning'">
-            <div x-init="setTimeout(() => message = '', 3000)" x-show="message" class="alert alert-warning"
-                 role="alert">
-                <span x-text="message"></span>
-            </div>
-        </template>
-        <template x-if="messageType == 'success'">
-            <div x-init="setTimeout(() => message = '', 3000)" x-show="message" class="alert alert-success"
-                 role="alert">
-                <span x-text="message"></span>
-            </div>
-        </template>
-        <template x-if="messageType == 'danger'">
-            <div x-init="setTimeout(() => message = '', 3000)" x-show="message" class="alert alert-danger" role="alert">
-                <span x-text="message"></span>
-            </div>
-        </template>
 
 
         <!--edit User modal-->
