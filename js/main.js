@@ -86,8 +86,8 @@ function getCookie(cname) {
 
 
 
-if (!getCookie("token") && location.href.replace(/.*\/\/[^\/]*/, '') != "/login.html") {
-    window.location.replace("/login.html");
+if (!getCookie("token") && location.href.replace(/.*\/\/[^\/]*/, '') != "/status_project/login.html") {
+    window.location.replace("/status_project/login.html");
 }
 
 const generateVariable = (selector) => {
@@ -126,13 +126,10 @@ const themeChange =()=>{
 
 
 
-
-
-
-
 const userCokie = document.cookie;
 if(userCokie){
-    const userInfo = JSON.parse(userCokie.split(";")[0].split("=")[1])
+    const userInfoCokie = userCokie.split(";")[0].split("=")[1]
+    const userInfo = userInfoCokie ? JSON.parse(userInfoCokie) : {}
     let userMenu = generateVariable('#userMenu')
     let userMenu1 = generateVariable('#userMenu1')
 
