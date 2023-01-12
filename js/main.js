@@ -132,7 +132,7 @@ const generateVariable = (selector) => {
 
 
 
-const userInfo = JSON.parse(document.cookie.split(";")[0].split("=")[1])
+const userInfo = (document.cookie.split(";")[0].split("=")[1])
 let userMenu = generateVariable('#userMenu')
 let userMenu1 = generateVariable('#userMenu1')
 
