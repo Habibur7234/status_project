@@ -74,6 +74,8 @@ if (!getCookie("token") && location.href.replace(/.*\/\/[^\/]*/, '') != "/status
 //
 
 
+//
+
 //LOGIN
 window.logIn =
     function () {
