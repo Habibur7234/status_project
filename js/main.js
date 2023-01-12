@@ -86,10 +86,10 @@ function getCookie(cname) {
 
 
 
-//
-// if (!getCookie("token") && location.href.replace(/.*\/\/[^\/]*/, '') != "/login.html") {
-//     window.location.replace("/login.html");
-// }
+
+if (!getCookie("token") && location.href.replace(/.*\/\/[^\/]*/, '') != "/login.html") {
+    window.location.replace("/login.html");
+}
 
 const generateVariable = (selector) => {
     return document.querySelector(selector)
