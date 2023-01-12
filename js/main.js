@@ -52,6 +52,7 @@ window.logIn =
                         window.location = "index.html"
                         document.cookie= "user" + "=" + JSON.stringify(data.user);
 
+
                     })
                     .catch((error) => {
                         this.pushNotify("error", error, 'UserName or Password Invalid')
@@ -129,29 +130,29 @@ const themeChange =()=>{
 const userCokie = document.cookie;
 if(userCokie){
     const userInfoCokie = userCokie.split(";")[0].split("=")[1]
-    const userInfo = userInfoCokie ? JSON.parse(userInfoCokie) : {}
-    console.log(userInfo)
-    let userMenu = generateVariable('#userMenu')
-    let userMenu1 = generateVariable('#userMenu1')
-
-    let userNameId = generateVariable('#currentUserName');
-    const {id,name,email,role,role_id} = userInfo;
-    if(role==='Manager'){
-        userMenu.innerHTML=""
-        userMenu.hidden = true;
-    }
-    if(role==='Manager'){
-        userMenu1.innerHTML=""
-        userMenu1.hidden = true;
-    }
-
-    if(userNameId){
-        if(userInfo){
-            userNameId.innerText = name
-        }else{
-            userNameId.innerText = 'John Doe'
-        }
-    }
+    // const userInfo = userInfoCokie ? JSON.parse(userInfoCokie) : {}
+    console.log(userInfoCokie)
+    // let userMenu = generateVariable('#userMenu')
+    // let userMenu1 = generateVariable('#userMenu1')
+    //
+    // let userNameId = generateVariable('#currentUserName');
+    // const {name,role} = userInfo;
+    // if(role==='Manager'){
+    //     userMenu.innerHTML=""
+    //     userMenu.hidden = true;
+    // }
+    // if(role==='Manager'){
+    //     userMenu1.innerHTML=""
+    //     userMenu1.hidden = true;
+    // }
+    //
+    // if(userNameId){
+    //     if(userInfo){
+    //         userNameId.innerText = name
+    //     }else{
+    //         userNameId.innerText = 'John Doe'
+    //     }
+    // }
 }
 
 
