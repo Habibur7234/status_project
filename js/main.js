@@ -64,9 +64,6 @@ window.logIn =
     };
 
 
-
-
-
 //Login Check
 function getCookie(cname) {
     let name = cname + "=";
@@ -86,9 +83,8 @@ function getCookie(cname) {
 
 
 
-
-if (!getCookie("token") && location.href.replace(/.*\/\/[^\/]*/, '') != "/login.html") {
-    window.location.replace("/login.html");
+if (!getCookie("token") && location.href.replace(/.*\/\/[^\/]*/, '') != "/status_project/login.html") {
+    window.location.replace("/status_project/login.html");
 }
 
 const generateVariable = (selector) => {
