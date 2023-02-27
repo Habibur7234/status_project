@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="cecffeb5-2443-4baa-bfc1-0727f175bf02" name="Changes" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2KE7gR3Ejn85Q3LptnGktnTtBzP" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/habiburrahman/WebstormProjects/status_project&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="cecffeb5-2443-4baa-bfc1-0727f175bf02" name="Changes" comment="" />
+      <created>1673527999732</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1673527999732</updated>
+      <workItem from="1673528001550" duration="530000" />
+      <workItem from="1673528801662" duration="1624000" />
+      <workItem from="1673705483649" duration="3000" />
+      <workItem from="1674295404515" duration="603000" />
+      <workItem from="1675319188853" duration="257000" />
+      <workItem from="1676525501496" duration="195000" />
+      <workItem from="1676527649836" duration="209000" />
+      <workItem from="1677401975507" duration="788000" />
+      <workItem from="1677497396577" duration="604000" />
+      <workItem from="1677505822385" duration="941000" />
+    </task>
+    <task id="LOCAL-00001" summary="last update">
+      <created>1673528073821</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1673528073822</updated>
+    </task>
+    <task id="LOCAL-00002" summary="last update2">
+      <created>1673529108648</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1673529108648</updated>
+    </task>
+    <task id="LOCAL-00003" summary="last update2">
+      <created>1677402051827</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1677402051827</updated>
+    </task>
+    <task id="LOCAL-00004" summary="drack mode bug fix">
+      <created>1677402428074</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1677402428074</updated>
+    </task>
+    <task id="LOCAL-00005" summary="drack mode bug fix">
+      <created>1677402585612</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1677402585612</updated>
+    </task>
+    <task id="LOCAL-00006" summary="scrool bug fix">
+      <created>1677402753015</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1677402753015</updated>
+    </task>
+    <task id="LOCAL-00007" summary="scrool bug fix">
+      <created>1677505877463</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1677505877463</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="last update" />
+    <MESSAGE value="last update2" />
+    <MESSAGE value="drack mode bug fix" />
+    <MESSAGE value="scrool bug fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="scrool bug fix" />
+  </component>
+</project>
